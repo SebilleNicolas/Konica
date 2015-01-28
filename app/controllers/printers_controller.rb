@@ -5,6 +5,7 @@ class PrintersController < ApplicationController
 		@titre = "Liste des Imprimantes"
 		@consommables = Consommable.all
 		@printer = Printer.new
+		@incident = Incident.new
 		# @printers.to_json
 
 	end
@@ -70,7 +71,7 @@ class PrintersController < ApplicationController
 
 	  @attachments = @printer.attachments
 	 	@attachment = Attachment.new
-	 	puts @attachments.to_yaml
+	 	# puts @attachments.to_yaml
     @incident = Incident.new
     @incidents =@printer.incidents
     @NbIncident = @printer.incidents.count
@@ -85,12 +86,24 @@ class PrintersController < ApplicationController
     @consommables = @printer.consommables
     @consommables_true = @consommables.where("valide_consommables = ?", true)
 		@consommables_false = @consommables.where("valide_consommables = ?", false)
+
+puts '****************************************************************************'
+puts '****************************************************************************'
+
 		@consommables_search = Consommable.find_by_sql("select * from consommables where id 
  in ( select  consommable_id from printers_consommables where printer_id != #{@printer.id}
-  and consommable_id != 
-  (select consommable_id from printers_consommables where printer_id = #{@printer.id} LIMIT 1))")
-		@consommables_vide_search = Consommable.find_by_sql("select * from consommables where id 
-		in ( select  consommable_id from printers_consommables where printer_id != #{@printer.id})")
+  and consommable_id NOT IN 
+  (select distinct consommable_id from printers_consommables where printer_id = #{@printer.id} ))
+		AND valide_consommables = true")
+puts '****************************************************************************'
+puts '****************************************************************************'
+
+		# @consommables_vide_search = Consommable.find_by_sql("
+		# 	select * from consommables where id 
+		# in ( select distinct consommable_id from printers_consommables where printer_id != #{@printer.id}) 
+		# AND valide_consommables = true")
+    
+
     @Nbconsommable = @printer.consommables.count
 
   	
@@ -103,7 +116,15 @@ class PrintersController < ApplicationController
     @releves_compteurs_true = @releves_compteurs.where("valide_releve_compteurs = ?", true)
 		@releves_compteurs_false = @releves_compteurs.where("valide_releve_compteurs = ?", false)
 	end		
-	
+	def destroy
+ 		@printer = Printer.find(params[:id])
+	    @printer.destroy
+	    respond_to do |format|
+	      format.html { redirect_to printers_url }
+	      format.json { head :no_content }
+	      format.js   { render :layout => false }
+	    end
+	end
  #  def destroy
  #  	@printer = Printer.find(params[:id])
  #  	@printer = @printer.incidents.build(return_params)
@@ -130,19 +151,19 @@ class PrintersController < ApplicationController
  #  end
 private
 	
-def printer_update_code_printers_params
-	params.require(:printer).permit(:code_printers)
-end
-def printer_update_description_params
-	params.require(:printer).permit(:description_printers, attachments_attributes: [:file,:id])
-end
-def return_params
-  params.require(:printer).permit(:incident_ids => [])
-end
+	def printer_update_code_printers_params
+		params.require(:printer).permit(:code_printers)
+	end
+	def printer_update_description_params
+		params.require(:printer).permit(:description_printers, attachments_attributes: [:file,:id])
+	end
+	def return_params
+	  params.require(:printer).permit(:incident_ids => [])
+	end
 
-def printer_params
-	params.require(:printer).permit(:code_printers, :description_printers, attachments_attributes: [:file])
-end
+	def printer_params
+		params.require(:printer).permit(:code_printers, :description_printers, attachments_attributes: [:file])
+	end
 
 
 end

@@ -19,24 +19,25 @@
     %th Modifier
     %th Validité
     %th Activer
-  - @users_non_valide.each do |user|
-    %tbody
-      %td= user.id
-      %td= user.email
-      %td= user.login
-      %td= user.last_name
-      %td= user.first_name
-      = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
-        %td
-          = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
-        %td
-          = f.button :submit, class: "btn btn-primary", :value => 'Modifier'
-      %td= user.valide
-      
-      %td 
-        = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir activer l'utilisateur #{user.login} ?" },:method => 'patch'  do |f| |
-          = f.hidden_field :valide, :value => true
-          = f.button :submit, class: "btn btn-primary", :value => 'Activer'
+  %tbody
+    - @users_non_valide.each do |user|
+      %tr
+        %td= user.id
+        %td= user.email
+        %td= user.login
+        %td= user.last_name
+        %td= user.first_name
+        = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
+          %td
+            = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
+          %td
+            = f.button :submit, class: "btn btn-primary", :value => 'Modifier'
+        %td= user.valide
+        
+        %td 
+          = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir activer l'utilisateur #{user.login} ?" },:method => 'patch'  do |f| |
+            = f.hidden_field :valide, :value => true
+            = f.button :submit, class: "btn btn-primary", :value => 'Activer'
 
       / %td= link_to 'Valider', user, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider l'utilisateur ?" },:class => 'valide_user'
 

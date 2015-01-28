@@ -59,6 +59,7 @@ return url + ( ( url.indexOf( "?" ) != -1 ) ? "&" : "?" ) + queryString.join( "&
 // Integrate Rails CSRF token into file upload dialogs (link, image, attachment and flash)
 CKEDITOR.on( 'dialogDefinition', function( ev ){
 // Take the dialog name and its definition from the event data.
+
 var dialogName = ev.data.name;
 var dialogDefinition = ev.data.definition;
 var content, upload;
@@ -71,6 +72,7 @@ upload.action = config.addQueryString(upload.action, upload.filebrowser['params'
 }
 }
 });
+// CKEDITOR.replace('body', {height: 500});
 // Toolbar groups configuration.
 config.toolbar = [
 { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ ] },
@@ -101,3 +103,4 @@ config.toolbar_mini = [
 { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] }
 ];
 };
+

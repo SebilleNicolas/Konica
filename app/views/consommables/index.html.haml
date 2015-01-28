@@ -1,0 +1,58 @@
+%h2 Consommables Non validé :
+
+%table.table-bordered{:align => "center", :style => "border:none; width: 100%;"}
+  %thead
+
+    %th{:style => "text-align:center;"}
+      ID
+    %th{:style => "text-align:center;"}
+      Code consommable
+    %th
+      Désignation conso
+    %th{:style => "text-align:center;"}
+      Valider
+    %th{:style => "text-align:center;"}
+      Supprimer
+  %tbody
+    - @consommables_false.each do |conso|
+      %tr
+        %td{:align => "center"}
+          = link_to conso.id, conso
+
+        %td{:align => "center"}
+          = link_to "#{conso.code_consommables}", conso
+        %td{:align => "center"}
+          = link_to conso.designation_consommables, conso
+        %td{:align => "center"}
+          / = simple_form_for conso , url: update_valide_consommables_path(conso),data: { confirm: "Etes vous sur de vouloir valider ce consommable ?" },:method => 'patch'  do |f| |
+          /   = f.hidden_field :valide_consommables, :value => true
+          /   = f.button :submit, class: "btn btn-primary", :value => 'valider'
+          = link_to 'Valider', conso, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider le consommable?" },:class => 'update_consommables'
+        %td{:align => "center"}
+          = link_to 'Supprimer', conso, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le conso?" },:class => 'delete_incident'
+%h2 Consommables validé :
+
+%table.table-bordered{:align => "center", :style => "border:none; width: 100%;"}
+  %thead
+
+    %th{:style => "text-align:center;"}
+      ID
+    %th{:style => "text-align:center;"}
+      Code consommable
+    %th{:style => "text-align:center;"}
+      Désignation consommable
+    %th{:style => "text-align:center;"}
+      Supprimer
+  %tbody
+    - @consommables_true.each do |conso|
+      %tr
+        %td{:align => "center"}
+          = link_to conso.id, conso
+        %td{:align => "center"}
+          = link_to "#{conso.code_consommables}", conso
+        %td{:align => "center"}
+          = link_to conso.designation_consommables, conso
+       
+        %td{:align => "center"}
+          = link_to 'Supprimer', conso, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'conso?" },:class => 'delete_incident'
+

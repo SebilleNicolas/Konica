@@ -19,12 +19,12 @@ SampleApp::Application.routes.draw do
     member do
       patch :update_description
       patch :update_code_printers  
-      
+      delete :delete
     end
     collection do
       get :autocomplete_printer_code_printers
       get :search
-
+      get :update_valide
     end
     resources  :download do
       collection do 

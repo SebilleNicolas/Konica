@@ -31,6 +31,12 @@
             %span.glyphicon.glyphicon-lock
             = link_to "Gérer U", manage_users_path
             |
+        %li
+          %span.glyphicon.glyphicon-info-sign
+            / %a.btn.btn-link{"aria-controls" => "collapseExample", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseExample",style: 'margin-left: -13px;, margin-top: -5px;' }
+            /   %b{style: 'color:#09c;'} Info
+            = link_to "Info", '#collapse_info',"aria-controls" => "collapse_info", "aria-expanded" => "false", "data-toggle" => "collapse"
+            |
         / %li
         /   %span.glyphicon.glyphicon-search
         /   = link_to "Rechercher", recherche_path
@@ -39,59 +45,70 @@
           %span.glyphicon.glyphicon-log-out
           = link_to "Déconnexion", destroy_user_session_path, method: :delete, :class => 'navbar-link'
         %br
-        %br
-        %br
-        - if current_user.is? :ADMIN
-          %table{:align => "left", :style => "border:none;height: 50px; width: 250px;"}
+    
+
+        #collapse_info.collapse
+          / .well 
+          %br
+          - if current_user.is? :ADMIN
+            %table{:align => "left", :style => "border:none;height: 50px; width: 250px;"}
+              %tr
+                %td
+                  %p{:align => "left"}
+                    %a{:href => manage_users_path}
+                      Nombre Utilisateurs non validé 
+                      %span.badge=User.all.where("valide = ?", false).count.to_s
+
+              %tr
+                %td
+                  %p{:align => "left"}
+                  %a{:href => incidents_path}
+                    Nombre Incidents non validé 
+                    %span.badge=Incident.all.where("valide_incidents = ?", false).count.to_s
+              %tr
+                %td
+                  %p{:align => "left"}
+                  %a{:href => consommables_path}
+                    Nombre Consommables non validé 
+                    %span.badge=Consommable.all.where("valide_consommables = ?", false).count.to_s
+
+          %table{:align => "right", :style => "border:none; height: 50px;"}
             %tr
               %td
-                %p{:align => "left"}
-                  %a{:href => manage_users_path}
-                    Nombre utilisateurs non validé 
-                    %span.badge=User.all.where("valide = ?", false).count.to_s
-
+                %p{:align => "right"} Vous êtes connecté en tant que :
+              %td
+                %p{:align => "center"}
+                  \&nbsp;
+                  %strong
+                    = current_user.last_name
+                    , #{current_user.first_name}
             %tr
               %td
-                %p{:align => "left"}
-                %a{:href => incidents_path}
-                  Nombre utilisateurs non validé 
-                  %span.badge=Incident.all.where("valide_incidents = ?", false).count.to_s
+                %p{:align => "right"} Votre statut est :
+              %td
+                %p{:align => "center"}
+                  %strong= current_user.role
+            %tr
+              %td
+                %p{:align => "right"} Email :
+              %td
+                %p{:align => "center"}
+                  %strong= current_user.email
+            %tr
+              %td
+                %p{:align => "right"} Nombre total incident :
+              %td
+                %p{:align => "center"}
+                  %strong=Incident.all.count
+            %tr
+              %td
+                %p{:align => "right"} Nombre total conso :
+              %td
+                %p{:align => "center"}
+                  %strong=Consommable.all.count
 
-        %table{:align => "right", :style => "border:none; height: 50px;"}
-          %tr
-            %td
-              %p{:align => "right"} Vous êtes connecté en tant que :
-            %td
-              %p{:align => "center"}
-                \&nbsp;
-                %strong
-                  = current_user.last_name
-                  , #{current_user.first_name}
-          %tr
-            %td
-              %p{:align => "right"} Votre statut est :
-            %td
-              %p{:align => "center"}
-                %strong= current_user.role
-          %tr
-            %td
-              %p{:align => "right"} Email :
-            %td
-              %p{:align => "center"}
-                %strong= current_user.email
-          %tr
-            %td
-              %p{:align => "right"} Nombre total incident :
-            %td
-              %p{:align => "center"}
-                %strong=Incident.all.count
-          %tr
-            %td
-              %p{:align => "right"} Nombre total conso :
-            %td
-              %p{:align => "center"}
-                %strong=Consommable.all.count
-
+          
+        
 
   / - else
   /   %nav.round
@@ -102,5 +119,7 @@
   /         </button>
   /       |
   /       \#{link_to "Connexion", new_user_session_path, :class => 'navbar-link'}
+%br/
+%br/
 %br/
 %br/

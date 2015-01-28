@@ -15,6 +15,9 @@
           %b Nombre Incidents
         %td{:align => "center"}
           %b Nombre Consommables
+        - if current_user.is? :ADMIN
+          %td{:align => "center"}
+            %b Supprimer
              
     %tbody
       - @search.each do |printer|
@@ -28,3 +31,7 @@
             = link_to printer.incidents.count, printer
           %td{:align => "center"}
             = link_to printer.consommables.count, printer
+          - if current_user.is? :ADMIN
+
+            %td{:align => "center"}
+              = link_to 'Supprimer', printer, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'imprimante'?" },:class => 'delete_printer'

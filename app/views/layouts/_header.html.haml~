@@ -1,0 +1,106 @@
+%header{:style => " display: inline-flex ;"}
+  / image_tag("logo.png", :alt => "Application exemple", :class => "round")
+  - logo =  image_tag("KM.png", :alt => "Konica Minolta", :class => "round" , :style => "margin-right: 60px;")
+  
+  -if user_signed_in?
+    / = link_to logo,   root_path
+    %a#imageLogo{:href => root_path}
+      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
+  - else
+    %a#imageLogo{:href => new_user_session_path}
+      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
+  - if user_signed_in?
+
+    %nav#test{:style => "width: 715px; margin-left: 0px;"}
+      %ul#menu
+        - if current_user.is? :ADMIN
+          %li
+            %span.glyphicon.glyphicon-plus
+            = link_to "Ajouter Imprimante", new_printer_path
+          |
+        %li
+          %span.glyphicon.glyphicon-th-list
+          = link_to "Liste Imprimante", index_path
+          |
+        %li
+          %span.glyphicon.glyphicon-user
+          = link_to "Profil", edit_user_registration_path
+          |
+        - if current_user.is? :ADMIN
+          %li
+            %span.glyphicon.glyphicon-lock
+            = link_to "Gérer U", manage_users_path
+            |
+        / %li
+        /   %span.glyphicon.glyphicon-search
+        /   = link_to "Rechercher", recherche_path
+        /   |
+        %li
+          %span.glyphicon.glyphicon-log-out
+          = link_to "Déconnexion", destroy_user_session_path, method: :delete, :class => 'navbar-link'
+        %br
+        %br
+        %br
+        - if current_user.is? :ADMIN
+          %table{:align => "left", :style => "border:none;height: 50px; width: 250px;"}
+            %tr
+              %td
+                %p{:align => "left"}
+                  %a{:href => manage_users_path}
+                    Nombre utilisateurs non validé 
+                    %span.badge=User.all.where("valide = ?", false).count.to_s
+
+            %tr
+              %td
+                %p{:align => "left"}
+                %a{:href => incidents_path}
+                  Nombre utilisateurs non validé 
+                  %span.badge=Incident.all.where("valide_incidents = ?", false).count.to_s
+
+        %table{:align => "right", :style => "border:none; height: 50px;"}
+          %tr
+            %td
+              %p{:align => "right"} Vous êtes connecté en tant que :
+            %td
+              %p{:align => "center"}
+                \&nbsp;
+                %strong
+                  = current_user.last_name
+                  , #{current_user.first_name}
+          %tr
+            %td
+              %p{:align => "right"} Votre statut est :
+            %td
+              %p{:align => "center"}
+                %strong= current_user.role
+          %tr
+            %td
+              %p{:align => "right"} Email :
+            %td
+              %p{:align => "center"}
+                %strong= current_user.email
+          %tr
+            %td
+              %p{:align => "right"} Nombre total incident :
+            %td
+              %p{:align => "center"}
+                %strong=Incident.all.count
+          %tr
+            %td
+              %p{:align => "right"} Nombre total conso :
+            %td
+              %p{:align => "center"}
+                %strong=Consommable.all.count
+
+
+  / - else
+  /   %nav.round
+  /     %ul
+  /       = link_to "inscription", new_user_registration_path
+  /       /
+  /         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+  /         </button>
+  /       |
+  /       \#{link_to "Connexion", new_user_session_path, :class => 'navbar-link'}
+%br/
+%br/

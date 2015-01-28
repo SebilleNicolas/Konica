@@ -93,115 +93,139 @@
       %h2
         %u Description de l'imprimante :
       %br/
-      - if @printer.attachments.count > 0
-        / ****************** Slide des images : ******************
-        #carousel-example-generic.carousel.slide{:style => "width:250px; float:left;","data-ride" => "carousel", "data-spy" => "scroll"}
-          / Indicators
-          %ol.carousel-indicators
-            %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
-            - for i in 1..@attachments.count - 1
-              - if File.extname(@attachments[i].file.to_s) != ".pdf"
-                %li{"data-slide-to" => "i", "data-target" => "#carousel-example-generic"}
-              / %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
-              / %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
+      #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+      .panel.panel-default
+        #headingOne.panel-heading{:role => "tab"}
+          %h4.panel-title
+            %a{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
+              %b Caractéristique et image de l'imprimante
+        #collapseOne.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+          .panel-body
             
-          / Wrapper for slides
-          .carousel-inner{:role => "listbox"}
-            - if @attachments.count > 0
-              .item.active
-                = image_tag(@attachments[0].file_url(:thumb),:style => "margin-left:70px;")
-                / = image_tag(@printer.img_url(:thumb),:style => "margin-left:70px;")
-                %p
-                  = File.basename(@attachments[0].file.to_s)
-                .carousel-caption
-                
-                  / = image_tag(@attachments[1].file,:style => "margin-left:70px;")
-              - @attachments.each do |a|
-                - if a.file != @attachments[0].file && File.extname(a.file.to_s) != ".pdf"
-                  .item
-                    = image_tag(a.file_url(:thumb),:style => "margin-left:70px;")
-                    %p
-                      = File.basename(a.file.to_s)
-                / .item
-                /   = image_tag(@attachments[2].file,:style => "margin-left:70px;")
-                / .item
-                /   = image_tag(@attachments[2].file,:style => "margin-left:70px;")
-          / Controls
-          %a.left.carousel-control{"data-slide" => "prev", :href => "#carousel-example-generic", :role => "button"}
-            %span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}
-            %span.sr-only Previous
-          %a.right.carousel-control{"data-slide" => "next", :href => "#carousel-example-generic", :role => "button"}
-            %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
-            %span.sr-only Next
-        
-          / = @printer.description_printers
-
-      / ****************** Description du Printer : ******************
+            - if @printer.attachments.count > 0
+              / ****************** Slide des images : ******************
+              #carousel-example-generic.carousel.slide{:style => "width:280px; float:left;","data-ride" => "carousel", "data-spy" => "scroll"}
+                / Indicators
+                %ol.carousel-indicators
+                  %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
+                  - for i in 1..@attachments.count - 1
+                    - if File.extname(@attachments[i].file.to_s) != ".pdf"
+                      %li{"data-slide-to" => "i", "data-target" => "#carousel-example-generic"}
+                    / %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+                    / %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
+                  
+                / Wrapper for slides
+                .carousel-inner{:role => "listbox"}
+                  - if @attachments.count > 0
+                    .item.active
+                      = image_tag(@attachments[0].file_url(:thumb),:style => "margin-left:70px;")
+                      / = image_tag(@printer.img_url(:thumb),:style => "margin-left:70px;")
+                      %p
+                        = File.basename(@attachments[0].file.to_s)
+                      .carousel-caption
+                      
+                        / = image_tag(@attachments[1].file,:style => "margin-left:70px;")
+                    - @attachments.each do |a|
+                      - if a.file != @attachments[0].file && File.extname(a.file.to_s) != ".pdf"
+                        .item
+                          = image_tag(a.file_url(:thumb),:style => "margin-left:70px;")
+                          %p
+                            = File.basename(a.file.to_s)
+                      / .item
+                      /   = image_tag(@attachments[2].file,:style => "margin-left:70px;")
+                      / .item
+                      /   = image_tag(@attachments[2].file,:style => "margin-left:70px;")
+                / Controls
+                %a.left.carousel-control{"data-slide" => "prev", :href => "#carousel-example-generic", :role => "button"}
+                  %span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}
+                  %span.sr-only Previous
+                %a.right.carousel-control{"data-slide" => "next", :href => "#carousel-example-generic", :role => "button"}
+                  %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
+                  %span.sr-only Next
+              
+                / = @printer.description_printers
+            - if current_user.is? :ADMIN
+              = simple_form_for(@printer, url: update_description_printer_path(params[:id]),data: { confirm: "Etes vous sur de vouloir modifier la description ?" }, method: :patch) do |f|
+                %table.table-bordered{:style => "margin-left: inherit;"}
+                  %tr
+                    %td
+                      = f.cktext_area :description_printers , :ckeditor => {:height => '100'},:spellcheck => false, :required => true , :value => @printer.description_printers
+                  %tr
+                    %td
+                      = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary btn-block"
+            - else
+              %p
+                = cktext_area_tag :description_printers ,  @printer.description_printers, disabled: true
+      / ************************** Colapse Pieces Jointes  du Printer : **************************
       - if current_user.is? :ADMIN
-        = simple_form_for(@printer, url: update_description_printer_path(params[:id]),data: { confirm: "Etes vous sur de vouloir modifier la description ?" }, method: :patch) do |f|
-          %table.table-bordered{:style => "margin-left: inherit;"}
-            %tr
-              %td
-                = f.cktext_area :description_printers , :spellcheck => false, :required => true , :value => @printer.description_printers
-            %tr
-              %td
-                %br
-                %br
-                %table.table-bordered{:style => "margin-left: 0px;width:300px;"}
-                  %thead
-                  %th nom
-                  %th Choisir fichier
-                  %th Supprimer
-                  = f.simple_fields_for :attachments , @attachments  do |p| 
-                    
-                    %tbody
-                      %tr
-                        - if File.extname(@printer.attachments[p.index].file.to_s) != ".pdfr"
-                          %td
-                            / Button trigger modal
-                            = link_to("#{File.basename(@printer.attachments[p.index].file.to_s)}", printer_download_path(:printer_id => @printer.id, :id => @printer.attachments[p.index].file.to_s ))
-                            / = link_to 'Show', @attachments, :action => :download, :input_html => {:target => "_blank"}
-                        - else
-                          %td 
-                            = File.basename(@printer.attachments[p.index].file.to_s)
-                        %td
-                          = p.input :file, as: :file, label: false
-                        %td 
-                          = link_to 'Supprimer', @printer.attachments[p.index], :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'image'?" },:class => 'delete_attachment'
-   
-            %tr
-              %td
-                = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary btn-block"
-        %br/
-        %br/
-        %br/
-        %button.btn.btn-primary.btn-lg{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}
-          Ajouter Nouvelle Piece Jointe
-        / Modal
-        #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1" }
-          .modal-dialog
-            .modal-content{:style => "height:300px;"} 
-              .modal-header
-                %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-                  %span{"aria-hidden" => "true"} 
-                %h4#myModalLabel.modal-title Ajouter une nouvelle piece jointe
-              .modal-body
-                = simple_form_for @attachment do |f|
-                  %table{:align => "left", :style => "border : none;"}
+        .panel.panel-default
+          #headingTwo.panel-heading{:role => "tab"}
+            %h4.panel-title
+              %a.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseTwo"}
+                %b Pieces Jointes de l'imprimante
+          #collapseTwo.panel-collapse.collapse{"aria-labelledby" => "headingTwo", :role => "tabpanel"}
+            .panel-body
+              - if current_user.is? :ADMIN
+                = simple_form_for(@printer, url: update_description_printer_path(params[:id]),data: { confirm: "Etes vous sur de vouloir modifier les pieces jointes ?" }, method: :patch) do |f|
+                  %table.table-bordered{:style => "margin-left: inherit; width: 100%;"}
                     %tr
                       %td
-                        / = f.label "Ajouter nouvelle image"
-                        = f.input :file, as: :file
-                        = f.hidden_field :printer_id, :value => @printer.id
+                        %table.table-bordered{:style => "margin-left: 0px;width:100%;"}
+                          %thead
+                          %th Nom
+                          %th Choisir fichier
+                          %th Supprimer
+                          = f.simple_fields_for :attachments , @attachments  do |p| 
+                            
+                            %tbody
+                              %tr
+                                - if File.extname(@printer.attachments[p.index].file.to_s) != ".pdfr"
+                                  %td
+                                    / Button trigger modal
+                                    = link_to("#{File.basename(@printer.attachments[p.index].file.to_s)}", printer_download_path(:printer_id => @printer.id, :id => @printer.attachments[p.index].file.to_s ))
+                                    / = link_to 'Show', @attachments, :action => :download, :input_html => {:target => "_blank"}
+                                - else
+                                  %td 
+                                    = File.basename(@printer.attachments[p.index].file.to_s)
+                                %td
+                                  = p.input :file, as: :file, label: false
+                                %td 
+                                  = link_to 'Supprimer', @printer.attachments[p.index], :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'image'?" },:class => 'delete_attachment'
+           
+                    %tr
                       %td
-                        %span.input-group-btn
-                          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button", :style => "margin-right:30px;"} Close
-                          = f.button :submit, "Valider" , class: "btn btn-lg btn-primary "
+                        = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary btn-block"
+                %br/
+                %br/
+                %br/
+                %button.btn.btn-lg.btn-primary.btn-block{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}
+                  Ajouter Nouvelle Piece Jointe
+                / Modal
+                #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1" }
+                  .modal-dialog
+                    .modal-content{:style => "height:300px;"} 
+                      .modal-header
+                        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                          %span{"aria-hidden" => "true"} 
+                        %h4#myModalLabel.modal-title Ajouter une nouvelle piece jointe
+                      .modal-body
+                        = simple_form_for @attachment do |f|
+                          %table{:align => "left", :style => "border : none;"}
+                            %tr
+                              %td
+                                / = f.label "Ajouter nouvelle image"
+                                = f.input :file, as: :file
+                                = f.hidden_field :printer_id, :value => @printer.id
+                              %td
+                                %span.input-group-btn
+                                  %button.btn.btn-default{"data-dismiss" => "modal", :type => "button", :style => "margin-right:30px;"} Close
+                                  = f.button :submit, "Valider" , class: "btn btn-lg btn-primary "
+        
+        
+      
               
 
-      - else
-        %p
-          = cktext_area_tag :description_printers ,  @printer.description_printers, disabled: true
+      
       /
         <div class="form-group">
         <label for="exampleInputFile">Choisir un fichier :</label>
@@ -265,6 +289,7 @@
               %th DesignationConsommable
               %th Durée de vie
               - if current_user.is? :ADMIN
+                %th Valider 
                 %th Supprimer 
           %tbody
             - @consommables_false.each do |consommable|
@@ -273,8 +298,13 @@
                 %td= link_to  consommable.designation_consommables,consommable
                 %td= link_to  consommable.duree_vie_consommables,consommable
                 - if current_user.is? :ADMIN 
+                  %td
+                    = link_to 'Valider', consommable, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider le consommable?" },:class => 'update_consommables'
+                    / %button.btn.btn-primary#valid-consommable{data:{consommable: @consommable.id,id: "#{consommable.id}"}}
+                    /   = consommable.id
                   %td= link_to 'Supprimer', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable?" },:class => 'delete_consommable'
-       
+      
+
       - else
         %p Il n'y a pas de consommable a valider.
     / Fin de l'onglet
@@ -285,6 +315,7 @@
         %table.table.table-bordered
           %thead
             %tr
+              %th ID
               %th CodeConsommable
               %th DesignationConsommable
               %th Durée de vie
@@ -293,7 +324,8 @@
           %tbody
             - @consommables_true.each do |consommable|
               %tr
-                %td= link_to  consommable.code_consommables , consommable
+                %td= link_to  consommable.id  , consommable
+                %td= link_to  consommable.code_consommables  , consommable
                 %td= link_to  consommable.designation_consommables,consommable
                 %td= link_to  consommable.duree_vie_consommables,consommable
                 - if current_user.is? :ADMIN 
@@ -377,7 +409,7 @@
                 %td{}
                   .col-md-9{:style => "width: 100%"}
                     .form-group
-                      = f.input :intitule_incidents ,label: false, :input_html => { :size => 40, :maxlength => 20, :required => true }
+                      = f.input :intitule_incidents ,label: false, :input_html => { :size => 40, :maxlength => 40, :required => true }
                     / /.col-lg-6
                   / /.row
             %table.table.table-bordered
@@ -506,7 +538,7 @@
                     %th Designation Consommable 
                     %th Valider
                 %tbody
-                  - @consommables_vide_search.each do |consommable|
+                  - @consommables_search.each do |consommable|
                     %tr
                       %td= consommable.id
                       %td= consommable.code_consommables

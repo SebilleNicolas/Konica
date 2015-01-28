@@ -30,6 +30,7 @@
 //  });
 
 
+$('.collapse').collapse();
 
 $(document).ready(function(){
   $('.alert').delay(10000).fadeOut(2000);
@@ -95,7 +96,7 @@ $('#myTab a').click(function (e) {
 });
 $(function() {
   return $("a[data-remote]").on("ajax:success", function(e, data, status, xhr) {
-    return alert("L'objet a bien été supprimé.");
+    // return alert("L'objet a bien été supprimé.");
   });
 });
 

@@ -1,7 +1,7 @@
 $ ->
-	
+  
   $('#valid-consommable').click (e) ->
-    alert 'anus'
+    
     $.ajax
       url: 'update_valide'
       type: 'GET'
@@ -9,3 +9,4 @@ $ ->
         id: $(this).data('consommable')
       success: (data) ->
         $('#valid-true-false').html('true')
+        alert 'Le consommable a été validé.'

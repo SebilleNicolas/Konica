@@ -1,39 +1,83 @@
-%p Entrez le code le l'imprimante a rechercher :
-= simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
 
-  / =f.input :name
-  = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false , placeholder: "Entrez le code le l'imprimante"
 
 %br/
 %br/
-%br/
-%br/
-%br/
-%br/
-%br/
-%br/
-%br/
 
-%table.table.table-bordered
-  %thead
-    %tr
-      %th ID
-      %th CodeImprimante
-      %th Nombre Incidents
-      %th Nombre Consommables
-  %tbody
-    - @printers.each do |printer|
-      %tr
-        %td= link_to printer.id, printer
-        %td= link_to printer.code_printers, printer
-        %td= link_to printer.incidents.count, printer
-        %td= link_to printer.consommables.count, printer
-  / %tfoot
-  /   %tr
-  /     %td{:colspan => "2"} Entrez le code le l'imprimante a rechercher :
-  /     %td{:colspan => "2"}
-  /       = simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
-  /         = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false 
+%br/
+%br/
+#accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+  .panel.panel-default
+    #headingOne.panel-heading{:role => "tab"}
+      %h4.panel-title
+        %a{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
+          Rechercher Imprimante
+    #collapseOne.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+      .panel-body
+        %p Entrez le code le l'imprimante a rechercher :
+        = simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
+
+          / =f.input :name
+          = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false , placeholder: "Entrez le code le l'imprimante"
+  .panel.panel-default
+    #headingTwo.panel-heading{:role => "tab"}
+      %h4.panel-title
+        %a.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseTwo"}
+          Rechercher Incidents
+    #collapseTwo.panel-collapse.collapse{"aria-labelledby" => "headingTwo", :role => "tabpanel"}
+      .panel-body
+        %p Entrez le code incident a rechercher :
+        = simple_form_for @incident, url: search_incidents_path(@incident), method: :get do |f| 
+          = f.autocomplete_field :code_incidents, autocomplete_incident_code_incidents_pages_path,:size => 75, :"data-autocomplete-label" => false,placeholder: "Entrez le code incident "
+  .panel.panel-default
+    #headingThree.panel-heading{:role => "tab"}
+      %h4.panel-title
+        %a.collapsed{"aria-controls" => "collapseThree", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseThree"}
+          Rechercher Consommable
+    #collapseThree.panel-collapse.collapse{"aria-labelledby" => "headingThree", :role => "tabpanel"}
+      .panel-body
+        Consommable
+%br/
+%br/
+/ ************************* TABLEAU DES IMPRIMANTES *************************
+/ %table.table.table-bordered
+/   %thead
+/     %tr
+/       %th ID
+/       %th CodeImprimante
+/       %th Nombre Incidents
+/       %th Nombre Consommables
+/       - if current_user.is? :ADMIN
+/         %th Supprimer
+/   %tbody
+/     - @printers.each do |printer|
+/       %tr
+/         %td= link_to printer.id, printer
+/         %td= link_to printer.code_printers, printer
+/         %td= link_to printer.incidents.count, printer
+/         %td= link_to printer.consommables.count, printer
+/         - if current_user.is? :ADMIN
+/           %td{:align => "center"}
+/             = link_to 'Supprimer', printer, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'imprimante'?" },:class => 'delete_printer'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/ %tfoot
+/   %tr
+/     %td{:colspan => "2"} Entrez le code le l'imprimante a rechercher :
+/     %td{:colspan => "2"}
+/       = simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
+/         = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false 
 
      
 

@@ -1,4 +1,12 @@
 class ConsommablesController < ApplicationController
+	def index
+		@consommables = Consommable.all
+		@consommables_false = @consommables.where("valide_consommables = ?", false)
+		@consommables_true = @consommables.where("valide_consommables = ?", true)
+		#@printer = Printer.find(params[:id])
+		@titre = "Liste des conso"
+		
+	end
 	def home
 			@consommables = Consommable.all
 	end
@@ -77,7 +85,6 @@ class ConsommablesController < ApplicationController
 	    # else
 	    #   render 'edit'
 	    # end
-	    puts "anus"
 	    @consommable.update_attributes(:valide_consommables => true)
 
 	    render nothing: true
@@ -85,13 +92,19 @@ class ConsommablesController < ApplicationController
 
 	def update
 	    @consommable = Consommable.find(params[:id])
-	    @printer = Printer.find(params[:consommable][:printer_id])
-	    if @consommable.update(consommable_params)
-	      flash[:notice] = "Consommable Modifié "
-	      redirect_to @printer	      
-	    else
-	      render 'edit'
+	    @consommable.update_attributes(:valide_consommables => true)
+	    respond_to do |format|
+	      format.html { redirect_to printers_url }
+	      format.json { head :no_content }
+	      format.js   { render :layout => false }
 	    end
+	    # @printer = Printer.find(params[:consommable][:printer_id])
+	    # if @consommable.update(consommable_params)
+	    #   flash[:notice] = "Consommable Modifié "
+	    #   redirect_to @printer	      
+	    # else
+	    #   render 'edit'
+	    # end
 	end
 
 

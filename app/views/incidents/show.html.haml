@@ -5,7 +5,6 @@
     %tr
       %th Description
       %th Solution
-      %th Statut
 
       %th Modifier
       
@@ -16,8 +15,6 @@
         %td
           = f.cktext_area :solution_incidents, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @incident.solution_incidents}
           / = f.hidden_field :printer_id, :value => @printer.id
-        %td
-          = @incident.valide_incidents
 
         - if current_user.is? :ADMIN 
           %td= f.button :submit, class: "btn btn-primary", value:'Modifier'
@@ -36,4 +33,4 @@
 
 
 
-= link_to "retour en arriere", :back ,class:  "glyphicon glyphicon-arrow-left"
+= link_to "retour en arriere", printer_path(@printer)+ "#incidentTrue" ,class:  "glyphicon glyphicon-arrow-left"

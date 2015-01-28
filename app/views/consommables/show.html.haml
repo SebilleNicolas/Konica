@@ -12,8 +12,7 @@
       %th Durée de vie (page)
       - if current_user.is? :ADMIN
         %th Modifier
-      %th Durée de vie (page)
-      %th Durée de vie (page)
+        %th Valider
   
   %tbody
     %tr
@@ -27,6 +26,10 @@
 
         - if current_user.is? :ADMIN 
           %td= f.button :submit, class: "btn btn-primary", value:'Modifier'
+      - if current_user.is? :ADMIN     
+        %td
+          %button.btn.btn-primary#valid-consommable{data:{consommable: @consommable.id, test: "test"}}
+            Valider
           / %td= button_tag :submit, class: "btn btn-primary", value:'Valider'
 
       / = simple_form_for @consommable,url: update_valide_consommable_path(@consommable), data: { confirm: "Etes vous sur de vouloir valider consommable ?" }, method: :patch do |f|
@@ -35,8 +38,7 @@
       /   / # = button_to 'valider conso',  update_valide_consommable_path(@consommable) 
       / %td= f.button :submit, class: "btn btn-primary btn-lg ", value:'Valider le consommable'
       
-      %button#valid-consommable{data:{consommable: @consommable.id, anus: "anus"}}
-        anus
+      
 
 
 / - if current_user.is? :ADMIN
@@ -51,7 +53,7 @@
 /     = f.hidden_field :id, :value => @consommable.id
 /     = f.button :submit, class: "btn btn-primary btn-lg btn-block btn-danger", value:"Supprimer le consommable"
 
-= link_to " retour en arrière ", :back ,class:  "glyphicon glyphicon-arrow-left"
+= link_to " retour en arrière ", printer_path(@printer)+ "#consommableTrue" ,class:  "glyphicon glyphicon-arrow-left"
 
 
 

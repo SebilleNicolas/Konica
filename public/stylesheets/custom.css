@@ -9,7 +9,18 @@
   stroke: #3182bd;
   stroke-width: 1.5px;
 }
+.panel-group {
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+}
+.panel-default{
+  background-color:papayawhip ;
 
+}
+.panel-default > .panel-heading{
+  background-color: tan;
+  border-color: sienna;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+}
 .node text {
   font: 10px sans-serif;
   pointer-events: none;
@@ -25,14 +36,18 @@ path.link {
 {
   width: 400px;
 }
-ul#menu{ 
+/*ul#menu{ 
   height:20px;
   overflow:hidden;
  transition:height 1s ease 0.10s;
  /*transform:rotate(-90deg);*/
-}
-ul#menu:hover{ height:260px; }
+/*}*/
+/*ul#menu:hover{ height:260px; }*/
 
+.carousel
+{
+  height: auto;
+}
 .modal-content {
     background-clip: padding-box;
     background-color: white;
@@ -200,11 +215,22 @@ a.signup_button {
   font-weight: bold;
   padding: 20px;
 }
-/*.table.table-bordered
+.table.table-bordered
 {
-  border-color: black;
+  border-color: #c8c8c8;
    border-style: solid;
-}*/
+
+ border-width:2px; 
+  -moz-box-shadow: 2px 2px 4px 0px #656565;
+-webkit-box-shadow: 2px 2px 4px 0px #656565;
+-o-box-shadow: 2px 2px 4px 0px #656565;
+box-shadow: 2px 2px 4px 0px #656565;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
+}
+table tr:nth-child(2n+1)
+{
+    background-color: #9ffff3;
+}
 textarea {
   
   resize: none;

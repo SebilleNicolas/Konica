@@ -4,8 +4,7 @@ class IncidentsController < ApplicationController
 		@incidents_false = @incidents.where("valide_incidents = ?", false)
 		@incidents_true = @incidents.where("valide_incidents = ?", true)
 		#@printer = Printer.find(params[:id])
-		@titre = "Liste des Incidents"
-		
+		@titre = "Liste des Incidents"		
 	end
 	def search
 		# @search = Incident.find_by(code_incidents: params[:incident][:code_incidents])
@@ -87,6 +86,8 @@ class IncidentsController < ApplicationController
   def show
     @incident = Incident.find(params[:id])
     @titre = "Incident"
+    @printer_inci = PrintersIncident.find_by incident_id: @incident.id
+    @printer = Printer.find(@printer_inci.printer_id)
   end
  #  def destroy
 	#   @incident = Incident.find(params[:id])
