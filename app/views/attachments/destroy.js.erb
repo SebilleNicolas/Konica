@@ -1,3 +1,5 @@
 $('.delete_attachment').bind('ajax:success', function() {  
         $(this).closest('tr').fadeOut();
+           document.getElementById("update_attachments_printer").disabled = true;
+           document.getElementById("update_attachments_printer").dataset.delete = "true";
 });  

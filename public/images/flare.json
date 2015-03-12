@@ -1,0 +1,82 @@
+{
+ "name": "Dans un dossier ou dans un mail",
+ "children": [
+  {
+   "name": "Dossier",
+   "children": [
+    {
+     "name": "FTP",
+     "children": [
+      
+       
+      {"name": "Adresse IP", "size": 3812},
+      {"name": "Utilitaire FTP", "size": 3812},
+      {"name": "Parfeu", "size": 3812}
+    
+     ]
+    },
+    {
+     "name": "SMB",
+     "children": [
+      {
+     "name": "Erreur connexion serveur",
+     "children": [
+      {"name": "Verifier adresse IP enregistrer dans le système d'impression", "size": 3534}
+     ]
+    },
+    {
+     "name": "Erreur Identifiant",
+     "children": [
+      {"name": "Refaire la configuration", "size": 3534}
+     ]
+    },
+    {
+     "name": "Dossier Absent",
+     "children": [
+      {"name": "Verifier partage", "size": 3534}
+     ]
+    }
+      
+     ]
+    }
+    
+   ]
+  },
+  {
+     "name": "MAIL",
+     "children": [
+      
+       
+       {
+     "name": "Faire on/off machine",
+     "children": [
+      
+       
+      {
+     "name": "Oui sa marche :",
+     "children": [
+      
+       
+      {"name": "Fin", "size": 3812}
+
+    
+     ]
+    },
+    {
+     "name": " marche pas : ",
+     "children": [
+      
+       
+      {"name": "Appeler le service informatique", "size": 3812}
+
+    
+     ]
+    }
+    
+     ]
+    }
+    
+     ]
+    }
+ ]
+}

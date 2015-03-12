@@ -7,7 +7,8 @@
     = render 'layouts/stylesheets'
     
   %body{:position => "relative", :style => "height:10px;width:100%;"}
-    .container{ :style => "width:1050px;"}
+    .container{ :style => "width:100%;"}
+      / width:1050px
       = render 'layouts/header'
       
       %section.round
@@ -19,6 +20,6 @@
         / <p style="color: green"> </p>
         = yield
       = render 'layouts/footer'
-      / = debug(params) if Rails.env.development?
+      = debug(params) if Rails.env.development?
 
       / = tinymce 

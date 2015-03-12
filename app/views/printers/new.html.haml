@@ -1,17 +1,17 @@
 
-%h1{:align => "center"} Ajouter Imprimante
+%h1{:align => "center"} Ajouter système d'impression
 .CSSTableGenerator
   = simple_form_for @printer do |f|
     %table
       %tr
-        %td Code Imprimante :
-        %td Description Imprimante :
+        %td Code du système d'impression :
+        %td Description du système d'impression :
 
       %tr
         %td.info
           .col-lg-9
             .input-group
-              = f.input :code_printers , :input_html => { :style => "width:250px" }, label: false
+              = f.input :code_printers , :input_html => { :style => "width:250px" }, label: false, id: "dd"
 
         %td
           .col-lg-9

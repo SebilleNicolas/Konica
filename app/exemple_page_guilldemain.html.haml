@@ -1,0 +1,106 @@
+- content_for :title do
+  Boxon - Commande
+
+.bloc
+  .container
+    .navbar-header
+      %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+      %a.navbar-brand{:href => "/"} Boxon
+    .bloc-commande
+      %ul.nav.navbar-nav
+        %li.commande
+          %h3
+            .strong 1. Commande
+        %li.commande
+          %h3 2. Information
+        %li.commande
+          %h3 3. Paiement
+
+%br/
+.container
+  .row.text-center
+    .formulaire
+      = simple_form_for @order do |f|
+        %h1 Essayez la solution Boxon
+        %br/
+        %h3 Où habitez-vous ?
+        = f.input :address3, as: :string, style: "display:none;", label: false, placeholder: "Code Postal"
+        #suite
+          %br
+          .row
+            .col-sm-3
+            .col-sm-6
+              %br/
+              %h3 Combien de boîtes avez-vous besoin ?
+              .selector
+                = f.input :box_number, collection: 1..15, prompt: "boîtes", label: false, required: true
+              %br/
+            .col-sm-3
+              #volume
+              #chaussure
+              #T_shirts
+              #pulls
+              #vestes
+           
+          %br/
+          %h3 Quand déposons-nous vos boîtes vides ?
+          .form-group
+            #datetimepicker9.input-group.date
+              = f.input :date1, as: :string, input_html: { class: "form-control" }, label: false, required: true
+              %span.input-group-addon
+                %span.glyphicon.glyphicon-calendar
+            %br/
+            #time1
+              = f.input :time1, label: false, :collection => ["8h-10h","10h-12h","12h-14h","14h-16h","16h-18h","18h-20h","20h-22h"], prompt: "Sélectionnez votre horaire", required: false
+            #time2
+              = f.input :time1, label: false, :collection => ["11h-13h","13h-15h"], prompt: "Sélectionnez votre horaire", required: false
+          %br/
+          %h3 Quand récupérons-nous vos boîtes ?
+          %br/
+          %table
+            %tr
+              %td &nbsp;
+              %td
+              %td.text2 Lors du dépôt des boîtes vides
+            %tr
+              %td &nbsp;
+            %tr
+              %td &nbsp;
+              %td
+              %td.text2 ou
+            %tr
+              %td &nbsp;
+            %tr
+              %td
+                %input#check{:type => "checkbox", required: false}
+              %td &nbsp;&nbsp;
+              %td.text2 Je choisis une date ultérieure dans les 15 jours
+          %br/
+          #bloc{style: "display:none;"}
+            .form-group
+              #datetimepicker10.input-group.date
+                = f.input :date2, as: :string, input_html: { class: "form-control" }, label: false, required: false
+                %span.input-group-addon
+                  %span.glyphicon.glyphicon-calendar
+              %br/
+              #time3
+                = f.input :time2, label: false, :collection => ["8h-10h","10h-12h","12h-14h","14h-16h","16h-18h","18h-20h","20h-22h"], prompt: "Sélectionnez votre horaire", required: false
+              #time4
+                = f.input :time2, label: false, :collection => ["11h-13h","13h-15h"], prompt: "Sélectionnez votre horaire", required: false
+          %br/
+          %br/
+          = f.button :submit, :class => "btn btn-success", :value => "Suivant ", :id => "next_1"
+
+    #not_found{style: "visibility:hidden;"}
+      %p{style: "font-size: 16px;"} Oups! Nous ne livrons pas encore dans cette ville
+      %p{style: "font-size: 16px;"} Jetez un oeil sur nos points de livraison
+      %iframe{:height => "350", :src => "https://www.google.com/maps/d/embed?mid=zlBuLFKtZk4s.kqbUoglDsBHg", :width => "500"}
+      %br/      
+      %br/
+      %p{style: "font-size: 16px;"} Si vous voulez être recontacté, laissez-nous votre adresse mail
+      = simple_form_for(@contact, url: contact_orders_path, html: { method: :get }) do |ff|
+        .inline_form
+          = ff.input :mail, label: false, placeholder: "E-mail : dana.scully@fbi.com"
+        .inline_form
+          = ff.button :submit, :class => "btn btn-success", :value => "Envoyer", :style => "width: 80px"

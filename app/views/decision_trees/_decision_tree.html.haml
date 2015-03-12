@@ -1,0 +1,9 @@
+- @list_decision_tree.each do |d|
+  %tr
+    %td= link_to  d.id  , d
+    %td= link_to  d.title_decision_tree  , d
+   
+    - if current_user.is? :ADMIN 
+      %td
+        %button.btn.btn-primary.delete-printers-consommable{data:{consommable: consommable.id}}
+          Supprimer

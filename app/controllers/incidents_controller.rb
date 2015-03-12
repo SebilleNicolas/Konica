@@ -1,4 +1,5 @@
 class IncidentsController < ApplicationController
+	# autocomplete :incident, :code_incidents, :full => true
 	def index
 		@incidents = Incident.all
 		@incidents_false = @incidents.where("valide_incidents = ?", false)
@@ -7,23 +8,34 @@ class IncidentsController < ApplicationController
 		@titre = "Liste des Incidents"		
 	end
 	def search
+		
 		# @search = Incident.find_by(code_incidents: params[:incident][:code_incidents])
 		@param = params[:incident][:code_incidents]
-		@search = Incident.where("lower(code_incidents) LIKE lower('%#{@param}%')")
-		# puts "********************************************************************"
-		# puts "#{@search}"
+		@search = Incident.where("lower(code_incidents) LIKE lower('%#{@param}%') 
+			AND valide_incidents = true")
+    
+
+		# putsrch.id = incident_id "#{@search}"
 		# "'%#{params[:first_name]}%'"
 		# puts @search.to_yaml
 	end
  	def update_valide
     @incident = Incident.find(params[:id])
-    @incident.update_attributes(valide_incident_params)
+    
+    @printer_inci = PrintersIncident.find_by(incident_id: params[:id])
+    @printer = Printer.find(@printer_inci.printer_id)
 
-    respond_to do |format|
-      format.html { redirect_to incidents_url }
-      format.json { head :no_content }
-      format.js   { render :layout => false }
-    end
+    if @incident.update_attributes(:valide_incidents => true)
+    	flash[:notice] = "L'incident a bien été validé."
+			redirect_to printer_path(@printer)+ "#incidentTrue"
+		else
+			flash[:alert] = "L'incident n'a pas été validé."
+		end
+    # respond_to do |format|
+    #   format.html { redirect_to incidents_url }
+    #   format.json { head :no_content }
+    #   format.js   { render :layout => false }
+    # end
   end
 	def home
 		@incidents = Incident.all
@@ -47,9 +59,16 @@ class IncidentsController < ApplicationController
 	end
 	def update
     @incident = Incident.find(params[:id])
-    if @incident.update(incident_update_params)
-      flash[:notice] = "Incident modifié a une valeur 'VRAI'"
-      redirect_to printers_path	      
+    @printer_inci = PrintersIncident.find_by(incident_id: params[:id])
+    @printer = Printer.find(@printer_inci.printer_id)
+    # puts "*******************************************************************"
+    #  puts "*******************************************************************"
+    #  @incident.to_yaml
+    #   puts "*******************************************************************"
+    #    puts "*******************************************************************"
+    if @incident.update_attributes(incident_params)
+      flash[:notice] = "Incident modifié."
+      redirect_to @incident	      
     else
     	render 'edit'
     end
@@ -108,6 +127,61 @@ class IncidentsController < ApplicationController
       format.js   { render :layout => false }
     end
 	end
+
+
+	def ajax_incident
+	  # @@value = params[:value]
+	  if params[:value].length.to_i >= 2
+	  	@value = params[:value].downcase
+	    # printers = Printer.select([:code_printers],[:id]).where("lower(code_printers) LIKE ?", "%#{params[:value].downcase}%")
+	    incidents = Incident.find_by_sql("select * from incidents
+	    	where lower(code_incidents) like '%#{@value}%'  LIMIT 10")
+	    result = incidents.collect do |t|
+	      {code_incidents: t.code_incidents,id: t.id}
+	    end
+	    if result.count > 0
+		  	respond_to do |format|
+		        format.json { render :json => result.to_json }
+		    end
+	    else
+	    	benoit = {:status => true}
+  	 		respond_to do |format|
+        	format.json { render :json => benoit.to_json }
+      	end
+	    end
+    else
+  		benoit = {:status => true}
+  	 	respond_to do |format|
+        format.json { render :json => benoit.to_json }
+      end
+  	end
+	end
+	def ajax_printer_incidents
+	  # @@value = params[:value]
+  	@value = params[:value].downcase
+    # printers = Printer.select([:code_printers],[:id]).where("lower(code_printers) LIKE ?", "%#{params[:value].downcase}%")
+    printers_incident = PrintersIncident.find_by_sql("select * from printers_incidents
+    where incident_id in (select id from incidents where lower(code_incidents) like '%#{@value}%')  LIMIT 10")
+    result = printers.collect do |t|
+      {id: t.id}
+    end
+    if result.count > 0
+	  	respond_to do |format|
+	        format.json { render :json => result.to_json }
+	    end
+    else
+    	benoit = {:status => true}
+	 		respond_to do |format|
+      	format.json { render :json => benoit.to_json }
+    	end
+    end
+  # else
+		# benoit = {:status => true}
+	 # 	respond_to do |format|
+  #     format.json { render :json => benoit.to_json }
+  #   end
+	end
+	
 
 
 private

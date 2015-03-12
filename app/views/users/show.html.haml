@@ -1,37 +1,37 @@
-%h2{:align => "center"}
-  %b
-    %u Modifier Profil :
-= simple_form_for @user,                                                                                                                           |
-  :url => url_for(:action => 'update', :controller => 'users'),data: { confirm: "Etes vous sur de vouloir modifier ?" },   :method => 'put' do |f| |
-  = f.error_notification
-  .form-inputs
-    %table{:align => "center", :style => "border:none;"}
-      %tr
-        %td
-          = f.label "Email : " , required: true
-        %td= f.input :email, required: true, autofocus: true, label: false
-      %tr
-        %td
-          = f.label "Login : " , required: true
-        %td
-          = f.input :login, required: true, label: false
-      %tr
-        %td= f.label "Nom : " , required: true
-        %td
-          = f.input :last_name, required: true, label: false
-      %tr
-        %td= f.label "Prenom : " , required: true
-        %td= f.input :first_name, required: true, label: false
-      %tr
-        %td= f.label "Statut : "
-        %td
-          = f.collection_select :role, User::ROLES, :to_s, :humanize
-  .form-actions{:align => "center"}
-    = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary "
-/
-  <h3>Cancel my account</h3>
+/ %h2{:align => "center"}
+/   %b
+/     %u Modifier Profil :
+/ = simple_form_for @user,                                                                                                                           |
+/   :url => url_for(:action => 'update', :controller => 'users'),data: { confirm: "Etes vous sur de vouloir modifier ?" },   :method => 'put' do |f| |
+/   = f.error_notification
+/   .form-inputs
+/     %table.navBar{:align => "center", :style => "border:none;"}
+/       %tr
+/         %td
+/           = f.label "Email : " , required: true
+/         %td= f.input :email, required: true, autofocus: true, label: false
+/       %tr
+/         %td
+/           = f.label "Login : " , required: true
+/         %td
+/           = f.input :login, required: true, label: false
+/       %tr
+/         %td= f.label "Nom : " , required: true
+/         %td
+/           = f.input :last_name, required: true, label: false
+/       %tr
+/         %td= f.label "Prenom : " , required: true
+/         %td= f.input :first_name, required: true, label: false
+/       %tr
+/         %td= f.label "Statut : "
+/         %td
+/           = f.collection_select :role, User::ROLES, :to_s, :humanize
+/   .form-actions{:align => "center"}
+/     = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary "
+/ /
+/   <h3>Cancel my account</h3>
   
   
   
-  data: { confirm: "Êtes-vous sur de vouloir enregistrer ces modifications ?" },
-= link_to "Back", :back
+/   data: { confirm: "Êtes-vous sur de vouloir enregistrer ces modifications ?" },
+/ / = link_to "Back", :back

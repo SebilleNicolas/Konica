@@ -1,0 +1,36 @@
+.container
+  .row
+    .col-sm-10
+      %h2= @decision_tree.title_decision_tree
+      / = @decision_tree.title_decision_trees
+    .col-sm-1
+      = button_to 'modifier le nom arbre décision',decision_tree_path(@decision_tree), class: "btn btn btn-primary", :method => :get
+/ = @decision_tree.id
+
+%h4 Question
+
+/ = puts @question.to_yaml
+= simple_form_for [@decision_tree, @question] do |f|
+  = f.input :title_question, :input_html => { :size => 50 }
+  / = f.button :submit, class: "btn btn-primary", value:"valider"
+
+
+%br
+%br
+%br
+%br
+
+%b YES
+= simple_form_for [@decision_tree, @question] do |f|
+  = f.input :title_question, :input_html => { :size => 50 }
+  / = f.button :submit, class: "btn btn-primary", value:"Ajouter"
+
+
+%br
+%br
+
+
+%b NO
+= simple_form_for [@decision_tree, @question] do |f|
+  = f.input :title_question, :input_html => { :size => 50 }
+  / = f.button :submit, class: "btn btn-primary", value:"Ajouter"

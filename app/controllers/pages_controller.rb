@@ -7,7 +7,17 @@ class PagesController < ApplicationController
     @consommable = Consommable.new
     @consommables = Consommable.all
   end
-
+  # def autocomplete_incident_code_incidents
+  #   puts 'toto'
+  #   @param = params[:term]
+  #   puts @param.to_yaml
+  #   @incident = Incident.find_by_sql("SELECT  incidents.id, incidents.code_incidents 
+  #   FROM incidents  WHERE (LOWER(incidents.code_incidents) ILIKE lower('% #{@param} %'))
+    
+  #     ORDER BY incidents.code_incidents ASC LIMIT 10")
+  #   puts '***********************************************************'
+  #   puts @incident.count
+  # end
   def about
 	  @titre = "A propos"
   end
@@ -16,6 +26,7 @@ class PagesController < ApplicationController
   	@titre = "Contact"
     # @elements = Element.all
     # @elements.to_json
+    @printers  = Printer.all
   end
 
   def profil

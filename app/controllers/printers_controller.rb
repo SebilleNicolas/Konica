@@ -3,6 +3,7 @@ class PrintersController < ApplicationController
 	def index
 		@printers = Printer.all
 		@titre = "Liste des Imprimantes"
+		@consommable = Consommable.new
 		@consommables = Consommable.all
 		@printer = Printer.new
 		@incident = Incident.new
@@ -16,10 +17,10 @@ class PrintersController < ApplicationController
 		@titre = "Ajouter une Imprimante"
 	end
 	def search
-
+		@printers=Printer.all
 		# @search = Incident.find_by(code_incidents: params[:incident][:code_incidents])
-		@param = params[:printer][:id]
-		@search = Printer.where("lower(code_printers) LIKE lower('%#{@param}%')")
+		# @param = params[:printer][:id]
+		# @search = Printer.where("lower(code_printers) LIKE lower('%#{@param}%')")
 		# @search = Printer.where("ddddd")
 		# puts "********************************************************************"
 		# puts "#{@search}"
@@ -27,23 +28,88 @@ class PrintersController < ApplicationController
 		# "'%#{params[:first_name]}%'"
 		# puts @search.to_yaml
 	end
-	
+
+
+
+
+
+
+	def ajax_printer
+	  # @@value = params[:value]
+	  if params[:value].length.to_i >= 2
+	  	@value = params[:value].downcase
+	    # printers = Printer.select([:code_printers],[:id]).where("lower(code_printers) LIKE ?", "%#{params[:value].downcase}%")
+	    printers = Printer.find_by_sql("select * from printers
+	    	where lower(code_printers) like '%#{@value}%'  LIMIT 10")
+	    result = printers.collect do |t|
+	      {code_printers: t.code_printers,id: t.id}
+	    end
+	    if result.count > 0
+		  	respond_to do |format|
+		        format.json { render :json => result.to_json }
+		    end
+	    else
+	    	benoit = {:status => true}
+  	 		respond_to do |format|
+        	format.json { render :json => benoit.to_json }
+      	end
+	    end
+    else
+  		benoit = {:status => true}
+  	 	respond_to do |format|
+        format.json { render :json => benoit.to_json }
+      end
+  	end
+
+   
+	  #   end
+	  #   if result.any?
+	  #     result = {:status => true}
+	  #     respond_to do |format|
+	  #       format.json { render :json => result.to_json }
+	  #     end
+	  #   else
+	  #     result = {:status => false}
+	  #     respond_to do |format|
+	  #       format.json { render :json => result.to_json }
+	  #     end
+	  #   end
+	  # else
+	  #   result = {:status => nil}
+	  #   respond_to do |format|
+	  #     format.json { render :json => result.to_json }
+	  #   end
+	  # end
+	end
+
+
+
+
+
+
+
 	def update_code_printers
 		@printer = Printer.find(params[:id])	
 		if @printer.update_attributes(printer_update_code_printers_params) 
-			flash[:notice] = "Le code de l'imprimante a bien été modifié."
+			flash[:notice] = "Le code du système d'impression a bien été modifié."
 		else
-			flash[:alert] = "Le code de l'imprimante n'a pas été modifié."
+			flash[:alert] = "Le code du système d'impression n'a pas été modifié."
 		end
 		redirect_to @printer
 	end
 
 	def update_description
 		@printer = Printer.find(params[:id])
+		
 		if @printer.update_attributes(printer_update_description_params) 
-			flash[:notice] = "La description de l'imprimante a bien été modifié."
+			if params[:printer][:nature] == "pj"
+				flash[:notice] = "Les pieces jointes du système d'impression ont bien été modifié."
+			end
+			if params[:printer][:nature] == "description"
+				flash[:notice] = "La description du système d'impression a bien été modifié."
+			end
 		else
-			flash[:alert] = "La description de l'imprimante n'a pas été modifié."
+			flash[:alert] = "La description du système d'impression n'a pas été modifié."
 		end
 		redirect_to @printer
 	end
@@ -52,10 +118,10 @@ class PrintersController < ApplicationController
 			@printer = Printer.new(printer_params)
 			@printer.save
 			if @printer.save
-				flash[:notice] = "L'Imprimante a bien été créé."
+				flash[:notice] = "Le système d'impression a bien été créé."
 				redirect_to @printer
 			else
-				flash[:alert] = "L'Imprimante n'a pas été créé"
+				flash[:alert] = "Le système d'impression n'a pas été créé"
 				redirect_to @printer
 			end
 	end
@@ -67,17 +133,23 @@ class PrintersController < ApplicationController
 
 	def show
 		@printer = Printer.find(params[:id])
-	  @titre = "Imprimante"
+	  @titre = "Système Impression"
 
 	  @attachments = @printer.attachments
 	 	@attachment = Attachment.new
 	 	# puts @attachments.to_yaml
     @incident = Incident.new
     @incidents =@printer.incidents
-    @NbIncident = @printer.incidents.count
+    @NbIncident = @printer.incidents.where("valide_incidents = ?", true).count
     @incidents_true = @incidents.where("valide_incidents = ?", true)
-
-		@incidents_false = @incidents.where("valide_incidents = ?", false)
+		# puts "**************************************************************************"
+		# puts "**************************************************************************"
+		# puts "**************************************************************************"
+		@incidents_false = @printer.incidents.where("valide_incidents = ?", false)
+		# puts @incidents_false.to_yaml
+		# puts "**************************************************************************"
+		# puts "**************************************************************************"
+		# puts "**************************************************************************"
     # @incidents_true = 
     #@consommables = @printer.consommables
     
@@ -87,34 +159,39 @@ class PrintersController < ApplicationController
     @consommables_true = @consommables.where("valide_consommables = ?", true)
 		@consommables_false = @consommables.where("valide_consommables = ?", false)
 
-puts '****************************************************************************'
-puts '****************************************************************************'
 
 		@consommables_search = Consommable.find_by_sql("select * from consommables where id 
  in ( select  consommable_id from printers_consommables where printer_id != #{@printer.id}
   and consommable_id NOT IN 
   (select distinct consommable_id from printers_consommables where printer_id = #{@printer.id} ))
 		AND valide_consommables = true")
-puts '****************************************************************************'
-puts '****************************************************************************'
+		@consommables_hide_in_printers_consommables= Consommable.find_by_sql("
+			select * from consommables 
+			where id not in (select consommable_id from printers_consommables)")
 
 		# @consommables_vide_search = Consommable.find_by_sql("
 		# 	select * from consommables where id 
 		# in ( select distinct consommable_id from printers_consommables where printer_id != #{@printer.id}) 
 		# AND valide_consommables = true")
     
-
-    @Nbconsommable = @printer.consommables.count
+		
+    @Nbconsommable = @printer.consommables.where("valide_consommables = ?", true).count
 
   	
   	@printers_consommable = PrintersConsommable.new
 		@printers_consommables = PrintersConsommable.all
 
     @releve_compteur = ReleveCompteur.new
-   	
-    @releves_compteurs = ReleveCompteur.all
+   	# puts '***********************************************'
+    @releves_compteurs =  @printer.releve_compteurs
     @releves_compteurs_true = @releves_compteurs.where("valide_releve_compteurs = ?", true)
 		@releves_compteurs_false = @releves_compteurs.where("valide_releve_compteurs = ?", false)
+
+
+		@replacements = Replacement.all
+		puts '******************************************************************'
+		puts @replacements.to_yaml
+		puts '******************************************************************'
 	end		
 	def destroy
  		@printer = Printer.find(params[:id])
@@ -124,6 +201,28 @@ puts '**************************************************************************
 	      format.json { head :no_content }
 	      format.js   { render :layout => false }
 	    end
+	end
+
+	def delete_printers_consommables
+		@consommable = Consommable.find(params[:id])
+		@printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
+		@printer_conso.destroy
+		# puts '*********************************************************'
+		# puts '*********************************************************'
+		# puts @consommable.to_yaml
+		# puts '*********************************************************'
+		# puts '*********************************************************'
+		# @printer_id = PrintersConsommable.find_by(consommable_id: params[:id])
+		# @printer = Printer.find_by(id: @printer_id.printer_id)
+	    # if @consommable.update(:valide_consommables => 'true')
+	    #   redirect_to @printer
+	    #   flash[:notice] = "Le Consommable a été validé "
+	    # else
+	    #   render 'edit'
+	    # end
+	    # @consommable.update_attributes(:valide_consommables => true)
+
+	    render nothing: true
 	end
  #  def destroy
  #  	@printer = Printer.find(params[:id])

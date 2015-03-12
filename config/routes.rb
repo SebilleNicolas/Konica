@@ -1,5 +1,6 @@
 SampleApp::Application.routes.draw do
  
+
   get 'releves_compteurs/new'
 
   devise_for :users , :controllers => { :registrations => "registrations",:users => "users",:sessions => "sessions"}#, :passwords => "passwords" }
@@ -13,18 +14,36 @@ SampleApp::Application.routes.draw do
 
     end
   end
-
+  
+  resources :decision_trees do
+    member do
+    
+    end
+    collection do
+      get :add_title_first_question_decision_tree
+    end
+      resources :questions
+    # resources :questions do
+    #   member do
+    #   end
+    #   collection do
+    #   end
+    # end
+  end
+  
   resources :printers do
 
     member do
       patch :update_description
       patch :update_code_printers  
-      delete :delete
     end
     collection do
       get :autocomplete_printer_code_printers
+      # get :autocomplete_code_printers
       get :search
-      get :update_valide
+      get :delete_printers_consommables
+      # get :update_valide
+      get :ajax_printer
     end
     resources  :download do
       collection do 
@@ -36,21 +55,24 @@ SampleApp::Application.routes.draw do
 
 
   resources :pages do
-    get :search , :on => :collection 
+    # get :search , :on => :collection 
     get :autocomplete_incident_code_incidents, :on => :collection 
   end
 
 
 
 
-   resources :incidents do
+  resources :incidents do
     member do
       put :showAllIncidents
       delete :remove
       patch :update_valide
       delete :delete
     end
-     get :search , :on => :collection 
+    collection do
+      get :ajax_incident
+    end
+    get :search , :on => :collection 
   end
 
 
@@ -59,12 +81,17 @@ SampleApp::Application.routes.draw do
   resources :consommables do
     member do
       patch :update  
-      
+      delete :delete_consommable
       post :add_consommables_printer  
       delete :delete
+      patch :update_attributes
     end
     collection do 
       get :update_valide
+      get :ajax_consommable
+      get :autocomplete_consommable_code_consommables
+      get :search
+      get :search_conso_existant
     end
   end
 
@@ -72,6 +99,7 @@ SampleApp::Application.routes.draw do
     member do
       delete :delete
       patch :valide
+      patch :update_valide
     end
   end
   
@@ -142,8 +170,8 @@ end
 
   match '/index',    :to => 'printers#index', :via => [:get], :controllers => { :printers => "printers" }
 
-
   root :to => 'printers#index'
+  # root :to => 'printers#index'
   # if user_signed_in?
   #   root :to => 'pages#inscription'
   # else

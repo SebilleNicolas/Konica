@@ -1,0 +1,13 @@
+- @consommables_true.each do |consommable|
+  %tr
+    %td= link_to  consommable.id  , consommable
+    %td= link_to  consommable.code_consommables  , consommable
+    %td= link_to  consommable.designation_consommables,consommable
+    %td= link_to  consommable.duree_vie_consommables,consommable
+    - if current_user.is? :ADMIN 
+      %td
+        %button.btn.btn-primary.delete-printers-consommable{data:{consommable: consommable.id}}
+          Supprimer
+        / = link_to 'Supprimer totalement', delete_consommable_consommable_path(consommable), :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement ?" },:class => 'delete_consommable'
+      %td
+        = link_to 'Supprimer', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement ?" },:class => 'delete_printer_consommable'

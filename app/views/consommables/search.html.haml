@@ -1,0 +1,39 @@
+/ %h2= "Recherche pour : '#{@param}'"
+
+/ -if @search.count < 1
+/   %p= "il n'y a pas de résultat a votre recherche '#{@param}'."
+/ -else
+
+- if @return_value == false
+  - @search_url = params[:consommable][:code_consommables]
+  Le code consommable  
+  %b= @search_url
+  n'est pas complet ou n'existe pas.
+- if @search.blank? && @return_value == true
+  / - puts @search.to_yaml
+  %p Le consommable est déjà ajouté dans le système d'impression.
+-  if @search.blank? == false
+  %table{:align => "center", :style => "width: 100%; border:none;"}
+    %thead
+      %tr
+        %td{:align => "center"}
+          %b ID
+        %td{:align => "center"}
+          %b Code Consommable
+        %td{:align => "center"}
+          %b 
+            Ajouter dans le système d'impression
+            = params[:consommable][:printer_id]
+             
+    %tbody
+      / - @search.each do |conso|
+      %tr
+        %td{:align => "center"}
+          =  @search.id
+        %td{:align => "center"}
+          =  @search.code_consommables
+        %td{:align => "center"}
+          = simple_form_for @printers_consommable  do |f|
+            = f.hidden_field :printer_id, :value =>  params[:consommable][:printer_id]
+            = f.hidden_field :consommable_id, :value => @search.id
+            = f.button :submit, class: "btn  btn-primary", data: { confirm: "Etes vous sur de vouloir ajouter ce consommable dans le printer actuel ?" },:value => "Ajouter dans le systeme d'impression" 

@@ -4,21 +4,28 @@
   %table.table.table-bordered
     %thead
       %tr
-        %th Description
-        %th Statut
-        %th Modifier
+        %th{style: "text-align: center;"} Description
+        - if current_user.is? :ADMIN 
+          %th{style: "text-align: center;"} Statut
+          %th{style: "text-align: center;"} Modifier
         
     %tbody
       %tr
         
         %td
-          = f.text_area :description_releve_compteurs, label: false,:cols => 40, :rows => 8 ,:input_html => { :size => 18, :maxlength => 20 , value: @releve_compteur.description_releve_compteurs}
+          - if current_user.is? :ADMIN
+            / = f.text_area :description_releve_compteurs, label: false,:cols => 40, :rows => 8 ,:input_html => { :size => 18, :maxlength => 20 , value: @releve_compteur.description_releve_compteurs}
+            = f.cktext_area :description_releve_compteurs , :ckeditor => {:height => '100'},:spellcheck => false, :required => true , :value => @releve_compteur.description_releve_compteurs
+          - else 
+            = cktext_area_tag :description_printers ,  @releve_compteur.description_releve_compteurs, disabled: true
        
-        %td
-          = @releve_compteur.valide_releve_compteurs
+       
 
         - if current_user.is? :ADMIN 
-          %td= f.button :submit, class: "btn btn-primary", value:'Modifier'
+          %td
+            = @releve_compteur.valide_releve_compteurs
+          %td
+            = f.button :submit, class: "btn btn-primary", value:'Modifier'
    
       
             
@@ -27,11 +34,12 @@
   -if @releve_compteur.valide_releve_compteurs == false
     = simple_form_for @releve_compteur,url: valide_releve_compteur_path(@releve_compteur), data: { confirm: "Etes vous sur de vouloir valider le releve compteur ?" } do |f|
       = f.hidden_field :valide_releve_compteurs, :value => true
-      = f.button :submit, class: "btn btn-primary btn-lg btn-block", value:"Valider le releve_compteur"
-  = simple_form_for @releve_compteur ,url: delete_releve_compteur_path(@releve_compteur),data: { confirm: "Etes vous sur de vouloir supprimer la method releve compteur ?" }, method: :delete do |f|
+      = f.button :submit, class: "btn btn-success btn-lg btn-block", value:"Valider le releve compteur"
+  %br
+  = simple_form_for @releve_compteur ,url: delete_releve_compteur_path(@releve_compteur),data: { confirm: "Etes vous sur de vouloir supprimer la methode releve compteur ?" }, method: :delete do |f|
     = f.hidden_field :id, :value => @releve_compteur.id
-    = f.button :submit, class: "btn btn-primary btn-lg btn-block", value:"Supprimer le relevé compteur"
+    = f.button :submit, class: "btn btn-danger btn-lg btn-block", value:"Supprimer le relevé compteur"
 
 
-
-= link_to "retour en arriere", :back ,class:  "glyphicon glyphicon-arrow-left"
+= link_to " Retour en arriere ", :back ,class:  "glyphicon glyphicon-arrow-left"
+/ = link_to "retour en arriere", :back ,class:  "glyphicon glyphicon-arrow-left"

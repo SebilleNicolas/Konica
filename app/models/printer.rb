@@ -6,10 +6,10 @@ class Printer < ActiveRecord::Base
 
 	has_many :releve_compteurs
 	
-	has_many :printers_incidents, :dependent => :destroy
-	has_many :incidents ,:through => :printers_incidents, :dependent => :destroy
-	has_many :printers_consommables, :dependent => :destroy
-	has_many :consommables, :through => :printers_consommables, :dependent => :destroy
+	has_many :printers_incidents
+	has_many :incidents ,:through => :printers_incidents
+	has_many :printers_consommables
+	has_many :consommables, :through => :printers_consommables
 	
 	after_save :write_json
 end

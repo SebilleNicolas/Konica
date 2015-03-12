@@ -11,16 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218144754) do
+ActiveRecord::Schema.define(version: 20150225083407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "arbre_decisions", force: true do |t|
-    t.string   "titreAD"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "attachments", force: true do |t|
     t.string   "file"
@@ -35,6 +29,13 @@ ActiveRecord::Schema.define(version: 20141218144754) do
     t.string   "designation_consommables"
     t.boolean  "valide_consommables"
     t.string   "duree_vie_consommables"
+    t.integer  "replacement_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "decision_trees", force: true do |t|
+    t.string   "title_decision_tree"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -42,8 +43,8 @@ ActiveRecord::Schema.define(version: 20141218144754) do
   create_table "incidents", force: true do |t|
     t.string   "code_incidents"
     t.string   "intitule_incidents"
-    t.string   "description_incidents"
-    t.string   "solution_incidents"
+    t.text     "description_incidents"
+    t.text     "solution_incidents"
     t.boolean  "valide_incidents"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -51,7 +52,7 @@ ActiveRecord::Schema.define(version: 20141218144754) do
 
   create_table "printers", force: true do |t|
     t.string   "code_printers"
-    t.string   "description_printers"
+    t.text     "description_printers"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -71,18 +72,24 @@ ActiveRecord::Schema.define(version: 20141218144754) do
   end
 
   create_table "questions", force: true do |t|
-    t.string   "titreQuestions"
-    t.string   "libelleQuestions"
-    t.integer  "IDCheminOui"
-    t.integer  "IDCheminNon"
+    t.string   "title_question"
+    t.integer  "Id_route_yes"
+    t.integer  "Id_route_no"
+    t.integer  "decision_tree_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "releve_compteurs", force: true do |t|
-    t.string   "description_releve_compteurs"
+    t.text     "description_releve_compteurs"
     t.boolean  "valide_releve_compteurs"
-    t.integer  "printer_id_id"
+    t.integer  "printer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "replacements", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

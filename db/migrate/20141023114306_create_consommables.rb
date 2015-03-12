@@ -5,6 +5,7 @@ class CreateConsommables < ActiveRecord::Migration
 	    	t.string :designation_consommables
 	    	t.boolean	 :valide_consommables
 	    	t.string	:duree_vie_consommables
+	    	t.belongs_to :replacement
 	    t.timestamps			
     end
   end

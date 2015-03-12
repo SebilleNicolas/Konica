@@ -3,8 +3,12 @@ class ReleveCompteursController < ApplicationController
 
 	def index
 		@releves_compteurs = ReleveCompteur.all
-		
-		@releve_compteurs = "Liste des Releve Compteur"
+		@releve_compteur = ReleveCompteur.new
+    # puts '***********************************************'
+    # @releves_compteurs =  @printer.releve_compteurs
+    @releve_compteurs_true = @releves_compteurs.where("valide_releve_compteurs = ?", true)
+    @releve_compteurs_false = @releves_compteurs.where("valide_releve_compteurs = ?", false)
+		@titre = "Liste des Releve Compteur"
 	end
 
   def new
@@ -23,7 +27,7 @@ class ReleveCompteursController < ApplicationController
 
   def show
     @releve_compteur = ReleveCompteur.find(params[:id])
-    @titre = "releve_compteur"
+    @titre = "releve compteur"
   end
 
 
@@ -37,12 +41,21 @@ class ReleveCompteursController < ApplicationController
   	end
     redirect_to @printer
   end
+  def destroy   
+    @releve_compteur = ReleveCompteur.find(params[:id])
+    @releve_compteur.destroy
 
+    respond_to do |format|
+      format.html { redirect_to releve_compteurs_path }
+      format.json { head :no_content }
+      format.js   { render :layout => false }
+    end
+  end
 	def update
     @releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
     if @releve_compteur.update(releve_compteur_params)
-      flash[:notice] = "Incident modifié a une valeur 'VRAI'"
+      flash[:notice] = "Le relevé compteur a été modifié."
       redirect_to @printer	      
     else
     	render 'edit'
@@ -52,15 +65,26 @@ class ReleveCompteursController < ApplicationController
     @releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
     if @releve_compteur.update(valide_releve_compteur_params)
-      flash[:notice] = "Incident modifié a une valeur 'VRAI'"
+      flash[:notice] = "Le relevé compteur a été validé."
       redirect_to @printer	      
     else
     	render 'edit'
     end
 	end
-
+  def update_valide
+    @releve_compteur = ReleveCompteur.find(params[:id])
+    @releve_compteur.update(:valide_releve_compteurs => 'true')
+    respond_to do |format|
+      format.html { redirect_to releve_compteurs_path }
+      format.json { head :no_content }
+      format.js   { render :layout => false }
+    end
+  end
 
 private 
+  def update_valide_releve_compteur_params
+    params.require(:releve_compteur).permit( :releve_compteur => [:valide_releve_compteur])
+  end
 	def valide_releve_compteur_params
 		params.require(:releve_compteur).permit( :valide_releve_compteurs)
 	end

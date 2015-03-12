@@ -1,0 +1,19 @@
+// $('.update_consommablesd').bind('ajax:complete', function() {  
+// 				alert('Le consommable a bien été validé.');
+//         $(this).closest('tr').fadeOut();
+//         // $('.consommable_true_tbody').append($(this).closest('tr').html());
+//          $.ajax({
+//       url: 'consommables/consommables_true_tbody',
+//       data: {
+//           value: $(this).val()
+//       },
+//       type: "GET",
+//       success: function(data) {
+
+//       	$(".consommables_true_tbody").html('<%= escape_javascript(render( :partial => "consommables/consommables_true")) %>')
+//       }
+//        });
+  
+// });  
+
+

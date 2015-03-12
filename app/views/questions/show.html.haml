@@ -1,0 +1,37 @@
+/ %h1 Questions#show
+/ %p Find me in app/views/questions/show.html.haml
+
+/ = @decision_tree.title_decision_tree
+/ = @question.title_question
+
+.container
+  .row
+    .col-sm-8
+      %h2= @decision_tree.title_decision_tree
+      / = @decision_tree.title_decision_trees
+    .col-sm-1
+      = button_to 'modifier le nom arbre décision',decision_tree_path(@decision_tree), class: "btn btn btn-primary", :method => :get
+/ = @decision_tree.id
+
+= simple_form_for [@decision_tree, @question] , method: :patch do |f|
+  = f.input :title_question, value: @question.title_question, :input_html => { :size => 80 }
+  = f.button :submit, class: "btn btn-primary", value:"Modifier"
+  %br
+  %br
+
+= label_tag :Id_route_yes, "Yes", :value => "Yes" 
+= radio_button_tag 'Id_route_yes', 'true'
+#question_yes{style: "visibility:hidden;"}
+  = simple_form_for [@decision_tree, @question] do |f|
+    = f.input :title_question, :input_html => { :size => 50 }
+    = f.button :submit, class: "btn btn-primary", value:"Ajouter"
+
+%br
+= label_tag :Id_route_no, "No", :value => "No" 
+= radio_button_tag 'Id_route_yes', 'false'
+#question_no{style: "visibility:hidden;"}
+  = simple_form_for [@decision_tree, @question] do |f|
+    = f.input :title_question, :input_html => { :size => 50 }
+    = f.button :submit, class: "btn btn-primary", value:"Ajouter"
+
+

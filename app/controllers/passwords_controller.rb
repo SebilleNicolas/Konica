@@ -1,4 +1,4 @@
-class PasswordsController < Devise::PasswordsController
+class Devise::PasswordsController < DeviseController
   prepend_before_filter :require_no_authentication
   # Render the #edit only if coming from a reset password email link
   append_before_filter :assert_reset_token_passed, only: :edit
@@ -6,7 +6,6 @@ class PasswordsController < Devise::PasswordsController
   # GET /resource/password/new
   def new
     self.resource = resource_class.new
-    @titre= "Réinitialiser Mot de passe"
   end
 
   # POST /resource/password
@@ -24,32 +23,9 @@ class PasswordsController < Devise::PasswordsController
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
     self.resource = resource_class.new
+    set_minimum_password_length
     resource.reset_password_token = params[:reset_password_token]
   end
-
-
-
-
-  # def edit
-  #   self.resource = resource_class.find_or_initialize_with_error_by(:reset_password_token, params[:reset_password_token])
-  #   # @user = User.find_by(reset_password_token: params[:reset_password_token])
-  #   puts "*********************************************************************************"
-  #   puts "*********     #{resource} /     *********"
-  #     puts "*********     #{resource.id} /     *********"
-  #         puts "*********     #{resource.first_name} /     *********"
-  #             puts "*********     #{resource.last_name} /     *********"
-  #                 puts "*********     #{resource.login} /     *********"
-  #                     puts "*********     #{resource.errors} /     *********"
-  #                     puts resource.errors.to_yaml
-  #   puts "*********************************************************************************"
-  #   if !resource.errors.empty?
-  #     flash[:alert] = "Password token is invalid"
-  #     redirect_to new_session_path(resource_name)
-  #   end
-  # end
-
-
-
 
   # PUT /resource/password
   def update
@@ -91,5 +67,9 @@ class PasswordsController < Devise::PasswordsController
       resource.respond_to?(:unlock_access!) &&
         resource.respond_to?(:unlock_strategy_enabled?) &&
         resource.unlock_strategy_enabled?(:email)
+    end
+
+    def translation_scope
+      'devise.passwords'
     end
 end

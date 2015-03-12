@@ -10,17 +10,20 @@
     %a#imageLogo{:href => new_user_session_path}
       %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
   - if user_signed_in?
+    - @size = "715px", @margin = ""  if current_user.is? :ADMIN
+    - @size = "530px" if current_user.is? :HL2 
+    - @size = "530px" if current_user.is? :HL1
 
-    %nav#test{:style => "width: 715px; margin-left: 0px;"}
+    %nav#test{:style => "width: #{@size}; margin-left: 0px;"}
       %ul#menu
         - if current_user.is? :ADMIN
           %li
             %span.glyphicon.glyphicon-plus
-            = link_to "Ajouter Imprimante", new_printer_path
+            = link_to "Ajouter système d'impression", new_printer_path
           |
         %li
           %span.glyphicon.glyphicon-th-list
-          = link_to "Liste Imprimante", index_path
+          = link_to "Liste système d'impression", search_printers_path
           |
         %li
           %span.glyphicon.glyphicon-user
@@ -51,7 +54,7 @@
           / .well 
           %br
           - if current_user.is? :ADMIN
-            %table{:align => "left", :style => "border:none;height: 50px; width: 250px;"}
+            %table.navBar{:align => "left", :style => "border:none;height: 50px; width: 250px;"}
               %tr
                 %td
                   %p{:align => "left"}
@@ -71,8 +74,14 @@
                   %a{:href => consommables_path}
                     Nombre Consommables non validé 
                     %span.badge=Consommable.all.where("valide_consommables = ?", false).count.to_s
-
-          %table{:align => "right", :style => "border:none; height: 50px;"}
+              %tr
+                %td
+                  %p{:align => "left"}
+                  %a{:href => releve_compteurs_path}
+                    Nombre Relevé Compteur non validé 
+                    %span.badge=ReleveCompteur.all.where("valide_releve_compteurs = ?", false).count.to_s
+          %br/
+          %table.navBar{:align => "right", :style => "border:none; height: 50px;"}
             %tr
               %td
                 %p{:align => "right"} Vous êtes connecté en tant que :
@@ -94,18 +103,18 @@
               %td
                 %p{:align => "center"}
                   %strong= current_user.email
-            %tr
-              %td
-                %p{:align => "right"} Nombre total incident :
-              %td
-                %p{:align => "center"}
-                  %strong=Incident.all.count
-            %tr
-              %td
-                %p{:align => "right"} Nombre total conso :
-              %td
-                %p{:align => "center"}
-                  %strong=Consommable.all.count
+            / %tr
+            /   %td
+            /     %p{:align => "right"} Nombre total incident :
+            /   %td
+            /     %p{:align => "center"}
+            /       %strong=Incident.all.count
+            / %tr
+            /   %td
+            /     %p{:align => "right"} Nombre total conso :
+            /   %td
+            /     %p{:align => "center"}
+            /       %strong=Consommable.all.count
 
           
         

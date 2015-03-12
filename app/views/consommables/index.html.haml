@@ -29,7 +29,7 @@
           /   = f.button :submit, class: "btn btn-primary", :value => 'valider'
           = link_to 'Valider', conso, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider le consommable?" },:class => 'update_consommables'
         %td{:align => "center"}
-          = link_to 'Supprimer', conso, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le conso?" },:class => 'delete_incident'
+          = link_to 'Supprimer', conso, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le conso?" },:class => 'delete_consommable'
 %h2 Consommables validé :
 
 %table.table-bordered{:align => "center", :style => "border:none; width: 100%;"}
@@ -54,5 +54,5 @@
           = link_to conso.designation_consommables, conso
        
         %td{:align => "center"}
-          = link_to 'Supprimer', conso, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'conso?" },:class => 'delete_incident'
+          = link_to 'Supprimer', conso, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'conso?" },:class => 'delete_consommable'
 

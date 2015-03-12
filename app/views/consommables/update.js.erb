@@ -1,6 +1,16 @@
-$('.update_consommables').bind('ajax:success', function() {  
+
+//Valider consommable dans printers/show
+$('.update_consommables').bind('ajax:complete', function() {  
 				alert('Le consommable a bien été validé.');
-        $(this).closest('tr').fadeOut();
-        
+        // $(this).closest('tr').fadeOut();
+        if(history.pushState)
+        {
+        	history.pushState({"id":101}, "new title", "#consommableFalse");
+        }
+        window.location.reload();
 });  
+
+
+
+
 

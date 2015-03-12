@@ -4,7 +4,9 @@ class PrintersConsommablesController < ApplicationController
 	def create 
 		
 		@printers_consommable = PrintersConsommable.create(add_consommables_printer_params)
-		@printer = Printer.find(@printers_consommable.printer_id)
+
+		puts params[:printers_consommable][:printer_id].to_yaml
+		@printer = Printer.find(params[:printers_consommable][:printer_id])
 		if @printers_consommable.save
 			flash[:notice] = "Le consommable a bien été ajouté dans l'Imprimante #{@printers_consommable.printer_id}."
 			redirect_to printer_path(params[:printers_consommable][:printer_id]) + "#ajouterConsommable"

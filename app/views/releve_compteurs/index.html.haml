@@ -1,0 +1,53 @@
+%h2 Relevé compteur Non validé :
+- if @releve_compteurs_false.count > 0
+  %table{:align => "center", :style => "border:none; width: 500px;"}
+    %thead
+      %tr
+        %td{:align => "center"}
+          %b ID
+        %td{:align => "center"}
+          %b releve_compteur
+        %td{:align => "center"}
+          %b Valider
+        %td{:align => "center"}
+          %b Supprimer
+    %tbody
+      - @releve_compteurs_false.each do |releve_compteur|
+        %tr
+          %td{:align => "center"}
+            = link_to releve_compteur.id, releve_compteur
+          %td{:align => "center"}
+            = link_to "VOIR", releve_compteur
+          %td{:align => "center"}
+            = simple_form_for releve_compteur , url: update_valide_releve_compteur_path(releve_compteur),data: { confirm: "Etes vous sur de vouloir valider ce relevé compteur ?" },:method => 'patch'  do |f| |
+              / = f.hidden_field :valide_releve_compteur, :value => true
+              = f.button :submit, class: "btn btn-primary", :value => 'valider'
+          %td{:align => "center"}
+            = link_to 'Supprimer', releve_compteur, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le relevé compteur ?" },:class => 'delete_releve_compteur'
+- else
+  %p Il n'y a pas de relevé compteur non validé.
+%h2 Relevé compteur validé :
+
+- if @releve_compteurs_true.count > 0
+  %table{:align => "center", :style => "border:none; width: 500px;"}
+    %thead
+      %tr
+        %td{:align => "center"}
+          %b ID
+        %td{:align => "center"}
+          %b Relevé compteur
+
+        %td{:align => "center"}
+          %b Supprimer
+    %tbody
+      - @releve_compteurs_true.each do |releves_compteurs|
+        %tr
+          %td{:align => "center"}
+            = link_to releves_compteurs.id, releves_compteurs
+          %td{:align => "center"}
+            = link_to "voir relevé compteur", releves_compteurs
+         
+          %td{:align => "center"}
+            = link_to 'Supprimer', releves_compteurs, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le relevé compteur ?" },:class => 'delete_releve_compteur'
+- else
+  %p Il n'y a pas de relevé compteur validé.

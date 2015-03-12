@@ -1,6 +1,7 @@
 class Consommable < ActiveRecord::Base
 	has_many :printers_consommables, :dependent => :destroy
-	has_many :printers, :through => :printers_consommables, :dependent => :destroy
+	has_many :printers, :through => :printers_consommables
+	belongs_to :replacement
 end
 
 # class Printer < ActiveRecord::Base

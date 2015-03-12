@@ -2,6 +2,35 @@
   width: 1000px;
   /*opacity: 0.8;*/
 }
+
+input.toto,textarea,span.span_consommable
+{
+  display: flex;
+  vertical-align: top;
+  /*padding: 4px;*/
+  margin-left: 400px;
+}
+select.a
+{
+  vertical-align: top;
+  margin-left: 0;
+
+}
+/*select
+{
+  vertical-align: top;
+   margin-left: 400px;
+}*/
+
+/*span,input{
+  display: inline;
+}
+*/
+
+/*table-layout: table-cell
+inline-block
+mettre des width et jouer avec sa*/
+
 .node rect {
   cursor: pointer;
   fill: #fff;
@@ -9,11 +38,17 @@
   stroke: #3182bd;
   stroke-width: 1.5px;
 }
+
+.navBar tr:nth-child(2n+1)
+{
+  background-color: #ffffff;
+}
 .panel-group {
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
 }
 .panel-default{
   background-color:papayawhip ;
+
 
 }
 .panel-default > .panel-heading{
@@ -34,8 +69,10 @@ path.link {
 
 .ui-menu-item
 {
-  width: 400px;
+  width: 100%;
+  background-color: #cff;
 }
+
 /*ul#menu{ 
   height:20px;
   overflow:hidden;
@@ -96,8 +133,6 @@ path.link {
 }
 #form_home {
 opacity: 0.7;
-
-
 }
 #imageLogo {
   width: 255px;
@@ -119,6 +154,8 @@ margin-left: 160px;
 }
 body {
   background: #cff;
+ /*background: #ADD8E6;*/
+  /*background: white;*/
     /*background-image:url(../images/gsti.png);*/
   background-repeat:no-repeat;
   width: 100%;
@@ -229,7 +266,7 @@ filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, St
 }
 table tr:nth-child(2n+1)
 {
-    background-color: #9ffff3;
+    background-color: #cff;
 }
 textarea {
   

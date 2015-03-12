@@ -1,23 +1,41 @@
 
 
-%br/
-%br/
+/ %br/
+/ %br/
 
-%br/
-%br/
+/ %br/
+/ %br/
 #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
   .panel.panel-default
     #headingOne.panel-heading{:role => "tab"}
       %h4.panel-title
         %a{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
-          Rechercher Imprimante
+          Rechercher système d'impression
     #collapseOne.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
       .panel-body
-        %p Entrez le code le l'imprimante a rechercher :
-        = simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
+        %p Entrez le code du système d'impression a rechercher :
+        / = simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
 
-          / =f.input :name
-          = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false , placeholder: "Entrez le code le l'imprimante"
+        /   / =f.input :name
+        /   / = f.autocomplete_field :id, autocomplete_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false , placeholder: "Entrez le code le l'imprimante"
+        /   = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false , placeholder: "Entrez le code du système d'impression"
+        = simple_form_for @printer, url: ajax_printer_printers_path(@printer) do |f|
+
+          = f.input :code_printers, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "code système d'impression", autocomplete: "off"
+
+
+        #resultat_printers{:style => "margin-left: 10px;"}
+
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
   .panel.panel-default
     #headingTwo.panel-heading{:role => "tab"}
       %h4.panel-title
@@ -27,7 +45,26 @@
       .panel-body
         %p Entrez le code incident a rechercher :
         = simple_form_for @incident, url: search_incidents_path(@incident), method: :get do |f| 
+          / = f.autocomplete_field :code_incidents, autocomplete_code_incidents_incidents_path,:size => 75, :"data-autocomplete-label" => false,placeholder: "Entrez le code incident "
           = f.autocomplete_field :code_incidents, autocomplete_incident_code_incidents_pages_path,:size => 75, :"data-autocomplete-label" => false,placeholder: "Entrez le code incident "
+
+
+        / = simple_form_for @incident, url: ajax_incident_incidents_path(@incident) do |f|
+
+        /   = f.input :code_incidents, as: :string, :input_html => { :style => "width:500px" }, style: "display:none;", label: false, placeholder: "code incidents", autocomplete: "off"
+
+
+        #resultat_incidents{:style => "margin-left: 10px;"}
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
   .panel.panel-default
     #headingThree.panel-heading{:role => "tab"}
       %h4.panel-title
@@ -35,9 +72,36 @@
           Rechercher Consommable
     #collapseThree.panel-collapse.collapse{"aria-labelledby" => "headingThree", :role => "tabpanel"}
       .panel-body
-        Consommable
-%br/
-%br/
+        / = simple_form_for @consommable, url: search_consommables_path(@consommable), method: :get do |f| 
+        /   / = f.autocomplete_field :code_incidents, autocomplete_code_incidents_incidents_path,:size => 75, :"data-autocomplete-label" => false,placeholder: "Entrez le code incident "
+        /   = f.autocomplete_field :code_consommables, autocomplete_consommable_code_consommables_consommables_path,:size => 75, :"data-autocomplete-label" => false,placeholder: "Entrez le code consommable "
+
+
+        = simple_form_for @consommable, :html => {:autocomplete => "off"}, url: ajax_consommable_consommables_path(@consommable) do |f|
+
+          = f.input :code_consommables, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "code consommable",  autosave: false
+
+
+        %h3 Rechercher par :  
+        %select#column_search
+          %option{value: "code_consommables"} Code
+          %option{value: "designation_consommables"} Designation
+        #resultat_consommables{:style => "margin-left: 10px;"}
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+/ ************************* RECHERCHE AJAX MANUEL *************************
+
+
+/ %br/
+/ %br/
 / ************************* TABLEAU DES IMPRIMANTES *************************
 / %table.table.table-bordered
 /   %thead

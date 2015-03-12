@@ -11,6 +11,8 @@
           %b ID
         %td{:align => "center"}
           %b CodeIncident
+        %td{:align => "center"}
+          %b Système d'impression
              
     %tbody
       - @search.each do |incident|
@@ -20,3 +22,7 @@
             = link_to incident.id, incident
           %td{:align => "center"}
             = link_to incident.code_incidents, incident
+          %td{:align => "center"}
+            - @printer_inci =  PrintersIncident.find_by( id: incident.id)
+            - @printer = Printer.find(@printer_inci.printer_id)
+            = link_to @printer.code_printers, incident

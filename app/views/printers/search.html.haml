@@ -1,37 +1,32 @@
-%h2= "Recherche pour : '#{@param}'"
 
--if @search.count < 1
-  %p= "il n'y a pas de résultat a votre recherche '#{@param}'."
--else
-  
-  %table{:align => "center", :style => "width: 700px; border:none;"}
-    %thead
+%table{:align => "center", :style => "width: 700px; border:none;"}
+  %thead
+    %tr
+      %td{:align => "center"}
+        %b ID
+      %td{:align => "center"}
+        %b Code
+      %td{:align => "center"}
+        %b Nombre Incidents
+      %td{:align => "center"}
+        %b Nombre Consommables
+      - if current_user.is? :ADMIN
+        %td{:align => "center"}
+          %b Supprimer
+           
+  %tbody
+    - @printers.each do |printer|
+     
       %tr
         %td{:align => "center"}
-          %b ID
+          = link_to printer.id, printer
         %td{:align => "center"}
-          %b Code
+          = link_to printer.code_printers, printer
         %td{:align => "center"}
-          %b Nombre Incidents
+          = link_to printer.incidents.count, printer
         %td{:align => "center"}
-          %b Nombre Consommables
+          = link_to printer.consommables.count, printer
         - if current_user.is? :ADMIN
-          %td{:align => "center"}
-            %b Supprimer
-             
-    %tbody
-      - @search.each do |printer|
-       
-        %tr
-          %td{:align => "center"}
-            = link_to printer.id, printer
-          %td{:align => "center"}
-            = link_to printer.code_printers, printer
-          %td{:align => "center"}
-            = link_to printer.incidents.count, printer
-          %td{:align => "center"}
-            = link_to printer.consommables.count, printer
-          - if current_user.is? :ADMIN
 
-            %td{:align => "center"}
-              = link_to 'Supprimer', printer, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'imprimante'?" },:class => 'delete_printer'
+          %td{:align => "center"}
+            = link_to 'Supprimer', printer, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le système d'impression'?" },:class => 'delete_printer'

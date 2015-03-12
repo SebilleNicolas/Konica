@@ -1,0 +1,5 @@
+= simple_form_for @order do |f|
+        %h1 Essayez la soluton Boxon
+        %br/
+        %h3 Où habitez-vous ?
+        = f.input :address3, as: :string, style: "display:none;", label: false, placeholder: "Code Postal", id: "ajax_printer"
