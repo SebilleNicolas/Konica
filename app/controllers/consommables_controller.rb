@@ -51,13 +51,17 @@ class ConsommablesController < ApplicationController
 		@printers_consommables = PrintersConsommable.all
     @param = params[:consommable][:code_consommables]
     @printer = Printer.find(params[:consommable][:printer_id])
-
+    # puts '************************************************'
+		# @conso = Consommable.find_by code_consommables: @param
+		# @conso = Consommable.where("code_consommables LIKE :param", param: "#{param}%")
+		# @conso = Consommable.find_by_sql("
+		# 	select * from consommables 
+		# where code_consommables  LIKE '%#{@param}%'")
 		@conso = Consommable.find_by code_consommables: @param
-
     @consommables_search = Consommable.find_by_sql("select * from consommables where id 
- in ( select  consommable_id from printers_consommables where printer_id != #{@printer.id}
-  and consommable_id NOT IN 
-  (select distinct consommable_id from printers_consommables where printer_id = #{@printer.id} ))
+		in ( select  consommable_id from printers_consommables where printer_id != #{@printer.id}
+  	and consommable_id NOT IN 
+  	(select distinct consommable_id from printers_consommables where printer_id = #{@printer.id} ))
 		AND valide_consommables = true")
 		@consommables_hide_in_printers_consommables= Consommable.find_by_sql("
 			select * from consommables 
@@ -66,13 +70,21 @@ class ConsommablesController < ApplicationController
 		if @conso.blank?
 			@return_value = false
 		end
-		if @conso.in?(@consommables_search)
-			@search = @conso
-			puts '************************************************'
-		end
-		if @conso.in?(@consommables_hide_in_printers_consommables)
-			@search = @conso
-			puts '--------------------------------------------------'
+		
+		# puts @conso.id
+		if !@conso.nil?
+			@consommables_search.each do |c|
+				if c.id == @conso.id
+					@search = @conso
+					puts 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+				end
+			end
+			@consommables_hide_in_printers_consommables.each do |c|
+				if c.id == @conso.id
+					@search = @conso
+					puts '-----------------------------------------------------'
+				end
+			end
 		end
 	end
 	def home
@@ -194,9 +206,11 @@ class ConsommablesController < ApplicationController
 
 	def update_attributes
 		@consommable = Consommable.find(params[:id])
+		@printer_id = PrintersConsommable.find_by(consommable_id: params[:id])
+		@printer = Printer.find_by(id: @printer_id.printer_id)
 		if @consommable.update_attributes(consommable_params)
       flash[:notice] = "Consommable modifié."
-      redirect_to @consommable	      
+      redirect_to @printer
     else
     	render 'edit'
     end

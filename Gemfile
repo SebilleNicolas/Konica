@@ -54,7 +54,7 @@ gem 'rails4-autocomplete'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'tinymce-rails', '~> 4.1.5'
+
 
 gem 'devise'
 #gem 'awesome_print', '~> 1.2.0'

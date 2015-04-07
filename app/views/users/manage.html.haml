@@ -6,6 +6,7 @@
   %b   
     Nb utilisateurs : 
     = @users.count
+- @disabled = false
 
 %h3 Utilisateurs non validé :
 %table.table-bordered{:style => "width: 940px;text-align: center; "}
@@ -19,8 +20,14 @@
     %th{:style => "text-align: center;"} Modifier
     %th{:style => "text-align: center;"} Validité
     %th{:style => "text-align: center;"} Activer
+    %th{:style => "text-align: center;"} Supprimer
   %tbody
+
     - @users_non_valide.each do |user|
+      - if current_user.id == user.id
+        - @disabled = true
+      - else 
+        - @disabled = false
       %tr
         %td= user.id
         %td= user.email
@@ -31,13 +38,16 @@
           %td
             = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
           %td
-            = f.button :submit, class: "btn btn-primary", :value => 'Modifier'
+            = f.button :submit, class: "btn btn-primary", :value => 'Modifier', disabled: @disabled
         %td= user.valide
         
         %td 
-          = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir activer l'utilisateur #{user.login} ?" },:method => 'patch'  do |f| |
+          = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir activer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'patch'  do |f| |
             = f.hidden_field :valide, :value => true
-            = f.button :submit, class: "btn btn-success", :value => 'Activer'
+            = f.button :submit, class: "btn btn-success", :value => 'Activer', disabled: @disabled
+        %td
+          = simple_form_for user , data: { confirm: "Etes vous sur de vouloir supprimer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'delete'  do |f| 
+            = f.button :submit, class: "btn btn-danger", :value => 'Supprimer', disabled: @disabled
 
       / %td= link_to 'Valider', user, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider l'utilisateur ?" },:class => 'valide_user'
 
@@ -57,22 +67,29 @@
     %th{:style => "text-align: center;"} Modifier
     %th{:style => "text-align: center;"}Validité
     %th{:style => "text-align: center;"} Désactiver
+    %th{:style => "text-align: center;"} Supprimer
   %tbody
     - @users_valide.each do |user|
       %tr
-    
+        - if current_user.id == user.id
+          - @disabled = true
+        - else 
+          - @disabled = false
         %td= user.id
         %td= user.email
         %td= user.login
         %td= user.last_name
         %td= user.first_name
-        = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.login} ?" }, method: :patch) do |f|
+        = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
           %td
             = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
           %td
-            = f.button :submit, class: "btn btn-primary", :value => 'Modifier'
+            = f.button :submit, class: "btn btn-primary", :value => 'Modifier', disabled: @disabled
         %td= user.valide
         %td
           = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir désactiver l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'patch'  do |f| |
             = f.hidden_field :valide, :value => false
-            = f.button :submit, class: "btn btn-danger", :value => 'Desactiver'
+            = f.button :submit, class: "btn btn-warning", :value => 'Desactiver', disabled: @disabled
+        %td
+          = simple_form_for user , data: { confirm: "Etes vous sur de vouloir supprimer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'delete'  do |f| 
+            = f.button :submit, class: "btn btn-danger", :value => 'Supprimer', disabled: @disabled

@@ -15,15 +15,16 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require autocomplete-rails
-//= require tinymce
 //= require ckeditor/init
 //= require d3
 //= require contact
 //= require turbolinks
 //= require bootstrap
 //= require_bootstrap-sprockets
-
 //= require_tree .
+
+
+
 // $(document).ready(function(){
 //   setTimeout(function(){
 //     $('.alert').remove().fadeOut(5000); }, 5000);
@@ -80,7 +81,7 @@ $("#printer_code_printers").keyup(function() {
 
           var resultat = data[cpt].id;
           var nom = data[cpt].code_printers;
-          s = s + '<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a> </br>';
+          s = s + '<a href="http://150.17.156.66:3000/printers/'+resultat+'">'+nom+' </a> </br>';
           // $('#resultat').html('<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a>');
           // alert(data[0].code_printers);
           cpt++;
@@ -105,7 +106,7 @@ $("#consommable_code_consommables").keyup(function() {
       url: 'consommables/ajax_consommable',
       data: {
           value: $(this).val(),
-          column_search : $('#column_search').val()
+          column_search: $('#column_search').val()
       },
       type: "GET",
       success: function(data) {
@@ -143,7 +144,7 @@ $("#consommable_code_consommables").keyup(function() {
             {
               nom = data[cpt].designation_consommables;
             }
-          s = s + '<a href="http://localhost:3000/consommables/'+resultat+'">'+nom+' </a> </br>';
+          s = s + '<a href="http://150.17.156.66:3000/consommables/'+resultat+'">'+nom+' </a> </br>';
           // s = s + nom+' </br>';
           // $('#resultat').html('<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a>');
           // alert(data[0].code_printers);

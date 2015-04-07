@@ -16,7 +16,7 @@
   %b Liste imprimante Compatible
 
 %select.a
-  - if @list_printers_consommable.count > 1 
+  - if @list_printers_consommable.count >= 1  
     - @list_printers_consommable.each do |printer| 
       %option
         = printer.code_printers

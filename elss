@@ -1,0 +1,7 @@
+ id | code_incidents |    intitule_incidents    |                                 description_incidents                                 |           solution_incidents           | valide_incidents |         created_at         |         updated_at         
+----+----------------+--------------------------+---------------------------------------------------------------------------------------+----------------------------------------+------------------+----------------------------+----------------------------
+  5 | c0202          | Problème bourrage papier | <p><br />\r                                                                          +| <p><br />\r                           +| t                | 2015-02-23 09:10:14.946204 | 2015-02-23 09:10:37.775667
+    |                |                          | La machine ne fonctionne plus et affiche sur l&#39;&eacute;cran un code erreur.</p>\r+| Eteindre et rallumer la machine.</p>\r+|                  |                            | 
+    |                |                          |                                                                                       |                                        |                  |                            | 
+(1 row)
+

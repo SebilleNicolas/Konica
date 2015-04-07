@@ -1,4 +1,34 @@
 %h1 DecisionTree#index
 %p Find me in app/views/decision_tree/index.html.haml
+- if current_user.is? :ADMIN
+  = link_to 'Ajouter un arbre de décision', new_decision_tree_path
 
-= link_to 'Ajouter un arbre de décision', new_decision_tree_path
+%table{:align => "center", :style => "width: 700px; border:none;"}
+  %thead
+    %tr
+      %td{:align => "center"}
+        %b ID
+      %td{:align => "center"}
+        %b Titre
+      %td{:align => "center"}
+        %b Nombre Questions
+      
+      - if current_user.is? :ADMIN
+        %td{:align => "center"}
+          %b Supprimer
+           
+  %tbody
+    - @decision_trees.each do |decision_tree|
+     
+      %tr
+        %td{:align => "center"}
+          = link_to decision_tree.id, new_decision_tree_question_path(decision_tree)
+        %td{:align => "center"}
+          = link_to decision_tree.title_decision_tree, new_decision_tree_question_path(decision_tree)
+        %td{:align => "center"}
+          = link_to decision_tree.questions.count, new_decision_tree_question_path(decision_tree)
+        
+        - if current_user.is? :ADMIN
+
+          %td{:align => "center"}
+            = link_to 'Supprimer', decision_tree, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'arbre de décision ainsi que toutes ses questions ?" },:class => 'delete_decision_tree'

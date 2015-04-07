@@ -31,7 +31,15 @@ class UsersController < ApplicationController
       format.js   { render :layout => false }
     end
   end
-
+  def destroy
+    @user = User.find(params[:id])
+      if @user.destroy
+        flash[:notice] = "L'utilisateur a bien été supprimé."
+      else
+        flash[:alert] = "L'utilisateur n'a pas été supprimé."
+      end
+      redirect_to manage_users_path
+  end
   def update
     @user = User.find(params[:id])
 		@titre = "Modification"

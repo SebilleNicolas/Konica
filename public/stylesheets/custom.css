@@ -153,7 +153,8 @@ width: 646px ;
 margin-left: 160px;
 }
 body {
-  background: #cff;
+  /*background: #cff;*/
+  background: rgba(45, 115, 174, 0.42);
  /*background: #ADD8E6;*/
   /*background: white;*/
     /*background-image:url(../images/gsti.png);*/

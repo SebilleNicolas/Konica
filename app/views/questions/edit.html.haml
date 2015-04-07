@@ -1,0 +1,6 @@
+%h1 Modifier la question 
+%h2=@question.title_question
+
+= simple_form_for [@decision_tree, @question],data: { confirm: "Etes vous sur de vouloir modifier la question ?" }, method: :patch do |f|
+	= f.input :title_question , value: @question.title_question, :input_html => { :size => 40}
+	= f.button :submit, class: "btn btn-primary", :value => 'Valider la modification'

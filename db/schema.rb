@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20150225083407) do
 
   create_table "questions", force: true do |t|
     t.string   "title_question"
-    t.integer  "Id_route_yes"
-    t.integer  "Id_route_no"
+    t.integer  "id_route_yes"
+    t.integer  "id_route_no"
     t.integer  "decision_tree_id"
     t.datetime "created_at"
     t.datetime "updated_at"

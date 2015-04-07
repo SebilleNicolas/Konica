@@ -12,7 +12,7 @@
 - if @search.blank? && @return_value == true
   / - puts @search.to_yaml
   %p Le consommable est déjà ajouté dans le système d'impression.
--  if @search.blank? == false
+-  if !@search.blank?
   %table{:align => "center", :style => "width: 100%; border:none;"}
     %thead
       %tr

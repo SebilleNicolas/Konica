@@ -1,7 +1,7 @@
 SampleApp::Application.routes.draw do
  
 
-  get 'releves_compteurs/new'
+  
 
   devise_for :users , :controllers => { :registrations => "registrations",:users => "users",:sessions => "sessions"}#, :passwords => "passwords" }
   resources :printers_consommables
@@ -22,7 +22,12 @@ SampleApp::Application.routes.draw do
     collection do
       get :add_title_first_question_decision_tree
     end
-      resources :questions
+      resources :questions do
+        collection do
+          get :ajax_titi
+        end
+      end
+
     # resources :questions do
     #   member do
     #   end

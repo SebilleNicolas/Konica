@@ -1,0 +1,6 @@
+%h1 Modifier l'arbre de décision
+%h2=@decision_tree.title_decision_tree
+
+= simple_form_for [@decision_tree],data: { confirm: "Etes vous sur de vouloir modifier l'arbre de décision'?" }, method: :patch do |f|
+	= f.input :title_decision_tree , value: @decision_tree.title_decision_tree, :input_html => { :size => 100}
+	= f.button :submit, class: "btn btn-primary", :value => 'Valider la modification'
