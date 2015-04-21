@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150225083407) do
     t.integer  "decision_tree_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "number_question",  limit: 60
   end
 
   create_table "releve_compteurs", force: true do |t|

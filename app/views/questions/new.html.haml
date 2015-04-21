@@ -3,11 +3,18 @@
   .row
     .col-sm-10
       %h2= @decision_tree.title_decision_tree
+
       / = @decision_tree.title_decision_trees
     - if current_user.is? :ADMIN
       .col-sm-1
         = button_to 'modifier le nom arbre décision',edit_decision_tree_path(@decision_tree), class: "btn btn btn-primary", :method => :get
+
+    %br
+    Temps écoulé : 
+    %input#Compteur.modification{:name => "TempsAction", :style => "width:95px;", :type => "text", :value => "00 : 00 : 00",disabled: true}
 / = @decision_tree.id
+
+
 
 //-------------------------------------------------- PARTIE ADMIN --------------------------------------------------
 - if current_user.is? :ADMIN
@@ -21,17 +28,20 @@
         
         - if !@question_first.nil?
           = label_tag "Titre Question :" 
-          - puts @question_first.title_question
-          - puts '***************************************************'
+          / - puts @question_first.title_question
+          / - puts '***************************************************'
           = @question_first.title_question
-
+          %br
+          = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_first.id)
           - cpt = 0 
           - @question_next_yes = @question_first
           - @question_next_no = @question_first
           - @margin = 10
 
           - while @question_next_yes.id_route_yes?
+
             - if @question_next_yes.title_question != @question_first.title_question
+              
               %br
               %span{style: "margin-left: "+@margin.to_s+"px;"}
                 = label_tag "YES :" 
@@ -42,10 +52,15 @@
                   - if !@question_next_yes.id.nil?
                     %br
                     %span{style: "margin-left: "+@margin.to_s+"px;"}
+                      - if !@question_next_yes.id_route_no?
+                        = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_yes.id)
+                        |
                       = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_yes.id)
+            - if @question_next_yes.title_question != @question_first.title_question
+              - cpt = cpt + 1
             - @question_next_yes = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_yes.id_route_yes
             - @margin = @margin + 40
-            - cpt = cpt + 1
+
           %br
           %span{style: "margin-left: "+@margin.to_s+"px;"}
             = label_tag "YES :" 
@@ -56,8 +71,9 @@
               - if !@question_next_yes.id.nil?
                 %br
                 %span{style: "margin-left: "+@margin.to_s+"px;"}
-                  = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_yes.id)
-                  |
+                  - if !@question_next_yes.id_route_no?
+                    = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_yes.id)
+                    |
                   = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_yes.id)
           - @question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id_route_yes: @question_next_yes.id
           - @question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_no
@@ -72,13 +88,62 @@
               - if !@question_next_no.id.nil?
                 %br
                 %span{style: "margin-left: "+@margin.to_s+"px;"}
-                  = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_no.id)
-                  |
+                  - if !@question_next_no.id_route_no?
+                    = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_no.id)
+                    |
                   = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_no.id)
-          - @margin = @margin - 40
+          / - @margin = @margin - 40
+          - puts "777777777777777777777777777777777777777777777777777777777777777777777"
+          - puts  @question_next_no.to_yaml
+
+          - while @question_next_no.id_route_no?
+
+            - @margin = @margin + 40
+            - puts "QUESTION AVANT : "+ @question_next_no.to_yaml
+            - @question_next_yes = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_yes
+            -  @question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_no
+
+            - puts " QUESTION YES : " + @question_next_yes.to_yaml
+            - puts " QUESTION NO : " + @question_next_no.to_yaml
+            %br
+            %span{style: "margin-left: "+@margin.to_s+"px;"}
+              = label_tag "YES :" 
+              - if @question.id == @question_next_yes.id
+                %b= @question_next_yes.title_question
+              - else
+                = @question_next_yes.title_question
+                - if !@question_next_yes.id.nil?
+                  %br
+                  %span{style: "margin-left: "+@margin.to_s+"px;"}
+                    - if !@question_next_yes.id_route_no?
+                      = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_yes.id)
+                      |
+                    = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_yes.id)
+            - cpt = cpt - 1
+            
+            %br
+            %span{style: "margin-left: "+@margin.to_s+"px;"}
+              = label_tag "NO :" 
+              - if @question.id == @question_next_no.id
+                %b= @question_next_no.title_question
+              - else
+                = @question_next_no.title_question
+                - if !@question_next_no.id.nil?
+                  %br
+                  %span{style: "margin-left: "+@margin.to_s+"px;"}
+                    - if !@question_next_no.id_route_no?
+                      = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_no.id)
+                      |
+                    = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_no.id)
+            - cpt = cpt - 1
+            - @margin = @margin + 40
+
+
+          / - cpt = cpt + 1
           - cpt2 = 0
-          
-          - while cpt > 1
+          - puts '************************************ CPT : ' +cpt.to_s
+          - @margin = @margin - 40
+          - while cpt > 0
             - puts "Compteur : "+ cpt.to_s
             - puts "Avant remonter "
             - puts @question_next_no.to_yaml
@@ -91,7 +156,9 @@
             - puts "fill question no"
             - @question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_no
             - puts @question_next_no.to_yaml
-            
+           
+
+
             %br
             %span{style: "margin-left: "+@margin.to_s+"px;"}
               = label_tag "NO :" 
@@ -102,9 +169,57 @@
                 - if !@question_next_no.id.nil?
                   %br
                   %span{style: "margin-left: "+@margin.to_s+"px;"}
+                    - if !@question_next_no.id_route_no?
+                      = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_no.id)
+                      |
                     = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_no.id)
             - cpt = cpt - 1
             - @margin = @margin - 40
+
+            - while @question_next_no.id_route_no?
+
+              - @margin = @margin + 80
+              - puts "QUESTION AVANT : "+ @question_next_no.to_yaml
+              - @question_next_yes = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_yes
+              -  @question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_no
+
+              - puts " QUESTION YES : " + @question_next_yes.to_yaml
+              - puts " QUESTION NO : " + @question_next_no.to_yaml
+              %br
+              %span{style: "margin-left: "+@margin.to_s+"px;"}
+                = label_tag "YES :" 
+                - if @question.id == @question_next_yes.id
+                  %b= @question_next_yes.title_question
+                - else
+                  = @question_next_yes.title_question
+                  - if !@question_next_yes.id.nil?
+                    %br
+                    %span{style: "margin-left: "+@margin.to_s+"px;"}
+                      - if !@question_next_yes.id_route_no?
+                        = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_yes.id)
+                        |
+                      = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_yes.id)
+              - cpt = cpt - 1
+              
+              %br
+              %span{style: "margin-left: "+@margin.to_s+"px;"}
+                = label_tag "NO :" 
+                - if @question.id == @question_next_no.id
+                  %b= @question_next_no.title_question
+                - else
+                  = @question_next_no.title_question
+                  - if !@question_next_no.id.nil?
+                    %br
+                    %span{style: "margin-left: "+@margin.to_s+"px;"}
+                      - if !@question_next_no.id_route_no?
+                        = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@question_next_no.id)
+                        |
+                      = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_next_no.id)
+              - cpt = cpt - 1
+              - @margin = @margin + 40
+
+
+          
         / = @y.title_question if !(@y.nil?)
         / %br
         / - if !(@y.nil? )
@@ -159,8 +274,10 @@
     
     = button_tag "YES", class: "btn btn-primary", value: @question_first.id_route_yes, id: @question_next_yes.id, :onclick => "titi(#{@decision_tree.id},#{@question_next_yes.id},'yes',0,10)"
     %div{id: "YESS0"}
-    %br
+    
     = button_tag "NON", class: "btn btn-primary", value: @question_next_no.id_route_yes, id: @question_next_no.id_route_no, :onclick => "titi(#{@decision_tree.id},#{@question_next_no.id},'no',0,10)"
+
+    %div{id: "NO0"}
 
     / - while @question_next_yes.id_route_yes?
     /   - if @question_next_yes.title_question != @question_first.title_question
@@ -228,4 +345,5 @@
 
 
   
+
 

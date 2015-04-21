@@ -3,6 +3,16 @@
   /*opacity: 0.8;*/
 }
 
+.separation{
+  clear: both;
+  position: absolute;
+  margin-top :10px;
+  margin-left: 250px;
+  height: 20px;
+  width : 2px;
+  background: black;
+  }
+
 input.toto,textarea,span.span_consommable
 {
   display: flex;
@@ -61,11 +71,16 @@ mettre des width et jouer avec sa*/
   pointer-events: none;
 }
 
-path.link {
+/*path.link {
   fill: none;
   stroke: #9ecae1;
   stroke-width: 1.5px;
-}
+}*/
+.link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
+    }
 
 .ui-menu-item
 {
@@ -155,6 +170,8 @@ margin-left: 160px;
 body {
   /*background: #cff;*/
   background: rgba(45, 115, 174, 0.42);
+  /*background: #3e7bb3;*/
+  /*background:#95a5a6;*/
  /*background: #ADD8E6;*/
   /*background: white;*/
     /*background-image:url(../images/gsti.png);*/
