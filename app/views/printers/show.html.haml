@@ -97,7 +97,7 @@
   .tab-content
     / Onglet DESCRIPTION IMPRIMANTE
     #descriptImprimante.tab-pane.fade.in.active{"border-radius" => "10px"}
-      %h2
+      %h3
         %u Description du système d'impression :
       
       #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
@@ -111,7 +111,7 @@
             
             - if @printer.attachments.count > 0
               / ****************** Slide des images : ******************
-              #carousel-example-generic.carousel.slide{:style => "width:280px; float:left;","data-ride" => "carousel", "data-spy" => "scroll"}
+              #carousel-example-generic.carousel.slide{:style => "width:300px; float:left;","data-ride" => "carousel", "data-spy" => "scroll"}
                 / Indicators
                 %ol.carousel-indicators
                   %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
@@ -475,13 +475,13 @@
                 %td.info
                   .col-md-9{:style => "width: 100%"}
                     .form-group
-                      = f.input :code_incidents ,label: false,:input_html => { :size => 40, :maxlength => 20, :required => true }
+                      = f.input :code_incidents ,label: false, :required => true ,:input_html => { :size => 40, :maxlength => 20}
                     / /.col-lg-6
                   / /.row
                 %td{}
                   .col-md-9{:style => "width: 100%"}
                     .form-group
-                      = f.input :intitule_incidents ,label: false, :input_html => { :size => 40, :maxlength => 40, :required => true }
+                      = f.input :intitule_incidents ,label: false, :input_html => { :size => 40, :maxlength => 40 }
                     / /.col-lg-6
                   / /.row
             %table.table.table-bordered
@@ -525,13 +525,13 @@
                   %td
                     .col-md-9{:style => "width: 100%"}
                       .form-group
-                        = f.input :code_consommables, label: false ,:input_html => { :size => 40, :maxlength => 20 }
+                        = f.input :code_consommables, label: false ,required: true,:input_html => { :size => 40, :maxlength => 20 }
                       / /.col-lg-6
                     / /.row
                   %td
                     .col-md-9{:style => "width: 100%"}
                       .form-group
-                        = f.input :designation_consommables, label: false ,:input_html => { :size => 40, :maxlength => 500 }
+                        = f.input :designation_consommables, label: false ,required: true,:input_html => { :size => 40, :maxlength => 500 }
                   %td
                     .col-md-9{:style => "width: 100%"}
                       .form-group
@@ -541,7 +541,7 @@
                     %td
                       .col-md-9{:style => "width: 100%"}
                         .form-group
-                          = f.input :duree_vie_consommables, label: false,:input_html => { :min => "0",   :type => "number", :value => "0"}
+                          = f.input :duree_vie_consommables,required: true, label: false,:input_html => { :min => "0",   :type => "number", :value => "0"}
                           
 
 

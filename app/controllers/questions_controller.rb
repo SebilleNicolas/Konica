@@ -4,6 +4,17 @@ class QuestionsController < ApplicationController
     
   end
 
+  def destroy   
+    @question = Question.find(params[:id])
+    @question.destroy
+
+    respond_to do |format|
+      format.html { redirect_to decision_trees_url }
+      format.json { head :no_content }
+      format.js   { render :layout => false }
+    end
+  end
+
   def ajax_titi
     @decision_tree = DecisionTree.find(params[:decision_tree_id])
     @question_avant = Question.find(params[:question_avant])
@@ -78,10 +89,11 @@ class QuestionsController < ApplicationController
       end
     end
     
-
-    @question_yes = decision_tree.questions.create(:title_question => params[:title_questions_yes])
-    @question_no = decision_tree.questions.create(:title_question => params[:title_questions_no])
-    
+   
+    @question_yes = decision_tree.questions.create(:title_question => params[:title_questions_yes],
+         :question_yes => true)
+    @question_no = decision_tree.questions.create(:title_question => params[:title_questions_no],
+         :question_yes => false)
     @question_yes.save
     @question_no.save
     if params[:question].nil?

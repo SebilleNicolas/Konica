@@ -30,16 +30,16 @@
 - if current_user.is? :ADMIN
   -if @incident.valide_incidents == false
     = button_to "Valider l'incident",update_valide_incident_path, data: { confirm: "Etes vous sur de vouloir valider l'incident ?" }, method: :patch, class: "btn btn-block btn-primary"
-/     = simple_form_for @incident,data: { confirm: "Etes vous sur de vouloir valider l'incident ?" } do |f|
-/       = f.hidden_field :valide_incidents, :value => true
-/       = f.button :submit, class: "btn btn-success btn-lg btn-block", value:"Valider l'incident"
-/     %br
-/   = simple_form_for @incident ,url: delete_incident_path(@incident),data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete do |f|
-/     = f.hidden_field :id, :value => @incident.id
-/     = f.button :submit, class: "btn btn-danger btn-lg btn-block", value:"Supprimer l'incident"
+  /     = simple_form_for @incident,data: { confirm: "Etes vous sur de vouloir valider l'incident ?" } do |f|
+  /       = f.hidden_field :valide_incidents, :value => true
+  /       = f.button :submit, class: "btn btn-success btn-lg btn-block", value:"Valider l'incident"
+  /     %br
+  /   = simple_form_for @incident ,url: delete_incident_path(@incident),data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete do |f|
+  /     = f.hidden_field :id, :value => @incident.id
+  /     = f.button :submit, class: "btn btn-danger btn-lg btn-block", value:"Supprimer l'incident"
 
 
-
+  = button_to "Supprimer l'incident",delete_incident_path, data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete, class: "btn btn-block btn-danger"
 / = link_to "retour en arriere", printer_path(@printer)+ "#incidentTrue" ,class:  "glyphicon glyphicon-arrow-left"
 %br
 %br

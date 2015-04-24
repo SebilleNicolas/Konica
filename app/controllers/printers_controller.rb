@@ -116,13 +116,24 @@ class PrintersController < ApplicationController
 
 	def create
 			@printer = Printer.new(printer_params)
-			@printer.save
-			if @printer.save
-				flash[:notice] = "Le système d'impression a bien été créé."
-				redirect_to @printer
+			@printers=Printer.all
+			@bool = false
+			@printers.each do |printer|
+				if printer.code_printers == @printer.code_printers
+					@bool = true
+				end
+			end
+			if @bool != true
+				if @printer.save
+					flash[:notice] = "Le système d'impression a bien été créé."
+					redirect_to @printer
+				else
+					flash[:alert] = "Le système d'impression n'a pas été créé"
+					redirect_to @printer
+				end
 			else
-				flash[:alert] = "Le système d'impression n'a pas été créé"
-				redirect_to @printer
+				flash[:alert] = "Le système d'impression #{@printer.code_printers} existe déjà."
+				redirect_to new_printer_path
 			end
 	end
 

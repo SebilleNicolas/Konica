@@ -9,6 +9,20 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -687,6 +701,8 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 -- Data for Name: attachments; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY attachments (id, filename, file, type_attachment, printer_id, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -700,6 +716,8 @@ SELECT pg_catalog.setval('attachments_id_seq', 1, false);
 -- Data for Name: consommables; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY consommables (id, code_consommables, designation_consommables, valide_consommables, duree_vie_consommables, replacement_id, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -713,6 +731,8 @@ SELECT pg_catalog.setval('consommables_id_seq', 1, false);
 -- Data for Name: decision_trees; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY decision_trees (id, title_decision_tree, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -726,6 +746,8 @@ SELECT pg_catalog.setval('decision_trees_id_seq', 1, false);
 -- Data for Name: incidents; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY incidents (id, code_incidents, intitule_incidents, description_incidents, solution_incidents, valide_incidents, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -739,12 +761,16 @@ SELECT pg_catalog.setval('incidents_id_seq', 1, false);
 -- Data for Name: printers; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY printers (id, code_printers, primary_key, description_printers, created_at, updated_at) FROM stdin;
+\.
 
 
 --
 -- Data for Name: printers_consommables; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY printers_consommables (id, consommable_id, printer_id, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -765,6 +791,8 @@ SELECT pg_catalog.setval('printers_id_seq', 1, false);
 -- Data for Name: printers_incidents; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY printers_incidents (id, incident_id, printer_id, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -778,6 +806,8 @@ SELECT pg_catalog.setval('printers_incidents_id_seq', 1, false);
 -- Data for Name: questions; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY questions (id, title_question, number_question, id_route_yes, id_route_no, decision_tree_id, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -791,6 +821,8 @@ SELECT pg_catalog.setval('questions_id_seq', 1, false);
 -- Data for Name: releve_compteurs; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY releve_compteurs (id, description_releve_compteurs, valide_releve_compteurs, printer_id, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -804,6 +836,8 @@ SELECT pg_catalog.setval('releve_compteurs_id_seq', 1, false);
 -- Data for Name: replacements; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY replacements (id, name, created_at, updated_at) FROM stdin;
+\.
 
 
 --
@@ -817,28 +851,32 @@ SELECT pg_catalog.setval('replacements_id_seq', 1, false);
 -- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
-INSERT INTO schema_migrations (version) VALUES ('20141023114306');
-INSERT INTO schema_migrations (version) VALUES ('20141023120533');
-INSERT INTO schema_migrations (version) VALUES ('20141023122058');
-INSERT INTO schema_migrations (version) VALUES ('20141023122224');
-INSERT INTO schema_migrations (version) VALUES ('20141023123339');
-INSERT INTO schema_migrations (version) VALUES ('20141023123439');
-INSERT INTO schema_migrations (version) VALUES ('20141023123802');
-INSERT INTO schema_migrations (version) VALUES ('20141023123820');
-INSERT INTO schema_migrations (version) VALUES ('20141023124654');
-INSERT INTO schema_migrations (version) VALUES ('20141104085224');
-INSERT INTO schema_migrations (version) VALUES ('20141104142621');
-INSERT INTO schema_migrations (version) VALUES ('20141106152900');
-INSERT INTO schema_migrations (version) VALUES ('20141107104506');
-INSERT INTO schema_migrations (version) VALUES ('20141204101244');
-INSERT INTO schema_migrations (version) VALUES ('20141215122704');
-INSERT INTO schema_migrations (version) VALUES ('20150225083407');
+COPY schema_migrations (version) FROM stdin;
+20150225083407
+20141023123820
+20141215122704
+20141023123339
+20141204101244
+20141023120533
+20141023123802
+20141023123439
+20141023122058
+20141023122224
+20141023114306
+20141104085224
+20141104142621
+20141107104506
+20141106152900
+20141023124654
+\.
 
 
 --
 -- Data for Name: user_visite_arbre_decisions; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY user_visite_arbre_decisions (id, "compteurVisiteArbreDecision") FROM stdin;
+\.
 
 
 --
@@ -852,6 +890,8 @@ SELECT pg_catalog.setval('user_visite_arbre_decisions_id_seq', 1, false);
 -- Data for Name: user_visite_consommables; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY user_visite_consommables (id, "compteurVisiteConsommables") FROM stdin;
+\.
 
 
 --
@@ -865,6 +905,8 @@ SELECT pg_catalog.setval('user_visite_consommables_id_seq', 1, false);
 -- Data for Name: user_visite_incidents; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY user_visite_incidents (id, "compteurVisiteIncidents") FROM stdin;
+\.
 
 
 --
@@ -878,6 +920,8 @@ SELECT pg_catalog.setval('user_visite_incidents_id_seq', 1, false);
 -- Data for Name: user_visite_releve_compteurs; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY user_visite_releve_compteurs (id, "compteurVisiteReleveCompteurs") FROM stdin;
+\.
 
 
 --
@@ -891,6 +935,8 @@ SELECT pg_catalog.setval('user_visite_releve_compteurs_id_seq', 1, false);
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: nicolas
 --
 
+COPY users (id, email, encrypted_password, reset_password_token, reset_password_sent_at, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, created_at, updated_at, last_name, first_name, login, valide, role) FROM stdin;
+\.
 
 
 --

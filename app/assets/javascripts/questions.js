@@ -1,4 +1,7 @@
+
+function load() {window.location.reload();} 
 $(document).ready(function() {
+  
 // $("#question_yes").css('visibility', 'hidden');
 // $("#question_no").css('visibility', 'hidden');
 // 	var id_yes = document.getElementById('toto').dataset.idyes;
@@ -88,7 +91,7 @@ function titi (ID_descision_tree,ID_question,bool, nbr, margin)
 
 
 
-
+// window.reload();
 
 $seconde=0;
 $minute=0;

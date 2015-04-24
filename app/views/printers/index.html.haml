@@ -21,7 +21,7 @@
         /   = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false , placeholder: "Entrez le code du système d'impression"
         = simple_form_for @printer, url: ajax_printer_printers_path(@printer) do |f|
 
-          = f.input :code_printers, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "code système d'impression", autocomplete: "off"
+          = f.input :code_printers, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "Entrez le code système d'impression", autocomplete: "off"
 
 
         #resultat_printers{:style => "margin-left: 10px;"}
@@ -79,7 +79,7 @@
 
         = simple_form_for @consommable, :html => {:autocomplete => "off"}, url: ajax_consommable_consommables_path(@consommable) do |f|
 
-          = f.input :code_consommables, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "code consommable",  autosave: false
+          = f.input :code_consommables, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "Entrez le code consommable",  autosave: false
 
 
         %h3 Rechercher par :  
@@ -87,6 +87,26 @@
           %option{value: "code_consommables"} Code
           %option{value: "designation_consommables"} Designation
         #resultat_consommables{:style => "margin-left: 10px;"}
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+
+  .panel.panel-default
+    #headingFour.panel-heading{:role => "tab"}
+      %h4.panel-title
+        %a.collapsed{"aria-controls" => "collapseFour", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseFour"}
+          Arbres de décisions
+    #collapseFour.panel-collapse.collapse{"aria-labelledby" => "headingFour", :role => "tabpanel"}
+      .panel-body
+
+        = link_to "Consulter arbres de décisions",decision_trees_path,style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
         %br
         %br
         %br
@@ -213,4 +233,3 @@
 /       %td 3
 /       %td{:colspan => "2"} Larry the Bird
 /       %td @twitter
-= link_to "arbre de décision",decision_trees_path

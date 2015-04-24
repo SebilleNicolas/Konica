@@ -3,6 +3,7 @@ class CreateQuestion < ActiveRecord::Migration
     create_table :questions do |t|
     	t.string :title_question
     	t.string :number_question
+        t.boolean :question_yes
     	t.integer :id_route_yes
     	t.integer :id_route_no
     	t.belongs_to :decision_tree

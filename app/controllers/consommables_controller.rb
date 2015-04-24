@@ -98,18 +98,24 @@ class ConsommablesController < ApplicationController
 		# puts params[:consommable][:printer_id]
 		@printer = Printer.find(params[:consommable][:printer_id])
 		@consommable = @printer.consommables.create(consommable_params)
-		@consommable.save
-		respond_to do |format|
-			if @consommable.save
-				# set_flash_message :notice, :toto
-				# @printer_conso = Printer_conso.new(printer_consos_params)
-				flash[:notice] = "Le consommable a bien été créé."
-				# @printer = Printer.find(@consommable.printer_id)
-				format.html {redirect_to printer_path(@printer)+ "#ajouterConsommable"}
-			else
-				flash[:alert] = "Le consommable n'a pas été créé"
-				format.html {redirect_to @printer}
+		@consommables = Consommable.all
+		@bool = false
+		@consommables.each do |conso|
+			@bool = true if conso.code_consommables == @consommable.code_consommables
+		end
+		if @bool == false
+			respond_to do |format|
+				if @consommable.save
+					flash[:notice] = "Le consommable a bien été créé."
+					format.html {redirect_to printer_path(@printer)+ "#ajouterConsommable"}
+				else
+					flash[:alert] = "Le consommable n'a pas été créé"
+					format.html {redirect_to @printer}
+				end
 			end
+		else
+			flash[:alert] = "Le consommable #{@consommable.code_consommables} existe déjà."
+			redirect_to printer_path(@printer)+ "#ajouterConsommable"
 		end
 	end
 
@@ -210,7 +216,7 @@ class ConsommablesController < ApplicationController
 		@printer = Printer.find_by(id: @printer_id.printer_id)
 		if @consommable.update_attributes(consommable_params)
       flash[:notice] = "Consommable modifié."
-      redirect_to @printer
+      redirect_to printer_path(@printer)+ "#consommableTrue"
     else
     	render 'edit'
     end

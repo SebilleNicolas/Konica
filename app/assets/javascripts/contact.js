@@ -212,16 +212,32 @@ $(function() {
  //            .style("fill", function(d) {return color(d.name)})
  //            .append("title").text(function(d) {return d.name});
 
-var lineFunction = d3.svg.diagonal()
-   .projection(function(d) { return [d.y, d.x] });
 
-var svgContainer = d3.select("body").append("svg")
-                                .attr("width", 1000)
-                                .attr("height", 1000);
-d3.select("body")    .enter()
-    .append("path")
-    .attr("class", "link")
-    .attr("d", lineFunction);
+
+
+
+
+
+
+// var lineFunction = d3.svg.diagonal()
+//    .projection(function(d) { return [d.y, d.x] });
+
+// var svgContainer = d3.select("body").append("svg")
+//                                 .attr("width", 1000)
+//                                 .attr("height", 1000);
+// d3.select("body")    .enter()
+//     .append("path")
+//     .attr("class", "link")
+//     .attr("d", lineFunction);
+
+
+
+
+
+
+
+
+
 
   // d3.selectAll("circle").attr("d", d3.svg.diagonal()
   //                    .source( {"cx":40, "cy":60} )

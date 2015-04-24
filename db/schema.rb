@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20150225083407) do
   enable_extension "plpgsql"
 
   create_table "attachments", force: true do |t|
+    t.string   "filename"
     t.string   "file"
     t.string   "type_attachment"
     t.integer  "printer_id"
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(version: 20150225083407) do
 
   create_table "printers", force: true do |t|
     t.string   "code_printers"
+    t.string   "primary_key"
     t.text     "description_printers"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -73,12 +75,13 @@ ActiveRecord::Schema.define(version: 20150225083407) do
 
   create_table "questions", force: true do |t|
     t.string   "title_question"
+    t.string   "number_question"
+    t.boolean  "question_yes"
     t.integer  "id_route_yes"
     t.integer  "id_route_no"
     t.integer  "decision_tree_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "number_question",  limit: 60
   end
 
   create_table "releve_compteurs", force: true do |t|

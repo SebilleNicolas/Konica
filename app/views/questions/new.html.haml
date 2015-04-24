@@ -10,8 +10,9 @@
         = button_to 'modifier le nom arbre décision',edit_decision_tree_path(@decision_tree), class: "btn btn btn-primary", :method => :get
 
     %br
+    %br
     Temps écoulé : 
-    %input#Compteur.modification{:name => "TempsAction", :style => "width:95px;", :type => "text", :value => "00 : 00 : 00",disabled: true}
+    %input#Compteur.modification{:name => "TempsAction",:onload => "load()", :style => "width:95px;", :type => "text", :value => "00 : 00 : 00",disabled: true}
 / = @decision_tree.id
 
 
@@ -176,10 +177,11 @@
             - cpt = cpt - 1
             - @margin = @margin - 40
 
-            - while @question_next_no.id_route_no?
+            - while @question_next_no.id_route_no? || @question_next_yes.id_route_no?
 
               - @margin = @margin + 80
               - puts "QUESTION AVANT : "+ @question_next_no.to_yaml
+              - puts "QUESTION AVANT 22222: "+ @question_next_yes.to_yaml
               - @question_next_yes = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_yes
               -  @question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id: @question_next_no.id_route_no
 
@@ -241,10 +243,12 @@
             %br
             = label_tag "YES :"
             %br
+            = hidden_field_tag :question_yes, :value => true
             = text_field_tag  :title_questions_yes
             %br
             = label_tag "NO :"
             %br
+            = hidden_field_tag :question_no, :value => false
             = text_field_tag  :title_questions_no
             %br
             = submit_tag "Valider" , class: "btn btn btn-primary" 

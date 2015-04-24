@@ -46,7 +46,7 @@ class IncidentsController < ApplicationController
 	end
 	def create
 		@printer = Printer.find(params[:incident][:printer_id])		
-			@incident = @printer.incidents.create(incident_params)
+		@incident = @printer.incidents.create(incident_params)
 		if	params[:incident][:code_incidents].present? 
 			if @incident.save
 				flash[:notice] = "L'incident a bien été créé."

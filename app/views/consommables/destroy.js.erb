@@ -1,11 +1,11 @@
 $('.delete_printer_consommable').bind('ajax:success', function() {  
-	alert("Le consommable a bien été retiré de ce système d'impression.");
+	// alert("Le consommable a bien été retiré de ce système d'impression.");
   $(this).closest('tr').fadeOut();
 });  
 
 //Delete consommable /consommables
 $('.delete_consommable').bind('ajax:success', function() {  
-	alert('Le consommable a bien été supprimé.');
+	// alert('Le consommable a bien été supprimé.');
   // $(this).closest('tr').fadeOut();
   window.location.reload();
 });  
