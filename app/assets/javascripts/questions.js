@@ -47,6 +47,7 @@ function titi (ID_descision_tree,ID_question,bool, nbr, margin)
       	var nbr_avant = nbr; 
         // alert("avant : "+nbr);
       	nbr++;
+        bool_questions_end = false;
         // alert("apres : "+nbr);
       	// alert(bool);
         if ( document.getElementById('YESS'+nbr.toString()) ) { nbr++; }
@@ -54,7 +55,13 @@ function titi (ID_descision_tree,ID_question,bool, nbr, margin)
       	margin = margin + 40;	
       	var id_question_next = "";
       	// alert("id route yes : " + data["question"]["id_route_yes"] + "nom question : "+ data["question"]["title_question"]);
-      	var string = '<span style="margin-left: '+margin.toString()+'px;"></span> <b> '+data["question"]["title_question"].toString()+'</b> </br>';
+        if  (data["question"]["id_route_yes"] == null)
+          {bool_questions_end = true;}
+      	var string = '<span style="margin-left: '+margin.toString()+'px;"></span> <b> '+data["question"]["title_question"].toString() + '</b>';
+        if(bool_questions_end == true){
+          string = string + '<span class="label label-info" style="margin-left: 10px;">FIN</span>';
+        }
+        string = string + ' </br>';
 				if (data["question"]["id_route_yes"] != null){
 					if(bool == "yes"){id_question_next = data["question_avant"]["id_route_yes"].toString()}
 					if(bool == "no"){id_question_next = data["question_avant"]["id_route_no"].toString()}
@@ -81,7 +88,7 @@ function titi (ID_descision_tree,ID_question,bool, nbr, margin)
         if(bool=="no"){        $("#NO"+nbr_avant).html(string);   $("#YESS"+nbr_avant).html("");}
       	// alert(data["question_avant"]["title_question"]);
       	// alert(data["id_route_yes"]);
-      	// alert(data["id_route_no"]);
+      	// alert(data);
       }
 		});
 		}

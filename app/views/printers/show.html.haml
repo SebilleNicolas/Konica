@@ -12,7 +12,8 @@
     - else
       %b= @printer.code_printers 
   .col-xs-1{style: "margin-top: 15px;"} 
-    = button_to "Supprimer", @printer, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le système d'impression et tous ces composants ?" }, class: "btn btn btn-danger"
+    - if current_user.is? :ADMIN
+      = button_to "Supprimer", @printer, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le système d'impression et tous ces composants ?" }, class: "btn btn btn-danger"
   .col-xs-2
     %h3{style: "text-align:center;"}
       NbIncident  :
@@ -156,7 +157,7 @@
                 %table.table-bordered{:style => "margin-left: inherit;"}
                   %tr
                     %td
-                      = f.cktext_area :description_printers , :ckeditor => {:height => '250', :width => '800'},:spellcheck => false, :required => true , :value => @printer.description_printers
+                      = f.cktext_area :description_printers , :ckeditor => {:height => '250', :width => '780'},:spellcheck => false, :required => true , :value => @printer.description_printers
                   %tr
                     %td
                       = f.hidden_field :nature, :value => "description"
@@ -531,7 +532,7 @@
                   %td
                     .col-md-9{:style => "width: 100%"}
                       .form-group
-                        = f.input :designation_consommables, label: false ,required: true,:input_html => { :size => 40, :maxlength => 500 }
+                        = f.input :designation_consommables, label: false ,required: true,:input_html => { :size => 40, :maxlength => 254 }
                   %td
                     .col-md-9{:style => "width: 100%"}
                       .form-group

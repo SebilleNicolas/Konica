@@ -4,6 +4,27 @@ class QuestionsController < ApplicationController
     
   end
 
+  def delete
+    @question = Question.find(params[:id])
+    if @question.question_yes?
+      @question_avant = Question.find_by id_route_yes: @question.id
+      @question_2 = Question.find_by id: @question_avant.id_route_no
+    else
+      @question_avant = Question.find_by id_route_no: @question.id
+      @question_2 = Question.find_by id: @question_avant.id_route_yes
+    end
+
+    @question_avant.update_attributes(:id_route_yes => "", :id_route_no => "")
+   
+
+    if @question_2.destroy && @question.destroy
+      flash[:notice] = "La question a bien été supprimé."
+    else
+      flash[:alert] = "La question n'a pas été supprimé."
+    end
+    redirect_to new_decision_tree_question_path(@question_avant.decision_tree_id)
+  end
+
   def destroy   
     @question = Question.find(params[:id])
     @question.destroy
@@ -88,8 +109,6 @@ class QuestionsController < ApplicationController
         @question.save
       end
     end
-    
-   
     @question_yes = decision_tree.questions.create(:title_question => params[:title_questions_yes],
          :question_yes => true)
     @question_no = decision_tree.questions.create(:title_question => params[:title_questions_no],

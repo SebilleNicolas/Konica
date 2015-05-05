@@ -37,7 +37,7 @@
         %br
         %span.span_consommable
           %b Designation Consommable
-        = f.text_area :designation_consommables, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @consommable.designation_consommables},:cols => 35, :rows => 4, spellcheck: false, :class => 'toto',disabled: @disabled
+        = f.text_area :designation_consommables, label: false ,:input_html => { :size => 35, :maxlength => 254 , value: @consommable.designation_consommables},:cols => 35, :rows => 4, spellcheck: false, :class => 'toto',disabled: @disabled
 
         %span.span_consommable
           %b Remplacement Consommable

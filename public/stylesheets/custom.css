@@ -26,6 +26,12 @@ select.a
   margin-left: 0;
 
 }
+
+.test123{
+  color: blue;
+}
+
+
 /*select
 {
   vertical-align: top;
@@ -195,13 +201,13 @@ header img {
 
 section {
   margin-top: 1em;
-  font-size: 120%;
+  font-size: 100%;
   padding: 20px;
   background: #fff;
 }
 
 section h1 {
-  font-size: 200%;
+  font-size: 180%;
 }
 
 /* Liens */
@@ -266,21 +272,21 @@ a.signup_button {
   width: 190px;
   color: #fff;
   background: #006400;
-  font-size: 150%;
+  font-size: 120%;
   font-weight: bold;
   padding: 20px;
 }
 .table.table-bordered
 {
+  width: 100%;
   border-color: #c8c8c8;
-   border-style: solid;
-
- border-width:2px; 
+  border-style: solid;
+  border-width:2px; 
   -moz-box-shadow: 2px 2px 4px 0px #656565;
--webkit-box-shadow: 2px 2px 4px 0px #656565;
--o-box-shadow: 2px 2px 4px 0px #656565;
-box-shadow: 2px 2px 4px 0px #656565;
-filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
+  -webkit-box-shadow: 2px 2px 4px 0px #656565;
+  -o-box-shadow: 2px 2px 4px 0px #656565;
+  box-shadow: 2px 2px 4px 0px #656565;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
 }
 table tr:nth-child(2n+1)
 {
@@ -473,7 +479,7 @@ height: 39px;
   border:0px solid #000000;
   text-align:center;
   border-width:0px 0px 1px 1px;
-  font-size:14px;
+  font-size:15px;
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight:bold;
   color:#333333;

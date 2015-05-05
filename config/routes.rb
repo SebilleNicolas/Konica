@@ -23,8 +23,12 @@ SampleApp::Application.routes.draw do
       get :add_title_first_question_decision_tree
     end
       resources :questions do
+        member do
+          get :delete
+        end
         collection do
           get :ajax_titi
+
         end
       end
 

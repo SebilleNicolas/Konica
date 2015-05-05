@@ -8,7 +8,8 @@
   - @search_url = params[:consommable][:code_consommables]
   Le code consommable  
   %b= @search_url
-  n'est pas complet ou n'existe pas.
+  n'est pas complet ou n'existe pas. Pour l'ajouter, cliquez 
+  = link_to 'ici.', printer_path(params[:consommable][:printer_id])+"#ajouterConsommable"
 - if @search.blank? && @return_value == true
   / - puts @search.to_yaml
   %p Le consommable est déjà ajouté dans le système d'impression.
