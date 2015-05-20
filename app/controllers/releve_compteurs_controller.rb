@@ -18,6 +18,8 @@ class ReleveCompteursController < ApplicationController
   	@releve_compteur = ReleveCompteur.create(releve_compteur_params)
   	@printer = Printer.find(params[:releve_compteur][:printer_id])
 		if @releve_compteur.save
+      @user_add_releve_compteur = UserAddReleveCompteur.create(user_id: current_user.id, releve_compteur_id: @releve_compteur.id, datetime: Time.now.in_time_zone.in_time_zone)
+      @user_add_releve_compteur.save
 			flash[:notice] = "Le Relevé Compteur a bien été créé."
 		else
 			flash[:alert] = "Le Relevé Compteur n'a pas été créé."
@@ -55,6 +57,8 @@ class ReleveCompteursController < ApplicationController
     @releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
     if @releve_compteur.update(releve_compteur_params)
+      @user_update_releve_compteur = UserUpdateReleveCompteur.create(user_id: current_user.id , releve_compteur_id: @releve_compteur.id, datetime: Time.now.in_time_zone.in_time_zone)
+      @user_update_releve_compteur.save
       flash[:notice] = "Le relevé compteur a été modifié."
       redirect_to @printer	      
     else
@@ -65,6 +69,8 @@ class ReleveCompteursController < ApplicationController
     @releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
     if @releve_compteur.update(valide_releve_compteur_params)
+      @admin_valid_releve_compteur = AdminValidReleveCompteur.create(user_id: current_user.id , releve_compteur_id: @releve_compteur.id, datetime: Time.now.in_time_zone.in_time_zone)
+      @admin_valid_releve_compteur.save
       flash[:notice] = "Le relevé compteur a été validé."
       redirect_to @printer	      
     else
@@ -74,6 +80,8 @@ class ReleveCompteursController < ApplicationController
   def update_valide
     @releve_compteur = ReleveCompteur.find(params[:id])
     @releve_compteur.update(:valide_releve_compteurs => 'true')
+    @admin_valid_releve_compteur = AdminValidReleveCompteur.create(user_id: current_user.id , releve_compteur_id: @releve_compteur.id, datetime: Time.now.in_time_zone.in_time_zone)
+    @admin_valid_releve_compteur.save
     respond_to do |format|
       format.html { redirect_to releve_compteurs_path }
       format.json { head :no_content }

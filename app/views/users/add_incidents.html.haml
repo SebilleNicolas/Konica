@@ -1,0 +1,17 @@
+%H1 
+  Les Incidents ajouter par 
+  = @user.last_name 
+  = @user.first_name
+
+%table.table-bordered{:style => "width: 940px; text-align: center; "}
+  %thead
+    %th{:style => "text-align: center;"} Date
+    %th{:style => "text-align: center;"} ID incident
+    %th{:style => "text-align: center;"} Nom incident
+  %tbody
+    - @user_add_incidents.each do |i| 
+      %tr
+        %td= i.datetimestring.to_s
+        %td= i.incident_id
+        %td 
+          toto

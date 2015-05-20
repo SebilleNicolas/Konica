@@ -12,9 +12,7 @@
         / %b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
       - else
         = @@question_next_yes.title_question
-        - if !@@question_next_yes.id_route_no?
-          |
-          = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_yes.id), style: "color:red;"
+        
         - @@arr << @@question_next_yes.id
         - if !@@question_next_yes.id.nil?
           %br
@@ -24,6 +22,8 @@
               |
             = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@@question_next_yes.id)
             - if !@@question_next_yes.id_route_no?
+              |
+              = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_yes.id), style: "color:red;"
               %span.label.label-info{style: "margin-left: 10px;"} FIN
         -  @@question_next_yes = Question.find_by id_route_yes: @@question_next_yes.id
         - @@margin = @@margin - 40
@@ -41,9 +41,7 @@
           %u= @@question_next_yes.title_question
       - else
         = @@question_next_yes.title_question
-        - if !@@question_next_yes.id_route_no?
-          |
-          = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_yes.id), style: "color:red;"
+       
         - @@arr << @@question_next_yes.id
         - puts "***********************************"
         - puts @@arr.to_yaml
@@ -55,6 +53,8 @@
               |
             = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@@question_next_yes.id)
             - if !@@question_next_yes.id_route_no?
+              |
+              = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_yes.id), style: "color:red;"
               %span.label.label-info{style: "margin-left: 10px;"} FIN
         - @@question_next_yes = Question.find_by id_route_no: @@question_next_yes.id
         - puts "***********************************"

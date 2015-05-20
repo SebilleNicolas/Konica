@@ -109,18 +109,31 @@
               %b Caractéristique et image du système d'impression
         #collapseOne.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
           .panel-body
-            
             - if @printer.attachments.count > 0
               / ****************** Slide des images : ******************
               #carousel-example-generic.carousel.slide{:style => "width:300px; float:left;","data-ride" => "carousel", "data-spy" => "scroll"}
                 / Indicators
                 %ol.carousel-indicators
                   %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
-                  - for i in 1..@attachments.count - 1
-                    - if File.extname(@attachments[i].file.to_s) != ".pdf"
-                      %li{"data-slide-to" => "i", "data-target" => "#carousel-example-generic"}
-                    / %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
-                    / %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
+                  - if File.extname(@attachments[0].file.to_s) != ".pdf"
+                      
+                    - for i in 1..@attachments.count - 1
+                      - if File.extname(@attachments[i].file.to_s) != ".pdf"
+                        - puts "8888888888888888888888888888888888888888888888888888888"
+                        - puts "*******************************************************"
+                        - puts "*******************************************************"
+                        - puts File.extname(@attachments[i].file.to_s) != ".pdf"
+                        - puts "*******************************************************"
+                        - puts "*******************************************************"
+                        - puts File.extname(@attachments[i].file.to_s)
+                        - puts "*******************************************************"
+                        - puts "*******************************************************"
+                        - puts @attachments.count 
+                        - puts "*******************************************************"
+                        - puts "*******************************************************"
+                        %li{"data-slide-to" => "i", "data-target" => "#carousel-example-generic"}
+                      / %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+                      / %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
                   
                 / Wrapper for slides
                 .carousel-inner{:role => "listbox"}
@@ -134,6 +147,10 @@
                       
                         / = image_tag(@attachments[1].file,:style => "margin-left:70px;")
                     - @attachments.each do |a|
+                      - puts File.extname(a.file.to_s)
+                      - puts "///////////////////////////////////" 
+                      - puts @attachments[0].file.to_s
+                      - puts "44444444444444444444444444444"
                       - if a.file != @attachments[0].file && File.extname(a.file.to_s) != ".pdf"
                         .item
                           = image_tag(a.file_url(:thumb),:style => "margin-left:70px;")

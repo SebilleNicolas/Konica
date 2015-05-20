@@ -10,9 +10,7 @@
           %u= @@question_next_no.title_question
       - else
         = @@question_next_no.title_question
-        - if !@@question_next_no.id_route_no?
-          |
-          = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_no.id), style: "color:red;"
+       
         - @@arr << @@question_next_no.id
         - if !@@question_next_no.id.nil?
           %br
@@ -23,6 +21,8 @@
               - @@bool_questions_end = true
             = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@@question_next_no.id)
             - if !@@question_next_no.id_route_no?
+              |
+              = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_no.id), style: "color:red;"
               %span.label.label-info{style: "margin-left: 10px;"} FIN
         -  @@question_next_no = Question.find_by id_route_yes: @@question_next_no.id
         -  @@question_next_no = Question.find_by id: @@question_next_no.id_route_no
@@ -38,9 +38,7 @@
           %u= @@question_next_no.title_question
       - else
         = @@question_next_no.title_question
-        - if !@@question_next_no.id_route_no?
-          |
-          = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_no.id), style: "color:red;"
+        
         - @@arr << @@question_next_no.id
         - if !@@question_next_no.id.nil?
           %br
@@ -50,6 +48,8 @@
               |
             = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@@question_next_no.id)
             - if !@@question_next_no.id_route_no?
+              |
+              = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_no.id), style: "color:red;"
               %span.label.label-info{style: "margin-left: 10px;"} FIN
         -  @@question_next_no = Question.find_by id_route_no: @@question_next_no.id
         -  @@question_next_no = Question.find_by id: @@question_next_no.id_route_yes

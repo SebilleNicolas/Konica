@@ -21,6 +21,9 @@ class AttachmentsController < ApplicationController
 	def create
 		@printer = Printer.find(params[:attachment][:printer_id])
 		@attachment = Attachment.create(attachment_params)
+		puts params[:attachment][:file]
+		puts "****************************************"
+		puts @attachment.to_yaml
 		@attachment.save
 		if @attachment.save
 			flash[:notice] = "La piece jointe a bien été créé."

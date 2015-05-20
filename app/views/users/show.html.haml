@@ -1,37 +1,31 @@
-/ %h2{:align => "center"}
-/   %b
-/     %u Modifier Profil :
-/ = simple_form_for @user,                                                                                                                           |
-/   :url => url_for(:action => 'update', :controller => 'users'),data: { confirm: "Etes vous sur de vouloir modifier ?" },   :method => 'put' do |f| |
-/   = f.error_notification
-/   .form-inputs
-/     %table.navBar{:align => "center", :style => "border:none;"}
-/       %tr
-/         %td
-/           = f.label "Email : " , required: true
-/         %td= f.input :email, required: true, autofocus: true, label: false
-/       %tr
-/         %td
-/           = f.label "Login : " , required: true
-/         %td
-/           = f.input :login, required: true, label: false
-/       %tr
-/         %td= f.label "Nom : " , required: true
-/         %td
-/           = f.input :last_name, required: true, label: false
-/       %tr
-/         %td= f.label "Prenom : " , required: true
-/         %td= f.input :first_name, required: true, label: false
-/       %tr
-/         %td= f.label "Statut : "
-/         %td
-/           = f.collection_select :role, User::ROLES, :to_s, :humanize
-/   .form-actions{:align => "center"}
-/     = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary "
-/ /
-/   <h3>Cancel my account</h3>
-  
-  
-  
-/   data: { confirm: "Êtes-vous sur de vouloir enregistrer ces modifications ?" },
-/ / = link_to "Back", :back
+%H1
+  Utilisateur : 
+  %b= @user.last_name
+  %b= @user.first_name
+%H3 Incidents
+= link_to 'Incidents ajoutés', add_incidents_user_path
+%span{style: "margin-left:50px;"}= link_to 'Incidents validés', valid_incidents_user_path
+%span{style: "margin-left:50px;"}= link_to 'Incidents modifiés', update_incidents_user_path
+%H3 Consommables
+= link_to 'Consommables ajoutés', add_consommables_user_path
+%span{style: "margin-left:50px;"}= link_to 'Consommables validés', valid_consommables_user_path
+%span{style: "margin-left:50px;"}= link_to 'Consommables modifiés', update_consommables_user_path
+%H3 Releve Compteurs
+= link_to 'Compteurs ajoutés', add_releve_compteurs_user_path
+%span{style: "margin-left:50px;"}= link_to 'Compteurs validés', valid_releve_compteurs_user_path
+%span{style: "margin-left:50px;"}= link_to 'Compteurs modifiés', update_releve_compteurs_user_path
+%H3 Arbre de décisions
+= link_to 'Arbre de décisions ajoutés', add_decision_trees_user_path
+%span{style: "margin-left:50px;"}= link_to 'Arbre de décisions validés', valid_decision_trees_user_path
+%span{style: "margin-left:50px;"}= link_to 'Arbre de décisions modifiés', update_decision_trees_user_path
+
+
+%table.table-bordered{:style => "width: 940px; text-align: center; "}
+  %thead
+    %th{:style => "text-align: center;"} Date
+    %th{:style => "text-align: center;"} ID incident
+    %th{:style => "text-align: center;"} Nom incident
+  %tbody
+    %tr
+      %td qaz
+/ = link_to "Back", :back

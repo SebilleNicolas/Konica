@@ -26,6 +26,8 @@ class IncidentsController < ApplicationController
     @printer = Printer.find(@printer_inci.printer_id)
 
     if @incident.update_attributes(:valide_incidents => true)
+    	@admin_valid_incident = AdminValidIncident.create(user_id: current_user.id , incident_id: @incident.id, datetime: Time.now.in_time_zone )
+    	@admin_valid_incident.save
     	flash[:notice] = "L'incident a bien été validé."
 			redirect_to printer_path(@printer)+ "#incidentTrue"
 		else
@@ -49,6 +51,8 @@ class IncidentsController < ApplicationController
 		@incident = @printer.incidents.create(incident_params)
 		if	params[:incident][:code_incidents].present? 
 			if @incident.save
+				@user_add_incident = UserAddIncident.create(user_id: current_user.id, datetimestring: Time.now.in_time_zone, incident_id: @incident.id, date_add: Time.now.in_time_zone)
+				@user_add_incident.save
 				flash[:notice] = "L'incident a bien été créé."
 				# @printer = Printer.find(@incident.printer_id)
 				redirect_to printer_path(@printer)+ "#ajouterIncident"
@@ -67,6 +71,8 @@ class IncidentsController < ApplicationController
     #   puts "*******************************************************************"
     #    puts "*******************************************************************"
     if @incident.update_attributes(incident_params)
+    	@user_update_incident = UserUpdateIncident.create(user_id: current_user.id , incident_id: @incident.id, datetime: Time.now.in_time_zone)
+      @user_update_incident.save
       flash[:notice] = "Incident modifié."
       redirect_to @incident	      
     else

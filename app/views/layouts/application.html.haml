@@ -4,12 +4,14 @@
     %title= @titre
     = csrf_meta_tag
     / = tinymce_assets
+
     = render 'layouts/stylesheets'
     
   %body{:position => "relative", :style => "height:10px;width:100%;"}
     .container{ :style => "width:100%;"}
       / width:1050px
       = render 'layouts/header'
+      = yield(:toto)
       
       %section.round{:style => "width:100%;"}
         

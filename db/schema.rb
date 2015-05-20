@@ -11,10 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225083407) do
+ActiveRecord::Schema.define(version: 20150519085625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_valid_consommables", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "consommable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "admin_valid_decision_trees", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "decision_tree_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "admin_valid_incidents", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "incident_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "admin_valid_releve_compteurs", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "releve_compteur_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "attachments", force: true do |t|
     t.string   "filename"
@@ -47,6 +79,14 @@ ActiveRecord::Schema.define(version: 20150225083407) do
     t.text     "description_incidents"
     t.text     "solution_incidents"
     t.boolean  "valide_incidents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "posts", force: true do |t|
+    t.string   "name"
+    t.string   "title"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -98,6 +138,71 @@ ActiveRecord::Schema.define(version: 20150225083407) do
     t.datetime "updated_at"
   end
 
+  create_table "user_add_consommables", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "consommable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_add_decision_trees", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "decision_tree_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_add_incidents", force: true do |t|
+    t.datetime "date_add"
+    t.string   "datetimestring"
+    t.integer  "user_id"
+    t.integer  "incident_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_add_releve_compteurs", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "releve_compteur_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_update_consommables", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "consommable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_update_decision_trees", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "decision_tree_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_update_incidents", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "incident_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_update_releve_compteurs", force: true do |t|
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "releve_compteur_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_visite_arbre_decisions", force: true do |t|
     t.integer "compteurVisiteArbreDecision"
   end
@@ -107,7 +212,11 @@ ActiveRecord::Schema.define(version: 20150225083407) do
   end
 
   create_table "user_visite_incidents", force: true do |t|
-    t.integer "compteurVisiteIncidents"
+    t.datetime "datetime"
+    t.integer  "user_id"
+    t.integer  "incident_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_visite_releve_compteurs", force: true do |t|

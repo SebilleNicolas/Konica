@@ -15,6 +15,10 @@ class PrintersController < ApplicationController
 		@printer.attachments.build
 		# @attachment = Attachment.new
 		@titre = "Ajouter une Imprimante"
+		@date = Time.now.in_time_zone
+		@zone = Time.zone
+		puts @date
+		puts @zone
 	end
 	def search
 		@printers=Printer.all
@@ -115,6 +119,7 @@ class PrintersController < ApplicationController
 	end
 
 	def create
+
 			@printer = Printer.new(printer_params)
 			@printers=Printer.all
 			@bool = false
@@ -200,9 +205,9 @@ class PrintersController < ApplicationController
 
 
 		@replacements = Replacement.all
-		puts '******************************************************************'
-		puts @replacements.to_yaml
-		puts '******************************************************************'
+		# puts '******************************************************************'
+		# puts @replacements.to_yaml
+		# puts '******************************************************************'
 	end		
 	def destroy
  		@printer = Printer.find(params[:id])

@@ -3,7 +3,7 @@ class CreatePrinters < ActiveRecord::Migration
     create_table :printers do |t|
 	  	t.string 	 :code_printers, :primary_key
     	t.text 	 :description_printers
-     t.timestamps		
+      t.timestamps		
     end
   end
 end

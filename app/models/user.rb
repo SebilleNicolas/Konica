@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
     self.role == requested_role.to_s
   end
 
-  def deconnexion
-  end
+ 
 
 end

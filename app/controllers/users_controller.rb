@@ -7,8 +7,18 @@ class UsersController < ApplicationController
   def manage  
     @users = User.all
     @users_non_valide = @users.where("valide = ?", false)
-    @users_valide = @users.where("valide = ?", true)
+    @users_valide = @users.where("valide = ?", true).order(last_name: :asc)
     @titre = "Gérer Utilisateur"
+  end
+  def add_incidents
+    @user = User.find(params[:id])
+    # @user_add_incidents = UserAddIncident.find_by_sql("select * from user_add_incidents where user_id = #{@user.id} order by datetime asc LIMIT 10")
+    @all_user_add_incidents = UserAddIncident.all
+    @user_add_incidents = @all_user_add_incidents.where("user_id = ?", @user.id).order(date_add: :asc)
+    puts @user_add_incidents.to_yaml  
+    @dat = UserAddIncident.find_by_sql("select id,date_add from user_add_incidents")
+    puts 'DATETIME'
+    puts @dat.to_yaml
   end
 
   def update_valide

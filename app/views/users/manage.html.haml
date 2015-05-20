@@ -75,11 +75,11 @@
           - @disabled = true
         - else 
           - @disabled = false
-        %td= user.id
-        %td= user.email
-        %td= user.login
-        %td= user.last_name
-        %td= user.first_name
+        %td= link_to user.id , user_path(user)
+        %td= link_to user.email , user_path(user)
+        %td= link_to user.login , user_path(user)
+        %td= link_to user.last_name , user_path(user)
+        %td= link_to user.first_name , user_path(user)
         = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
           %td
             = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role

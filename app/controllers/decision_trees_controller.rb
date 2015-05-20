@@ -12,9 +12,11 @@ class DecisionTreesController < ApplicationController
 
   def create
     @decision_tree = DecisionTree.create(decision_tree_params)
-    @decision_tree.to_yaml
+    # @decision_tree.to_yaml
     # puts '********************************************************'
-    # @decision_tree.save
+    @decision_tree.save
+    @user_add_decision_tree = UserAddDecisionTree.create(user_id: current_user.id, decision_tree_id: @decision_tree.id, datetime: Time.now.in_time_zone.in_time_zone)
+    @user_add_decision_tree.save
     # @questions = Questions.new
     redirect_to new_decision_tree_question_path(@decision_tree)
   end
@@ -59,6 +61,8 @@ class DecisionTreesController < ApplicationController
   def update
     @decision_tree = DecisionTree.find(params[:id])
     if @decision_tree.update_attributes(decision_tree_params)
+      @user_update_decision_tree = UserUpdateDecisionTree.create(user_id: current_user.id , decision_tree_id: @decision_tree.id, datetime: Time.now.in_time_zone.in_time_zone)
+      @user_update_decision_tree.save
       # puts params
       # puts "*****************************************************"
       flash[:notice] = "L'arbre de décision a bien été modifié."

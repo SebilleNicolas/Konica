@@ -97,15 +97,18 @@ class ConsommablesController < ApplicationController
 	def create
 		# puts params[:consommable][:printer_id]
 		@printer = Printer.find(params[:consommable][:printer_id])
-		@consommable = @printer.consommables.create(consommable_params)
+		@code_conso = params[:consommable][:code_consommables]
 		@consommables = Consommable.all
 		@bool = false
 		@consommables.each do |conso|
-			@bool = true if conso.code_consommables == @consommable.code_consommables
+			@bool = true if conso.code_consommables == @code_conso
 		end
 		if @bool == false
+			@consommable = @printer.consommables.create(consommable_params)
 			respond_to do |format|
 				if @consommable.save
+					@user_add_consommable = UserAddConsommable.create(user_id: current_user.id, consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+					@user_add_consommable.save
 					flash[:notice] = "Le consommable a bien été créé."
 					format.html {redirect_to printer_path(@printer)+ "#ajouterConsommable"}
 				else
@@ -114,7 +117,7 @@ class ConsommablesController < ApplicationController
 				end
 			end
 		else
-			flash[:alert] = "Le consommable #{@consommable.code_consommables} existe déjà."
+			flash[:alert] = "Le consommable #{@code_conso} existe déjà."
 			redirect_to printer_path(@printer)+ "#ajouterConsommable"
 		end
 	end
@@ -205,7 +208,8 @@ class ConsommablesController < ApplicationController
 	    #   render 'edit'
 	    # end
 	    @consommable.update_attributes(:valide_consommables => true)
-
+    	@admin_valid_consommable = AdminValidConsommable.create(user_id: current_user.id , consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+    	@admin_valid_consommable.save
 	    # render nothing: true
 	end
 
@@ -215,6 +219,8 @@ class ConsommablesController < ApplicationController
 		@printer_id = PrintersConsommable.find_by(consommable_id: params[:id])
 		@printer = Printer.find_by(id: @printer_id.printer_id)
 		if @consommable.update_attributes(consommable_params)
+			@user_update_consommable = UserUpdateConsommable.create(user_id: current_user.id , consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+    	@user_update_consommable.save
       flash[:notice] = "Consommable modifié."
       redirect_to printer_path(@printer)+ "#consommableTrue"
     else
@@ -226,6 +232,8 @@ class ConsommablesController < ApplicationController
 	def update
     @consommable = Consommable.find(params[:id])
     @consommable.update_attributes(:valide_consommables => true)
+  	@admin_valid_consommable = AdminValidConsommable.create(user_id: current_user.id , consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+  	@admin_valid_consommable.save
     respond_to do |format|
       format.html { redirect_to printers_url }
       format.json { head :no_content }

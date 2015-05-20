@@ -1,4 +1,7 @@
 / %h1 Question#NEW
+/ = javascript_include_tag "compteur"
+- content_for :head do
+  = javascript_include_tag 'compteur'
 .container
   .row
     .col-sm-10

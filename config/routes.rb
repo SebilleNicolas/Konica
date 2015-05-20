@@ -116,9 +116,25 @@ SampleApp::Application.routes.draw do
     member do
       patch :update_valide
       patch :update_role
+      get :add_incidents
+      get :add_consommables
+      get :add_releve_compteurs
+      get :add_decision_trees
+
+      get :update_incidents
+      get :update_consommables
+      get :update_releve_compteurs
+      get :update_decision_trees
+
+      get :valid_incidents
+      get :valid_consommables
+      get :valid_releve_compteurs
+      get :valid_decision_trees
+
     end
     collection do
       get :manage
+
     end
   end
  devise_for :sessions do
