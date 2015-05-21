@@ -1,0 +1,24 @@
+%H1 
+  Les Incidents modifiés par 
+  %b= @user.last_name 
+  %b= @user.first_name
+
+%table.table-bordered{:style => "width: 940px; text-align: center; "}
+  %thead
+    %th{:style => "text-align: center;"} Date
+    %th{:style => "text-align: center;"} ID incident
+    %th{:style => "text-align: center;"} Code incident
+    %th{:style => "text-align: center;"} Intitule incident
+  %tbody
+    - @user_update_incidents.each do |i| 
+      - puts i.incident_id
+      - @@incident = Incident.find(i.incident_id)
+      %tr
+        %td
+          = i.date_update
+          = i.hour_update+":"+i.minute_update
+          
+        
+        %td= i.incident_id
+        %td= @@incident.code_incidents
+        %td= @@incident.intitule_incidents

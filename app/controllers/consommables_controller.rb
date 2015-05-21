@@ -95,6 +95,10 @@ class ConsommablesController < ApplicationController
 	end
 	
 	def create
+		@time = Time.now.in_time_zone
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
 		# puts params[:consommable][:printer_id]
 		@printer = Printer.find(params[:consommable][:printer_id])
 		@code_conso = params[:consommable][:code_consommables]
@@ -107,7 +111,8 @@ class ConsommablesController < ApplicationController
 			@consommable = @printer.consommables.create(consommable_params)
 			respond_to do |format|
 				if @consommable.save
-					@user_add_consommable = UserAddConsommable.create(user_id: current_user.id, consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+					@user_add_consommable = UserAddConsommable.create(user_id: current_user.id, consommable_id: @consommable.id,
+					 date_add: @date, hour_add: @hour, minute_add: @minute)
 					@user_add_consommable.save
 					flash[:notice] = "Le consommable a bien été créé."
 					format.html {redirect_to printer_path(@printer)+ "#ajouterConsommable"}
@@ -192,6 +197,10 @@ class ConsommablesController < ApplicationController
 	end
 
 	def update_valide
+		@time = Time.now.in_time_zone
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
 		@consommable = Consommable.find(params[:id])
 		@printer_id = PrintersConsommable.find_by(consommable_id: params[:id])
 		@printer = Printer.find_by(id: @printer_id.printer_id)
@@ -208,18 +217,24 @@ class ConsommablesController < ApplicationController
 	    #   render 'edit'
 	    # end
 	    @consommable.update_attributes(:valide_consommables => true)
-    	@admin_valid_consommable = AdminValidConsommable.create(user_id: current_user.id , consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+    	@admin_valid_consommable = AdminValidConsommable.create(user_id: current_user.id ,
+    	 consommable_id: @consommable.id, date_valid: @date, hour_valid: @hour, minute_valid: @minute)
     	@admin_valid_consommable.save
 	    # render nothing: true
 	end
 
 
 	def update_attributes
+		@time = Time.now.in_time_zone
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
 		@consommable = Consommable.find(params[:id])
 		@printer_id = PrintersConsommable.find_by(consommable_id: params[:id])
 		@printer = Printer.find_by(id: @printer_id.printer_id)
 		if @consommable.update_attributes(consommable_params)
-			@user_update_consommable = UserUpdateConsommable.create(user_id: current_user.id , consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+			@user_update_consommable = UserUpdateConsommable.create(user_id: current_user.id ,
+			 consommable_id: @consommable.id, date_update: @date, hour_update: @hour, minute_update: @minute)
     	@user_update_consommable.save
       flash[:notice] = "Consommable modifié."
       redirect_to printer_path(@printer)+ "#consommableTrue"
@@ -230,9 +245,14 @@ class ConsommablesController < ApplicationController
 
 
 	def update
+		@time = Time.now.in_time_zone
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
     @consommable = Consommable.find(params[:id])
     @consommable.update_attributes(:valide_consommables => true)
-  	@admin_valid_consommable = AdminValidConsommable.create(user_id: current_user.id , consommable_id: @consommable.id, datetime: Time.now.in_time_zone.in_time_zone)
+  	@admin_valid_consommable = AdminValidConsommable.create(user_id: current_user.id ,
+  	 consommable_id: @consommable.id, date_valid: @date, hour_valid: @hour, minute_valid: @minute )
   	@admin_valid_consommable.save
     respond_to do |format|
       format.html { redirect_to printers_url }

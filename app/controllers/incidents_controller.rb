@@ -20,13 +20,18 @@ class IncidentsController < ApplicationController
 		# puts @search.to_yaml
 	end
  	def update_valide
+ 		@time = Time.now.in_time_zone
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
     @incident = Incident.find(params[:id])
     
     @printer_inci = PrintersIncident.find_by(incident_id: params[:id])
     @printer = Printer.find(@printer_inci.printer_id)
 
     if @incident.update_attributes(:valide_incidents => true)
-    	@admin_valid_incident = AdminValidIncident.create(user_id: current_user.id , incident_id: @incident.id, datetime: Time.now.in_time_zone )
+    	@admin_valid_incident = AdminValidIncident.create(user_id: current_user.id ,
+    	 incident_id: @incident.id,date_valid: @date, hour_valid: @hour, minute_valid: @minute)
     	@admin_valid_incident.save
     	flash[:notice] = "L'incident a bien été validé."
 			redirect_to printer_path(@printer)+ "#incidentTrue"
@@ -47,11 +52,23 @@ class IncidentsController < ApplicationController
 		@incident = Incident.new
 	end
 	def create
+		@time = Time.now.in_time_zone
+		# puts "@time"
+		# puts @time
+		@hour = @time.strftime("%H")
+		# puts "@hour"
+		# puts @hour
+		@minute = @time.strftime("%M:%S")
+		# puts" @minute"
+		# puts @minute
+		@date = @time.strftime("%Y-%m-%d")
+		# puts "@date"
+		# puts @date
 		@printer = Printer.find(params[:incident][:printer_id])		
 		@incident = @printer.incidents.create(incident_params)
 		if	params[:incident][:code_incidents].present? 
 			if @incident.save
-				@user_add_incident = UserAddIncident.create(user_id: current_user.id, datetimestring: Time.now.in_time_zone, incident_id: @incident.id, date_add: Time.now.in_time_zone)
+				@user_add_incident = UserAddIncident.create(user_id: current_user.id, incident_id: @incident.id,date_add: @date, hour_add: @hour, minute_add: @minute)
 				@user_add_incident.save
 				flash[:notice] = "L'incident a bien été créé."
 				# @printer = Printer.find(@incident.printer_id)
@@ -62,6 +79,10 @@ class IncidentsController < ApplicationController
 		end
 	end
 	def update
+		@time = Time.now.in_time_zone
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
     @incident = Incident.find(params[:id])
     @printer_inci = PrintersIncident.find_by(incident_id: params[:id])
     @printer = Printer.find(@printer_inci.printer_id)
@@ -71,7 +92,8 @@ class IncidentsController < ApplicationController
     #   puts "*******************************************************************"
     #    puts "*******************************************************************"
     if @incident.update_attributes(incident_params)
-    	@user_update_incident = UserUpdateIncident.create(user_id: current_user.id , incident_id: @incident.id, datetime: Time.now.in_time_zone)
+    	@user_update_incident = UserUpdateIncident.create(user_id: current_user.id ,
+    	 incident_id: @incident.id,date_update: @date, hour_update: @hour, minute_update: @minute)
       @user_update_incident.save
       flash[:notice] = "Incident modifié."
       redirect_to @incident	      

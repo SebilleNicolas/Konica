@@ -1,0 +1,20 @@
+%H1 
+  Les arbres de décision validés par 
+  %b= @user.last_name 
+  %b= @user.first_name
+
+%table.table-bordered{:style => "width: 940px; text-align: center; "}
+  %thead
+    %th{:style => "text-align: center;"} Date
+    %th{:style => "text-align: center;"} ID arbre
+    %th{:style => "text-align: center;"} title_decision_tree
+  %tbody
+    - @admin_valid_decision_tree.each do |i| 
+      / - puts i.incident_id
+      - @@decision_tree = DecisionTree.find(i.decision_tree_id)
+      %tr
+        %td
+          = i.date_valid
+          = i.hour_valid+":"+i.minute_valid
+        %td= i.decision_tree_id
+        %td= @@decision_tree.title_decision_tree

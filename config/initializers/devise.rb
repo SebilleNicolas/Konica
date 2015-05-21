@@ -10,8 +10,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  # config.mailer_sender = 'frederic.chainaud@konicaminolta.fr'
-  config.mailer_sender = 'AdminPassword@konicaminolta.fr'
+  config.mailer_sender = 'AdminHotline@konicaminolta.fr'
   # Configure the class responsible to send e-mails.
   config.mailer = 'Devise::Mailer'
 

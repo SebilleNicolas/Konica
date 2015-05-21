@@ -1,1 +1,20 @@
-%H1 Les arbres de décisions ajouter par 
+%H1 
+  Les arbres de décision ajoutés par 
+  %b= @user.last_name 
+  %b= @user.first_name
+
+%table.table-bordered{:style => "width: 940px; text-align: center; "}
+  %thead
+    %th{:style => "text-align: center;"} Date
+    %th{:style => "text-align: center;"} ID arbre
+    %th{:style => "text-align: center;"} title_decision_tree
+  %tbody
+    - @user_add_decision_tree.each do |i| 
+      / - puts i.incident_id
+      - @@decision_tree = DecisionTree.find(i.decision_tree_id)
+      %tr
+        %td
+          = i.date_add
+          = i.hour_add+":"+i.minute_add
+        %td= i.decision_tree_id
+        %td= @@decision_tree.title_decision_tree
