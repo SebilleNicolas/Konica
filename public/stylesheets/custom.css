@@ -287,7 +287,16 @@ a.signup_button {
   -o-box-shadow: 2px 2px 4px 0px #656565;
   box-shadow: 2px 2px 4px 0px #656565;
   filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
+
+
 }
+/*.table.table-bordered tbody{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 500px;
+}*/
+
+
 table tr:nth-child(2n+1)
 {
     background-color: #cff;

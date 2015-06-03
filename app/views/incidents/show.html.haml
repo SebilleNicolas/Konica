@@ -1,7 +1,17 @@
 %h1
-  Incident : #{@incident.id}
+  %b Incident :
+  #{@incident.id}
+  %span{style:"float: right;"}
+    - if !@user.blank?
+      %b Ajouter par :
+      = @user.last_name
+      = @user.first_name
+    - if !@date_inci.blank?
+      %b Le : 
+      = @date_inci.date_add
 %h1
-  Système d'impression : #{@printer.code_printers}
+  %b Système d'impression :
+  #{@printer.code_printers}
 / %table.table.table-bordered
 /   %thead
 /     %tr
@@ -33,13 +43,13 @@
   %td
     = f.cktext_area :solution_incidents, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @incident.solution_incidents}
     / = f.hidden_field :printer_id, :value => @printer.id
-  %td= f.button :submit, class: "btn btn-block btn-primary", value:'Modifier', id: 'edit-button'
+  %td= f.button :submit, class: "btn btn-block btn-primary btn-sm", value:'Modifier', id: 'edit-button'
 
 
 - if current_user.is? :ADMIN
   -if @incident.valide_incidents == false
     %br
-    = button_to "Valider l'incident",update_valide_incident_path, data: { confirm: "Etes vous sur de vouloir valider l'incident ?" }, method: :patch, class: "btn btn-block btn-primary"
+    = button_to "Valider l'incident",update_valide_incident_path, data: { confirm: "Etes vous sur de vouloir valider l'incident ?" }, method: :patch, class: "btn btn-block btn-success btn-sm"
   /     = simple_form_for @incident,data: { confirm: "Etes vous sur de vouloir valider l'incident ?" } do |f|
   /       = f.hidden_field :valide_incidents, :value => true
   /       = f.button :submit, class: "btn btn-success btn-lg btn-block", value:"Valider l'incident"
@@ -49,7 +59,7 @@
   /     = f.button :submit, class: "btn btn-danger btn-lg btn-block", value:"Supprimer l'incident"
   %br
 
-  = button_to "Supprimer l'incident",delete_incident_path, data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete, class: "btn btn-block btn-danger"
+  = button_to "Supprimer l'incident",delete_incident_path, data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete, class: "btn btn-block btn-danger btn-sm"
 / = link_to "retour en arriere", printer_path(@printer)+ "#incidentTrue" ,class:  "glyphicon glyphicon-arrow-left"
 %br
 %br

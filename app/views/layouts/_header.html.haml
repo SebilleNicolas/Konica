@@ -10,7 +10,7 @@
     %a#imageLogo{:href => new_user_session_path}
       %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
   - if user_signed_in?
-    - @size = "715px", @margin = "-13px"  if current_user.is? :ADMIN
+    - @size = "715px", @margin = "-22px"  if current_user.is? :ADMIN
     - @size = "550px", @margin = "0px" if current_user.is? :HL2 
     - @size = "550px", @margin = "0px" if current_user.is? :HL1
     - @user_false = User.all.where("valide = ?", false).count
@@ -113,6 +113,31 @@
               %td
                 %p{:align => "center"}
                   %strong= current_user.email
+            %tr
+              %td
+                %p{:align => "right"} Derniere Connexion :
+              %td
+                %p{:align => "center"}
+
+                  / - @@User_Last_sign_in = User.find_by_sql("select TIME(last_sign_in_at) as dd from users where id = #{current_user.id}")
+                  / - @@User_Last_sign_in = User.find_by_sql("select date_trunc('minute', last_sign_in_at) as dd from users where id = #{current_user.id}")
+                  / - @usr = User.find(current_user.id).first
+                  / - puts @@usr.to_yaml
+                  / - puts @@User_Last_sign_in[0].dd.to_yaml
+                  / - puts '*****************************************'
+                  / - @aa = @@User_Last_sign_in[0].dd.to_s
+                  / - puts @aa.to_yaml
+
+                  / %strong= @@User_Last_sign_in[0].dd.to_s
+                  %strong
+                    - @rr = current_user.last_sign_in_at.to_time.iso8601
+                    - @tt =  DateTime.strptime(@rr, '%Y-%m-%dT%H:%M:%S')
+                    - @ss = @tt.strftime("%Y-%m-%d | %H:%M:%S")
+                    = @ss
+                    / %br
+                    / = @tt
+                    / %br
+                    / = @rr
             / %tr
             /   %td
             /     %p{:align => "right"} Nombre total incident :

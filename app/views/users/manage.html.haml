@@ -1,95 +1,109 @@
-%h2{:align => "center"}
-  %b
-    %u 
-      Manage Utilisateur : 
-  %br/
-  %b   
-    Nb utilisateurs : 
-    = @users.count
-- @disabled = false
+- if current_user.is? :ADMIN
+  %h2{:align => "center"}
+    %b
+      %u 
+        Manage Utilisateur : 
+    %br/
+    %b   
+      Nb utilisateurs : 
+      = @users.count
+  - @disabled = false
 
-%h3 Utilisateurs non validé :
-%table.table-bordered{:style => "width: 940px;text-align: center; "}
-  %thead
-    %th{:style => "text-align: center;"} ID
-    %th{:style => "text-align: center;"}Email
-    %th{:style => "text-align: center;"} Login
-    %th{:style => "text-align: center;"} Prenom
-    %th{:style => "text-align: center;"} Nom
-    %th{:style => "text-align: center;"} Role
-    %th{:style => "text-align: center;"} Modifier
-    %th{:style => "text-align: center;"} Validité
-    %th{:style => "text-align: center;"} Activer
-    %th{:style => "text-align: center;"} Supprimer
-  %tbody
+  %h3 Utilisateurs non validé :
+  %table.table-bordered{:style => "width: 940px;text-align: center; "}
+    %thead
+      %th{:style => "text-align: center;"} ID
+      %th{:style => "text-align: center;"}Email
+      %th{:style => "text-align: center;"} Login
+      %th{:style => "text-align: center;"} Prenom
+      %th{:style => "text-align: center;"} Nom
+      %th{:style => "text-align: center;"} Role
+      %th{:style => "text-align: center;"} Modifier
+      / %th{:style => "text-align: center;"} Validité
+      %th{:style => "text-align: center;"} Nombre connexion
+      %th{:style => "text-align: center;"} Nombre connexion  (3 derniers mois)
+      %th{:style => "text-align: center;"} Activer
+      %th{:style => "text-align: center;"} Supprimer
+    %tbody
 
-    - @users_non_valide.each do |user|
-      - if current_user.id == user.id
-        - @disabled = true
-      - else 
-        - @disabled = false
-      %tr
-        %td= user.id
-        %td= user.email
-        %td= user.login
-        %td= user.last_name
-        %td= user.first_name
-        = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
-          %td
-            = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
-          %td
-            = f.button :submit, class: "btn btn-primary", :value => 'Modifier', disabled: @disabled
-        %td= user.valide
-        
-        %td 
-          = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir activer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'patch'  do |f| |
-            = f.hidden_field :valide, :value => true
-            = f.button :submit, class: "btn btn-success", :value => 'Activer', disabled: @disabled
-        %td
-          = simple_form_for user , data: { confirm: "Etes vous sur de vouloir supprimer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'delete'  do |f| 
-            = f.button :submit, class: "btn btn-danger", :value => 'Supprimer', disabled: @disabled
-
-      / %td= link_to 'Valider', user, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider l'utilisateur ?" },:class => 'valide_user'
-
-%br/
-%br/
-%br/
-%br/
-%h3 Utilisateurs validé :      
-%table.table-bordered{:style => "width: 940px; text-align: center; "}
-  %thead
-    %th{:style => "text-align: center;"} ID
-    %th{:style => "text-align: center;"} Email
-    %th{:style => "text-align: center;"} Login
-    %th{:style => "text-align: center;"} Prenom
-    %th{:style => "text-align: center;"} Nom
-    %th{:style => "text-align: center;"} Role
-    %th{:style => "text-align: center;"} Modifier
-    %th{:style => "text-align: center;"}Validité
-    %th{:style => "text-align: center;"} Désactiver
-    %th{:style => "text-align: center;"} Supprimer
-  %tbody
-    - @users_valide.each do |user|
-      %tr
+      - @users_non_valide.each do |user|     
         - if current_user.id == user.id
           - @disabled = true
         - else 
           - @disabled = false
-        %td= link_to user.id , user_path(user)
-        %td= link_to user.email , user_path(user)
-        %td= link_to user.login , user_path(user)
-        %td= link_to user.last_name , user_path(user)
-        %td= link_to user.first_name , user_path(user)
-        = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
+        %tr
+          %td= user.id
+          %td= user.email
+          %td= user.login
+          %td= user.last_name
+          %td= user.first_name
+          = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
+            %td
+              = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
+            %td
+              = f.button :submit, class: "btn btn-primary", :value => 'Modifier', disabled: @disabled
+          / %td= user.valide
+          -  @nbr_co = UserConnexion.find_by_sql("select count(*) as dd from user_connexions where DATE(date_connect) >= current_date - interval '3 month' and user_id = #{user.id}")
+          %td= user.sign_in_count
+          %td= @nbr_co.fetch(0).dd
+          %td 
+            = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir activer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'patch'  do |f| |
+              = f.hidden_field :valide, :value => true
+              = f.button :submit, class: "btn btn-success", :value => 'Activer', disabled: @disabled
           %td
-            = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
+            = simple_form_for user , data: { confirm: "Etes vous sur de vouloir supprimer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'delete'  do |f| 
+              = f.button :submit, class: "btn btn-danger", :value => 'Supprimer', disabled: @disabled
+
+        / %td= link_to 'Valider', user, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider l'utilisateur ?" },:class => 'valide_user'
+
+  %br
+  %br
+  %br
+  %br
+  %h3 Utilisateurs validé :      
+  %table.table-bordered{:style => "width: 940px; text-align: center; "}
+    %thead
+      %th{:style => "text-align: center;"} ID
+      %th{:style => "text-align: center;"} Email
+      %th{:style => "text-align: center;"} Login
+      %th{:style => "text-align: center;"} Prenom
+      %th{:style => "text-align: center;"} Nom
+      %th{:style => "text-align: center;"} Role
+      %th{:style => "text-align: center;"} Modifier
+      / %th{:style => "text-align: center;"} Validité
+      %th{:style => "text-align: center;"} Nombre connexion
+      %th{:style => "text-align: center;"} Nombre connexion  (3 derniers mois)
+      %th{:style => "text-align: center;"} Désactiver
+      %th{:style => "text-align: center;"} Supprimer
+    %tbody
+      - @users_valide.each do |user|
+       
+        %tr
+          - if current_user.id == user.id
+            - @disabled = true
+          - else 
+            - @disabled = false
+          %td= link_to user.id , user_path(user)
+          %td= link_to user.email , user_path(user)
+          %td= link_to user.login , user_path(user)
+          %td= link_to user.last_name , user_path(user)
+          %td= link_to user.first_name , user_path(user)
+          = simple_form_for(user, url: update_role_user_path(user),data: { confirm: "Etes vous sur de vouloir modifier le role de l'utilisateur #{user.first_name} #{user.last_name} ?" }, method: :patch) do |f|
+            %td
+              = f.collection_select :role, User::ROLES, :to_s, :humanize, value: user.role
+            %td
+              = f.button :submit, class: "btn btn-primary", :value => 'Modifier', disabled: @disabled
+          / %td= user.valide
+          / %td= @nbr_co.nbr_connexion 
+          -  @nbr_co = UserConnexion.find_by_sql("select count(*) as dd from user_connexions where DATE(date_connect) >= current_date - interval '3 month' and user_id = #{user.id}")
+          %td= user.sign_in_count
+          %td= @nbr_co.fetch(0).dd
           %td
-            = f.button :submit, class: "btn btn-primary", :value => 'Modifier', disabled: @disabled
-        %td= user.valide
-        %td
-          = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir désactiver l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'patch'  do |f| |
-            = f.hidden_field :valide, :value => false
-            = f.button :submit, class: "btn btn-warning", :value => 'Desactiver', disabled: @disabled
-        %td
-          = simple_form_for user , data: { confirm: "Etes vous sur de vouloir supprimer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'delete'  do |f| 
-            = f.button :submit, class: "btn btn-danger", :value => 'Supprimer', disabled: @disabled
+            = simple_form_for user , url: update_valide_user_path(user),data: { confirm: "Etes vous sur de vouloir désactiver l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'patch'  do |f| |
+              = f.hidden_field :valide, :value => false
+              = f.button :submit, class: "btn btn-warning", :value => 'Desactiver', disabled: @disabled
+          %td
+            = simple_form_for user , data: { confirm: "Etes vous sur de vouloir supprimer l'utilisateur #{user.first_name} #{user.last_name} ?" },:method => 'delete'  do |f| 
+              = f.button :submit, class: "btn btn-danger", :value => 'Supprimer', disabled: @disabled
+- else
+  %p Vous n'êtes pas autorisé a consulter cette page.

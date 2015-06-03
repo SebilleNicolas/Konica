@@ -11,7 +11,7 @@ class DecisionTreesController < ApplicationController
   end
 
   def create
-    @time = Time.now.in_time_zone
+    @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")
@@ -64,7 +64,7 @@ class DecisionTreesController < ApplicationController
     # end
   end
   def update
-    @time = Time.now.in_time_zone
+    @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")

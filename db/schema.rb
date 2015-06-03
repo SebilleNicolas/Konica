@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519085625) do
+ActiveRecord::Schema.define(version: 20150601122012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,55 @@ ActiveRecord::Schema.define(version: 20150519085625) do
     t.datetime "updated_at"
   end
 
+  create_table "user_connexions", force: true do |t|
+    t.string   "date_connect"
+    t.string   "hour_connect"
+    t.string   "minute_connect"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_show_consommables", force: true do |t|
+    t.string  "date_show"
+    t.string  "hour_show"
+    t.string  "minute_show"
+    t.integer "user_id"
+    t.integer "consommable_id"
+  end
+
+  create_table "user_show_decision_trees", force: true do |t|
+    t.string  "date_show"
+    t.string  "hour_show"
+    t.string  "minute_show"
+    t.integer "user_id"
+    t.integer "decision_tree_id"
+  end
+
+  create_table "user_show_incidents", force: true do |t|
+    t.string  "date_show"
+    t.string  "hour_show"
+    t.string  "minute_show"
+    t.integer "user_id"
+    t.integer "incident_id"
+  end
+
+  create_table "user_show_printers", force: true do |t|
+    t.string  "date_show"
+    t.string  "hour_show"
+    t.string  "minute_show"
+    t.integer "user_id"
+    t.integer "printer_id"
+  end
+
+  create_table "user_show_releve_compteurs", force: true do |t|
+    t.string  "date_show"
+    t.string  "hour_show"
+    t.string  "minute_show"
+    t.integer "user_id"
+    t.integer "releve_compteur_id"
+  end
+
   create_table "user_update_consommables", force: true do |t|
     t.string   "date_update"
     t.string   "hour_update"
@@ -224,26 +273,6 @@ ActiveRecord::Schema.define(version: 20150519085625) do
     t.integer  "releve_compteur_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "user_visite_arbre_decisions", force: true do |t|
-    t.integer "compteurVisiteArbreDecision"
-  end
-
-  create_table "user_visite_consommables", force: true do |t|
-    t.integer "compteurVisiteConsommables"
-  end
-
-  create_table "user_visite_incidents", force: true do |t|
-    t.datetime "datetime"
-    t.integer  "user_id"
-    t.integer  "incident_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "user_visite_releve_compteurs", force: true do |t|
-    t.integer "compteurVisiteReleveCompteurs"
   end
 
   create_table "users", force: true do |t|

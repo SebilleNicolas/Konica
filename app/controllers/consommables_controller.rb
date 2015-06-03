@@ -2,10 +2,10 @@ class ConsommablesController < ApplicationController
 	autocomplete :consommable, :code_consommables,:full => true
 	def index
 		@consommables = Consommable.all
-		@consommables_false = @consommables.where("valide_consommables = ?", false)
-		@consommables_true = @consommables.where("valide_consommables = ?", true)
+		@consommables_false = @consommables.where("valide_consommables = ?", false).order(code_consommables: :asc)
+		@consommables_true = @consommables.where("valide_consommables = ?", true).order(code_consommables: :asc)
 		#@printer = Printer.find(params[:id])
-		@titre = "Liste des conso"
+		@titre = "Liste des consommables"
 	end
 
 	# def consommables_true_tbody
@@ -24,7 +24,7 @@ class ConsommablesController < ApplicationController
 	  	@column_search = params[:column_search].downcase
 	    # printers = Printer.select([:code_printers],[:id]).where("lower(code_printers) LIKE ?", "%#{params[:value].downcase}%")
 	    consommables = Consommable.find_by_sql("select * from consommables
-	    	where lower(#{@column_search}) like '%#{@value}%'  LIMIT 10")
+	    	where lower(#{@column_search}) like '%#{@value}%' order by code_consommables asc LIMIT 10")
 	    result = consommables.collect do |t|
 	      {code_consommables: t.code_consommables,id: t.id, designation_consommables: t.designation_consommables}
 	    end
@@ -76,13 +76,11 @@ class ConsommablesController < ApplicationController
 			@consommables_search.each do |c|
 				if c.id == @conso.id
 					@search = @conso
-					puts 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
 				end
 			end
 			@consommables_hide_in_printers_consommables.each do |c|
 				if c.id == @conso.id
 					@search = @conso
-					puts '-----------------------------------------------------'
 				end
 			end
 		end
@@ -95,7 +93,7 @@ class ConsommablesController < ApplicationController
 	end
 	
 	def create
-		@time = Time.now.in_time_zone
+		@time = Time.now
 		@hour = @time.strftime("%H")
 		@minute = @time.strftime("%M:%S")
 		@date = @time.strftime("%Y-%m-%d")
@@ -134,14 +132,23 @@ class ConsommablesController < ApplicationController
 		
 	end
 	def show
-	    @consommable = Consommable.find(params[:id])
-	    @printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
-	    @printer = Printer.find(@printer_conso.printer_id)
-	    @r = Replacement.find(@consommable.replacement_id)
-	    @titre = "CONSO"
-	    @list_printers_consommable = Printer.find_by_sql("select * from printers where id 
+		@time = Time.now
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
+    @consommable = Consommable.find(params[:id])
+    @printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
+    @printer = Printer.find(@printer_conso.printer_id)
+    @r = Replacement.find(@consommable.replacement_id)
+    @titre = "CONSO"
+    @list_printers_consommable = Printer.find_by_sql("select * from printers where id 
  in ( select  printer_id from printers_consommables where consommable_id = #{@consommable.id})")
-	   
+	   @user_show =  UserShowConsommable.create(consommable_id: @consommable.id, user_id: current_user.id,
+	   	date_show: @date, hour_show: @hour, minute_show: @minute)
+	   @date_conso = UserAddConsommable.find_by consommable_id: params[:id]
+	   if !@date_conso.blank?
+	   	@user = User.find(@date_conso.user_id)
+	   end
 	end
 
   	def delete
@@ -197,7 +204,7 @@ class ConsommablesController < ApplicationController
 	end
 
 	def update_valide
-		@time = Time.now.in_time_zone
+		@time = Time.now
 		@hour = @time.strftime("%H")
 		@minute = @time.strftime("%M:%S")
 		@date = @time.strftime("%Y-%m-%d")
@@ -225,7 +232,7 @@ class ConsommablesController < ApplicationController
 
 
 	def update_attributes
-		@time = Time.now.in_time_zone
+		@time = Time.now
 		@hour = @time.strftime("%H")
 		@minute = @time.strftime("%M:%S")
 		@date = @time.strftime("%Y-%m-%d")
@@ -245,7 +252,7 @@ class ConsommablesController < ApplicationController
 
 
 	def update
-		@time = Time.now.in_time_zone
+		@time = Time.now
 		@hour = @time.strftime("%H")
 		@minute = @time.strftime("%M:%S")
 		@date = @time.strftime("%Y-%m-%d")

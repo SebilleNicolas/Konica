@@ -1,8 +1,5 @@
 SampleApp::Application.routes.draw do
  
-
-  
-
   devise_for :users , :controllers => { :registrations => "registrations",:users => "users",:sessions => "sessions"}#, :passwords => "passwords" }
   resources :printers_consommables
   # resources :printers, :member => {:download => :get }
@@ -11,7 +8,6 @@ SampleApp::Application.routes.draw do
       post :add_img  
     end
     collection do 
-
     end
   end
   

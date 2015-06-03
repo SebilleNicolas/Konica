@@ -20,8 +20,8 @@
           = i.hour_add+":"+i.minute_add
           
         
-        %td= i.consommable_id
-        %td= @@consommable.code_consommables
-        %td= @@consommable.designation_consommables
-        %td= @@consommable.duree_vie_consommables + " jours"
+        %td= link_to i.consommable_id , consommable_path(@@consommable)
+        %td= link_to @@consommable.code_consommables , consommable_path(@@consommable)
+        %td= link_to @@consommable.designation_consommables , consommable_path(@@consommable)
+        %td= link_to @@consommable.duree_vie_consommables + " jours" , consommable_path(@@consommable)
         / %td= @@consommable.intitule_consommables

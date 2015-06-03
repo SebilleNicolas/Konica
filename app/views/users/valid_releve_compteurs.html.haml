@@ -13,6 +13,6 @@
       - @@releve_compteur = ReleveCompteur.find(i.releve_compteur_id)
       %tr
         %td
-          = i.date_valid
-          = i.hour_valid+":"+i.minute_valid
-        %td= i.releve_compteur_id
+          =  i.date_valid 
+          =  i.hour_valid+":"+i.minute_valid
+        %td= link_to i.releve_compteur_id , releve_compteur_path(@@releve_compteur)

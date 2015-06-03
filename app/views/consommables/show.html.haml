@@ -1,15 +1,18 @@
 
 %h1
-  Consommables : #{@consommable.id}
-  valider :
+  %b Consommables : 
+  #{@consommable.id}
+  %b valider :
   %span#valid-true-false
     #{@consommable.valide_consommables}
-- if current_user.is? :ADMIN 
-  - if @consommable.valide_consommables == false
-    %td
-      %button.btn.btn-primary#valid-consommable{data:{consommable: @consommable.id}}
-        Valider le consommable
-%br
+  %span{style:"float: right;"}
+    - if !@user.blank?
+      %b Ajouter par :
+      = @user.last_name
+      = @user.first_name
+    - if !@date_conso.blank?
+      %b Le : 
+      = @date_conso.date_add
 %br
 
 %span.a
@@ -53,10 +56,14 @@
         %br  
         %br 
         - if current_user.is? :ADMIN
-          = f.button :submit, class: "btn btn-primary toto ", value:'Modifier le consommable', :input_html => {style: "width:50px;"}
+          = f.button :submit, class: "btn btn-block btn-primary btn-sm", value:'Modifier le consommable'
 
-
-
+- if current_user.is? :ADMIN 
+  - if @consommable.valide_consommables == false
+    %span{style: "margin-left:50%;"}
+      %button.btn.btn-success.btn-sm.btn-block#valid-consommable{style: "width: 1000px; margin-left: 63px;",data:{consommable: @consommable.id}}
+        Valider le consommable
+%br
 
 = link_to " Retour en arriere ", :back ,class:  "glyphicon glyphicon-arrow-left"
 

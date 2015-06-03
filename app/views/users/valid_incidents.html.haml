@@ -19,6 +19,6 @@
           = i.hour_valid+":"+i.minute_valid
           
         
-        %td= i.incident_id
-        %td= @@incident.code_incidents
-        %td= @@incident.intitule_incidents
+        %td= link_to i.incident_id ,incident_path(@@incident) 
+        %td= link_to @@incident.code_incidents ,incident_path(@@incident) 
+        %td= link_to @@incident.intitule_incidents ,incident_path(@@incident)

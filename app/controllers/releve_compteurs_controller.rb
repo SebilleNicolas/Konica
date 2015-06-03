@@ -6,16 +6,18 @@ class ReleveCompteursController < ApplicationController
 		@releve_compteur = ReleveCompteur.new
     # puts '***********************************************'
     # @releves_compteurs =  @printer.releve_compteurs
-    @releve_compteurs_true = @releves_compteurs.where("valide_releve_compteurs = ?", true)
-    @releve_compteurs_false = @releves_compteurs.where("valide_releve_compteurs = ?", false)
+    @releve_compteurs_true = @releves_compteurs.where("valide_releve_compteurs = ?", true).order(id: :asc)
+    @releve_compteurs_false = @releves_compteurs.where("valide_releve_compteurs = ?", false).order(id: :asc)
 		@titre = "Liste des Releve Compteur"
+
+
 	end
 
   def new
   	@releve_compteur = ReleveCompteur.new
   end
   def create
-    @time = Time.now.in_time_zone
+    @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")
@@ -33,8 +35,19 @@ class ReleveCompteursController < ApplicationController
   end
 
   def show
+    @time = Time.now
+    @hour = @time.strftime("%H")
+    @minute = @time.strftime("%M:%S")
+    @date = @time.strftime("%Y-%m-%d")
     @releve_compteur = ReleveCompteur.find(params[:id])
-    @titre = "releve compteur"
+    @printer = Printer.find(@releve_compteur.printer_id)
+    @user_show =  UserShowReleveCompteur.create(releve_compteur_id: @releve_compteur.id, user_id: current_user.id,
+      date_show: @date, hour_show: @hour, minute_show: @minute) 
+    @titre = "Releve compteur"
+     @date_rc = UserAddReleveCompteur.find_by releve_compteur_id: params[:id]
+     if !@date_rc.blank?
+      @user = User.find(@date_rc.user_id)
+     end
   end
 
 
@@ -59,7 +72,7 @@ class ReleveCompteursController < ApplicationController
     end
   end
 	def update
-     @time = Time.now.in_time_zone
+     @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")
@@ -76,7 +89,7 @@ class ReleveCompteursController < ApplicationController
     end
 	end
 	def valide
-    @time = Time.now.in_time_zone
+    @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")
@@ -93,7 +106,7 @@ class ReleveCompteursController < ApplicationController
     end
 	end
   def update_valide
-    @time = Time.now.in_time_zone
+    @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")

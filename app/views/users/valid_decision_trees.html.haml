@@ -16,5 +16,5 @@
         %td
           = i.date_valid
           = i.hour_valid+":"+i.minute_valid
-        %td= i.decision_tree_id
-        %td= @@decision_tree.title_decision_tree
+        %td= link_to i.decision_tree_id , decision_tree_path(@@decision_tree)
+        %td= link_to @@decision_tree.title_decision_tree , decision_tree_path(@@decision_tree)

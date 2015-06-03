@@ -1,53 +1,89 @@
 %h2 Incidents Non validé :
 - if @incidents_false.count > 0
-  %table{:align => "center", :style => "border:none; width: 500px;"}
+  %table{:align => "center", :style => "border:none; width: 100%;"}
     %thead
       %tr
         %td{:align => "center"}
           %b ID
         %td{:align => "center"}
           %b Code incident
+        %td{:align => "center"}
+          %b Date Ajout
+        %td{:align => "center"}
+          %b Ajouté par
         %td{:align => "center"}
           %b Valider
         %td{:align => "center"}
           %b Supprimer
     %tbody
       - @incidents_false.each do |incident|
+        - @date = UserAddIncident.find_by incident_id: incident.id
+        - if !@date.blank?
+          - @user = User.find(@date.user_id)
         %tr
           %td{:align => "center"}
             = link_to incident.id, incident
           %td{:align => "center"}
             = link_to "#{incident.code_incidents}", incident
           %td{:align => "center"}
+            - if !@date.blank?
+              = link_to "#{@date.date_add}", incident
+            - else
+              %p Il n'y a de date pour cette incident.
+          %td{:align => "center"}
+            - if !@date.blank?
+              %b 
+                = link_to @user.first_name  , user_path(@user)
+                = link_to @user.last_name , user_path(@user)
+            - else
+              Pas d'utilisateur.
+          %td{:align => "center"}
             = simple_form_for incident , url: update_valide_incident_path(incident),data: { confirm: "Etes vous sur de vouloir valider cette incident ?" },:method => 'patch'  do |f| |
               = f.hidden_field :valide_incidents, :value => true
               = f.button :submit, class: "btn btn-primary", :value => 'valider'
           %td{:align => "center"}
-            = link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+            = link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
 - else
   %p Il n'y a pas d'incident non validé.
 %h2 Incidents validé :
 
 - if @incidents_true.count > 0
-  %table{:align => "center", :style => "border:none; width: 500px;"}
+  %table{:align => "center", :style => "border:none; width: 100%;"}
     %thead
       %tr
         %td{:align => "center"}
           %b ID
         %td{:align => "center"}
           %b Code incident
-
+        %td{:align => "center"}
+          %b Date Ajout
+        %td{:align => "center"}
+          %b Ajouté par
         %td{:align => "center"}
           %b Supprimer
     %tbody
       - @incidents_true.each do |incident|
+        - @date = UserAddIncident.find_by incident_id: incident.id
+        - if !@date.blank?
+          - @user = User.find(@date.user_id)
         %tr
           %td{:align => "center"}
             = link_to incident.id, incident
           %td{:align => "center"}
             = link_to "#{incident.code_incidents}", incident
-         
           %td{:align => "center"}
-            = link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+            - if !@date.blank?
+              = link_to "#{@date.date_add}", incident
+            - else
+              %p Il n'y a de date pour cette incident.
+          %td{:align => "center"}
+            - if !@date.blank?
+              %b 
+                = link_to @user.first_name  , user_path(@user)
+                = link_to @user.last_name , user_path(@user) 
+            - else
+              Pas d'utilisateur.
+          %td{:align => "center"}
+            = link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
 - else
   %p Il n'y a pas d'incidents validé.

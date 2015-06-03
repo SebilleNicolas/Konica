@@ -8,6 +8,8 @@ class PrintersController < ApplicationController
 		@printer = Printer.new
 		@incident = Incident.new
 		# @printers.to_json
+		@user = User.find(current_user.id)
+		# puts current_user.last_sign_in_at
 
 	end
 	def new	
@@ -15,10 +17,8 @@ class PrintersController < ApplicationController
 		@printer.attachments.build
 		# @attachment = Attachment.new
 		@titre = "Ajouter une Imprimante"
-		@date = Time.now.in_time_zone
+		@date = Time.now
 		@zone = Time.zone
-		puts @date
-		puts @zone
 	end
 	def search
 		@printers=Printer.all
@@ -148,6 +148,12 @@ class PrintersController < ApplicationController
 
 
 	def show
+		@time = Time.now
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
+
+
 		@printer = Printer.find(params[:id])
 	  @titre = "Système Impression"
 
@@ -180,16 +186,18 @@ class PrintersController < ApplicationController
  in ( select  consommable_id from printers_consommables where printer_id != #{@printer.id}
   and consommable_id NOT IN 
   (select distinct consommable_id from printers_consommables where printer_id = #{@printer.id} ))
-		AND valide_consommables = true")
+		AND valide_consommables = true order by code_consommables ASC")
 		@consommables_hide_in_printers_consommables= Consommable.find_by_sql("
 			select * from consommables 
 			where id not in (select consommable_id from printers_consommables)")
-
 		# @consommables_vide_search = Consommable.find_by_sql("
 		# 	select * from consommables where id 
 		# in ( select distinct consommable_id from printers_consommables where printer_id != #{@printer.id}) 
 		# AND valide_consommables = true")
     
+		 @user_show =  UserShowPrinter.create(printer_id: @printer.id, user_id: current_user.id,
+	   	date_show: @date, hour_show: @hour, minute_show: @minute) 
+
 		
     @Nbconsommable = @printer.consommables.where("valide_consommables = ?", true).count
 

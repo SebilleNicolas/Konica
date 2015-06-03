@@ -18,10 +18,11 @@ class UsersController < ApplicationController
     @all_user_update_releve_compteurs = UserUpdateReleveCompteur.where("user_id = ?", @user.id)
     @all_user_update_decision_trees = UserUpdateDecisionTree.where("user_id = ?", @user.id)
 
-
-
-
-
+    @all_user_show_incidents = UserShowIncident.where("user_id = ?", @user.id)
+    @all_user_show_consommables = UserShowConsommable.where("user_id = ?", @user.id)
+    @all_user_show_releve_compteurs = UserShowReleveCompteur.where("user_id = ?", @user.id)
+    @all_user_show_decision_trees = UserShowDecisionTree.where("user_id = ?", @user.id)
+    @all_user_show_printers = UserShowPrinter.where("user_id = ?", @user.id)
 
 
 
@@ -39,12 +40,20 @@ class UsersController < ApplicationController
     @count_update_consommables = @all_user_update_consommables.count
     @count_update_releve_compteurs = @all_user_update_releve_compteurs.count
     @count_update_decision_trees = @all_user_update_decision_trees.count
+
+    @count_show_incidents = @all_user_show_incidents.count
+    @count_show_consommables = @all_user_show_consommables.count
+    @count_show_releve_compteurs = @all_user_show_releve_compteurs.count
+    @count_show_decision_trees =@all_user_show_decision_trees.count
+    @count_show_printers = @all_user_show_printers.count
+
   end
 
   def manage  
     @users = User.all
     @users_non_valide = @users.where("valide = ?", false)
     @users_valide = @users.where("valide = ?", true).order(last_name: :asc)
+   
     @titre = "Gérer Utilisateur"
   end
   def add_incidents
@@ -134,9 +143,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.update_attributes(valide_user_params)
     if @user.valide?
-      # message = mail(to: @user.email,
-      #    subject: "[Signed up] Welcome #{@user.email}")
-      # message.deliver_now
       UserMailer.welcome_email(@user).deliver
     end
     respond_to do |format|

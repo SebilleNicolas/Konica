@@ -132,6 +132,7 @@ class QuestionsController < ApplicationController
     @question = @decision_tree.questions.find(params[:id])
     @question_new = Question.new
     @question_first = Question.find_by decision_tree_id: @decision_tree.id ,number_question: "1" 
+    
 
   end
   def update

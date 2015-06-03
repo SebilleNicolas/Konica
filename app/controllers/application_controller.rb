@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   @@NbIncidents = Incident.all.count
   
+  
   def after_sign_in_path_for(resource)
     if current_user.valide?
       request.env['omniauth.origin'] || stored_location_for(resource) || root_path

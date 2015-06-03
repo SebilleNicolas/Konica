@@ -2,8 +2,8 @@ class IncidentsController < ApplicationController
 	# autocomplete :incident, :code_incidents, :full => true
 	def index
 		@incidents = Incident.all
-		@incidents_false = @incidents.where("valide_incidents = ?", false)
-		@incidents_true = @incidents.where("valide_incidents = ?", true)
+		@incidents_false = @incidents.where("valide_incidents = ?", false).order(code_incidents: :asc)
+		@incidents_true = @incidents.where("valide_incidents = ?", true).order(code_incidents: :asc)
 		#@printer = Printer.find(params[:id])
 		@titre = "Liste des Incidents"		
 	end
@@ -20,7 +20,7 @@ class IncidentsController < ApplicationController
 		# puts @search.to_yaml
 	end
  	def update_valide
- 		@time = Time.now.in_time_zone
+ 		@time = Time.now
 		@hour = @time.strftime("%H")
 		@minute = @time.strftime("%M:%S")
 		@date = @time.strftime("%Y-%m-%d")
@@ -52,7 +52,7 @@ class IncidentsController < ApplicationController
 		@incident = Incident.new
 	end
 	def create
-		@time = Time.now.in_time_zone
+		@time = Time.now
 		# puts "@time"
 		# puts @time
 		@hour = @time.strftime("%H")
@@ -79,7 +79,7 @@ class IncidentsController < ApplicationController
 		end
 	end
 	def update
-		@time = Time.now.in_time_zone
+		@time = Time.now
 		@hour = @time.strftime("%H")
 		@minute = @time.strftime("%M:%S")
 		@date = @time.strftime("%Y-%m-%d")
@@ -131,10 +131,20 @@ class IncidentsController < ApplicationController
 		@incidents = Incident.all
 	end
   def show
+		@time = Time.now
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
     @incident = Incident.find(params[:id])
     @titre = "Incident"
     @printer_inci = PrintersIncident.find_by incident_id: @incident.id
     @printer = Printer.find(@printer_inci.printer_id)
+    @user_show =  UserShowIncident.create(incident_id: @incident.id, user_id: current_user.id,
+	   	date_show: @date, hour_show: @hour, minute_show: @minute) 
+    @date_inci = UserAddIncident.find_by incident_id: params[:id]
+	   if !@date_inci.blank?
+	   	@user = User.find(@date_inci.user_id)
+	   end
   end
  #  def destroy
 	#   @incident = Incident.find(params[:id])

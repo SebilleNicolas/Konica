@@ -15,4 +15,4 @@
         %td
           = i.date_update
           = i.hour_update+":"+i.minute_update
-        %td= i.releve_compteur_id
+        %td= link_to i.releve_compteur_id , releve_compteur_path(@@releve_compteur)

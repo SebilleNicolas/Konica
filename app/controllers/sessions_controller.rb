@@ -13,14 +13,18 @@ class SessionsController < Devise::SessionsController
 	end
 	# GET /resource/sign_in
 	def create
-		
+		@time = Time.now
+		@hour = @time.strftime("%H")
+		@minute = @time.strftime("%M:%S")
+		@date = @time.strftime("%Y-%m-%d")
 		self.resource = warden.authenticate!(auth_options)
-		# 
 		if resource.valide?
 			set_flash_message(:notice, :signed_in) if is_flashing_format?	
 			sign_in(resource_name, resource)
 			yield resource if block_given?
 			respond_with resource, location: after_sign_in_path_for(printers_path)
+			@user_connexion = UserConnexion.create(user_id: current_user.id,
+					 date_connect: @date, hour_connect: @hour, minute_connect: @minute)
 		else
 			flash[:alert] = "Vous n'avez pas la permission pour vous connecter. Veuillez contacter un Administrateur. "
 			# redirect_to root_path
