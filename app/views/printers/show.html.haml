@@ -306,7 +306,7 @@
                 %td= link_to incident.code_incidents, incident
                 %td= link_to "VALIDER", incident
                 - if current_user.is? :ADMIN 
-                  %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+                  %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
      
       - else
         %p Il n'y a pas d'incident.
@@ -329,7 +329,7 @@
                 %td= link_to incident.code_incidents, incident
                 %td= link_to "non Valider", incident
                 - if current_user.is? :ADMIN 
-                  %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+                  %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
       - else        
         %p Il n'y a pas d'incident a valider.
     / Fin de l'onglet
@@ -362,11 +362,11 @@
                     / %button.btn.btn-primary#valid-consommable{data:{consommable: @consommable.id,id: "#{consommable.id}"}}
                     /   = consommable.id
                   %td
-                    %button.btn.btn-primary.delete-printers-consommable{data:{consommable: consommable.id, printer: @printer.id}}
+                    %button.btn.btn-warning.delete-printers-consommable{data:{consommable: consommable.id, printer: @printer.id}}
                       Supprimer
                     / = link_to 'Supprimer totalement', delete_consommable_consommable_path(consommable), :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement ?" },:class => 'delete_consommable'
                   %td
-                    = link_to 'Supprimer définitivement', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement de tous les système d'impression ?"},:class => 'delete_printer_consommable',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
+                    = link_to 'Supprimer définitivement', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement de tous les système d'impression ?"},:class => 'delete_printer_consommable',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
       
 
       - else
@@ -398,11 +398,11 @@
                 %td= link_to  @r.name,consommable
                 - if current_user.is? :ADMIN 
                   %td
-                    %button.btn.btn-primary.delete-printers-consommable{data:{consommable: consommable.id}}
+                    %button.btn.btn-warning.delete-printers-consommable{data:{consommable: consommable.id}}
                       Supprimer
                     / = link_to 'Supprimer totalement', delete_consommable_consommable_path(consommable), :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement ?" },:class => 'delete_consommable'
                   %td
-                    = link_to 'Supprimer définitivement', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement de tous les système d'impression ?" },:class => 'delete_printer_consommable',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
+                    = link_to 'Supprimer définitivement', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement de tous les système d'impression ?" },:class => 'delete_printer_consommable',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
         
       - else
         %p Il n'y a pas de consommable à valider.
