@@ -29,13 +29,17 @@ function ActualiserCompteur()
       $heure=0;
       $jour=0;
     }
+    if ($("#Compteur").val() == "00 : 00 : 00")
+    {
+      document.getElementById('Compteur').style.color="#00CC33";
 
-    if ($("#Compteur").val() == "00 : 00 : 05")
+    }
+    if ($("#Compteur").val() == "00 : 02 : 59")
     {
       document.getElementById('Compteur').style.color="#CC6633";
 
     }
-    if ($("#Compteur").val() == "00 : 00 : 10")
+    if ($("#Compteur").val() == "00 : 06 : 59")
     {
       document.getElementById('Compteur').style.color="#CC0000";
     }

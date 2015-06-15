@@ -199,6 +199,211 @@ class UsersController < ApplicationController
   def edit
     @titre = "Modification"
   end
+
+# if date1.to_time.to_i < Date.today.to_time.to_i && Date.today.to_time.to_i > date2.to_time.to_i
+#   puts Date.today
+# end
+
+
+  def return_date_string(string)
+    if string == 'Janvier'
+      string = '01'
+    end
+    
+    if string == 'Février'
+      string  = '02'
+    end
+     
+    if string == 'Mars'
+      string = '03'
+    end
+
+    if string == 'Avril'
+      string = '04'
+    end
+
+    if string == 'Mai'
+      string = '05'
+    end
+
+    if string == 'Juin'
+      string = '06'
+    end
+
+    if string == 'Juillet'
+      string = '07'
+    end
+
+    if string == 'Août'
+      string = '08'
+    end
+
+    if string == 'Septembre'
+      string = '09'
+    end
+
+    if string == 'Octobre'
+      string = '10'
+    end
+
+    if string == 'Novembre'
+      string = '11'
+    end
+
+    if string == 'Décembre'
+      string = '12'
+    end
+
+     return string
+  end
+   def ajax_search_user
+    @user_id = params[:user_id]
+    @user = User.find(@user_id)
+
+     respond_to do |format|
+      format.json { render :json => {:user => @user }}
+      format.html { redirect_to printers_path}
+      # format.json { render :json =>  @question_avant.to_json }
+    end
+   end
+   def ajax_search_object
+    @object_id = params[:object_id]
+    @object_nature = params[:object_nature]
+    if @object_nature  == "incident"
+      @object = Incident.find(@object_id)
+    end
+    if @object_nature  == "consommable"
+      @object = Consommable.find(@object_id)
+    end
+    if @object_nature  == "decision_tree"
+      @object = DecisionTree.find(@object_id)
+    end
+    if @object_nature  == "releve_compteur"
+      @object = ReleveCompteur.find(@object_id)
+    end
+    puts @object.inspect
+    
+    respond_to do |format|
+      format.json { render :json => {:object => @object }}
+      format.html { redirect_to printers_path}
+      # format.json { render :json =>  @question_avant.to_json }
+    end
+   end
+   def ajax_search_date
+    @date_deb = params[:date_deb]
+    @date_fin = params[:date_fin]
+
+    @action = params[:action_obj]
+    @object = params[:object_obj]
+    @table = @action.to_s + @object.to_s
+    @my_obj = @object
+    # puts @action.to_yaml
+
+    if @action == 'user_add_'
+      @date_db = 'date_add' 
+    end
+    if @action == 'user_update_'
+      @date_db = 'date_update' 
+    end
+    if @action == 'user_show_'
+      @date_db = 'date_show' 
+    end
+    if @action == 'admin_valid_'
+      @date_db = 'date_valid' 
+    end
+    # DATE DEBUT 
+    @date_deb_tab=@date_deb.split
+    @date_deb_tab[1] = return_date_string(@date_deb_tab[1])
+    @date_debut = Date.new(@date_deb_tab[2].to_i,@date_deb_tab[1].to_i,@date_deb_tab[0].to_i)
+
+    # DATE FIN
+    @date_fin_tab=@date_fin.split
+    @date_fin_tab[1] = return_date_string(@date_fin_tab[1])
+    @date_de_fin = Date.new(@date_fin_tab[2].to_i,@date_fin_tab[1].to_i,@date_fin_tab[0].to_i)
+
+    if @my_obj.to_s == 'incidents'
+      if @action == 'user_add_'
+        @object = UserAddIncident.find_by_sql('Select * from '+@table+' where date_add BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+        # @object = @object + User.find(@object.user_id)
+        puts '*************************************'
+        puts '*************************************'
+        puts @object.inspect
+        puts '*************************************'
+        puts '*************************************'
+      end
+      if @action == 'user_update_'
+        @object = UserUpdateIncident.find_by_sql('Select * from '+@table+' where date_update BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'user_show_'
+        @object = UserShowIncident.find_by_sql('Select * from '+@table+' where date_show BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'admin_valid_'
+        @object = AdminValidIncident.find_by_sql('Select * from '+@table+' where date_valid BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+    end
+
+    if @my_obj.to_s == 'consommables'
+      if @action == 'user_add_'
+        @object = UserAddConsommable.find_by_sql('Select * from '+@table+' where date_add BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'user_update_'
+        @object = UserUpdateConsommable.find_by_sql('Select * from '+@table+' where date_update BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'user_show_'
+        @object = UserShowConsommable.find_by_sql('Select * from '+@table+' where date_show BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'admin_valid_'
+        @object = AdminValidConsommable.find_by_sql('Select * from '+@table+' where date_valid BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+    end
+
+    if @my_obj.to_s == 'decision_trees'
+      if @action == 'user_add_'
+        @object = UserAddDecisionTree.find_by_sql('Select * from '+@table+' where date_add BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'user_update_'
+        @object = UserUpdateDecisionTree.find_by_sql('Select * from '+@table+' where date_update BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'user_show_'
+        @object = UserShowDecisionTree.find_by_sql('Select * from '+@table+' where date_show BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'admin_valid_'
+        @object = AdminValidDecisionTree.find_by_sql('Select * from '+@table+' where date_valid BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+    end
+
+    if @my_obj.to_s == 'releve_compteurs'
+      if @action == 'user_add_'
+        @object = UserAddReleveCompteur.find_by_sql('Select * from '+@table+' where date_add BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+       
+      end
+      if @action == 'user_update_'
+        @object = UserUpdateReleveCompteur.find_by_sql('Select * from '+@table+' where date_update BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'user_show_'
+        @object = UserShowReleveCompteur.find_by_sql('Select * from '+@table+' where date_show BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+      if @action == 'admin_valid_'
+        @object = AdminValidReleveCompteur.find_by_sql('Select * from '+@table+' where date_valid BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
+      end
+    end
+
+    puts "*************************************************************"
+      puts @object.inspect
+    puts "*************************************************************"
+    
+
+    
+    respond_to do |format|
+      format.json { render :json => {:object_list => @object }}
+      format.html { redirect_to printers_path}
+      # format.json { render :json =>  @question_avant.to_json }
+    end
+
+  end
+
+
+
   private
 
   # check if we need password to update user data

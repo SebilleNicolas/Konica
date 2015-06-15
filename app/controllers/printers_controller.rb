@@ -9,7 +9,10 @@ class PrintersController < ApplicationController
 		@incident = Incident.new
 		# @printers.to_json
 		@user = User.find(current_user.id)
+		puts '*****************************************'
 		# puts current_user.last_sign_in_at
+		puts @user.inspect
+		puts '*****************************************'
 
 	end
 	def new	
@@ -19,6 +22,8 @@ class PrintersController < ApplicationController
 		@titre = "Ajouter une Imprimante"
 		@date = Time.now
 		@zone = Time.zone
+		puts @date
+		puts @zone
 	end
 	def search
 		@printers=Printer.all

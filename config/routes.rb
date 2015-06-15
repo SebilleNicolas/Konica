@@ -130,6 +130,9 @@ SampleApp::Application.routes.draw do
     end
     collection do
       get :manage
+      get :ajax_search_date
+      get :ajax_search_user
+      get :ajax_search_object
 
     end
   end
