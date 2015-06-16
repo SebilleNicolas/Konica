@@ -10,6 +10,7 @@
           = f.input :code_printers , :input_html => { :style => "width:100%;" }, label: false, value: @printer.code_printers
         = f.button :submit, class: "btn btn-block btn-primary", value:'Modifier'
     - else
+      %br
       %b= @printer.code_printers 
   .col-xs-1{style: "margin-top: 15px;"} 
     - if current_user.is? :ADMIN

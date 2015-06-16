@@ -1,4 +1,5 @@
 %header{:style => " display: inline-flex ;"}
+  %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", :rel => "stylesheet"}/
   / image_tag("logo.png", :alt => "Application exemple", :class => "round")
   - logo =  image_tag("KM.png", :alt => "Konica Minolta", :class => "round" , :style => "margin-right: 60px;")
   
@@ -20,7 +21,7 @@
     - @total = @user_false + @incident_false + @consommables_false + @releve_compteur_false
 
     %nav#test{:style => "width: #{@size}; margin-left:  #{@margin};"}
-      %ul#menu
+      %ul#menu{style: "margin-top:10px;"}
         - if current_user.is? :ADMIN
           %li
             %span.glyphicon.glyphicon-plus
@@ -36,11 +37,11 @@
           |
         - if current_user.is? :ADMIN
           %li
-            %span.glyphicon.glyphicon-lock
+            / %span.glyphicon.glyphicon-lock
+            %i.fa.fa-users{style: "color:#09c;"}
             = link_to "Gérer U", manage_users_path, data: { no_turbolink: true }
             |
         %li
-
           %span.glyphicon.glyphicon-info-sign
             / %a.btn.btn-link{"aria-controls" => "collapseExample", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#collapseExample",style: 'margin-left: -13px;, margin-top: -5px;' }
             /   %b{style: 'color:#09c;'} Info

@@ -105,7 +105,10 @@ function alo()
 
 
 $('#button_date').on('click', function(){
-// alert('jyhgjh');
+// alert('jyhgjh');{style: "width:470px;"}
+  // $("#calendar_group").css('visibility', 'hidden');
+  // $("#calendar_button").css('visibility', 'hidden');
+
 	$('#datetimepicker_deb').datetimepicker().on('dp.show', function(ev){
         var a = moment(ev.date);
         alert(a);
@@ -123,6 +126,8 @@ if($('#input_date_deb').val() != "" && $('#input_date_fin').val() != ""){
 		// alert($("#datetimepicker_deb").datetimepicker('date').toSource());
 		// alert(JSON.stringify($("#datetimepicker_deb").datetimepicker('date'), null, 4));
 		// alert();
+    $('#result_ajax_user').html(' <i style=" margin-left:45%;" class="fa fa-refresh fa-spin fa-5x"></i> ');
+    $("body").css("cursor", "progress");
 
 	 $.ajax({
 	      url: 'ajax_search_date',
@@ -207,7 +212,7 @@ if($('#input_date_deb').val() != "" && $('#input_date_fin').val() != ""){
                        
                     });
                   string = string + "  <td>";
-                        string = string + "<a href=\"/user/"+user["user"]["id"].toString()+"\">";
+                        string = string + "<a href=\"/users/"+user["user"]["id"].toString()+"\">";
                         string = string + user["user"]["first_name"].toString();
                         string = string + "</a>";
                         string = string + "  </td>";
@@ -226,13 +231,16 @@ if($('#input_date_deb').val() != "" && $('#input_date_fin').val() != ""){
 
 
                 $('#result_ajax_user').html(string);
+                $("body").css("cursor", "default");
 	      }
 	    });
 
 	
 
 }
-
+else{
+    $('#result_ajax_user').html('<h1> <b> Veuillez remplir une date de début et une date de fin. </b> </h1>' );
+}
 
 });
 

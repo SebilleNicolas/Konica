@@ -62,10 +62,10 @@ class ConsommablesController < ApplicationController
 		in ( select  consommable_id from printers_consommables where printer_id != #{@printer.id}
   	and consommable_id NOT IN 
   	(select distinct consommable_id from printers_consommables where printer_id = #{@printer.id} ))
-		AND valide_consommables = true")
+		AND valide_consommables = true order by code_consommables ASC")
 		@consommables_hide_in_printers_consommables= Consommable.find_by_sql("
 			select * from consommables 
-		where id not in (select consommable_id from printers_consommables)")
+		where id not in (select consommable_id from printers_consommables) order by code_consommables ASC")
 		@return_value = true
 		if @conso.blank?
 			@return_value = false

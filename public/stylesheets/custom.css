@@ -64,8 +64,6 @@ mettre des width et jouer avec sa*/
 }
 .panel-default{
   background-color:papayawhip ;
-
-
 }
 .panel-default > .panel-heading{
   background-color: tan;
@@ -295,6 +293,9 @@ a.signup_button {
     overflow-x: hidden;
     height: 500px;
 }*/
+
+/*Mettre le background du datetimepicker en white*/
+table.table-condensed tr:nth-child(2n+1) {background-color: #ffffff;}
 
 
 table tr:nth-child(2n+1)

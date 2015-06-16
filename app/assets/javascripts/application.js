@@ -20,6 +20,7 @@
 //= require contact
 //= require turbolinks
 //= require bootstrap
+
 //= require_bootstrap-sprockets
 //= require moment
 //= require bootstrap-datetimepicker
@@ -27,11 +28,11 @@
 //= require_tree .
 
 
-
 // $(document).ready(function(){
 //   setTimeout(function(){
 //     $('.alert').remove().fadeOut(5000); }, 5000);
 //  });
+
 
 
 $('.collapse').collapse();

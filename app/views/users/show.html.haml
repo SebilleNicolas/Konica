@@ -90,7 +90,7 @@
     #headingTwo.panel-heading{:role => "tab"}
       %h4.panel-title
         %a.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseTwo"}
-          Recherche Détailler
+          Recherche Détaillé
     #collapseTwo.panel-collapse.collapse{"aria-labelledby" => "headingTwo", :role => "tabpanel"}
       .panel-body
         .container
@@ -99,19 +99,19 @@
               .form-group
                 date deb
                 #datetimepicker_deb.input-group.date
-                  %input#input_date_deb.form-control
+                  %input#input_date_deb.form-control{style: "width:470px;"}
                   / = f.input :date1, as: :string, input_html: { class: "form-control" }, label: false, required: true
-                  %span.input-group-addon
-                    %span.glyphicon.glyphicon-calendar
+                  %span.input-group-addon#calendar_group{style: "visibility:hidden;"}
+                    %span.glyphicon.glyphicon-calendar#calendar_button{style: "visibility:hidden;"}
 
             .col-sm-6
               .form-group
                 date fin
                 #datetimepicker_fin.input-group.date
-                  %input#input_date_fin.form-control
+                  %input#input_date_fin.form-control{style: "width:470px;"}
                   / = f.input :date2, as: :string, input_html: { class: "form-control" }, label: false, required: false
-                  %span.input-group-addon
-                    %span.glyphicon.glyphicon-calendar
+                  %span.input-group-addon{style: "visibility:hidden;"}
+                    %span.glyphicon.glyphicon-calendar{style: "visibility:hidden;"}
 
 
         %br

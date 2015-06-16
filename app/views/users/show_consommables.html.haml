@@ -1,0 +1,27 @@
+%H1 
+  Les Consommables validés par 
+  %b= @user.last_name 
+  %b= @user.first_name
+
+%table.table-bordered{:style => "width: 940px; text-align: center; "}
+  %thead
+    %th{:style => "text-align: center;"} Date
+    %th{:style => "text-align: center;"} ID consommable
+    %th{:style => "text-align: center;"} Code consommable
+    %th{:style => "text-align: center;"} Designation consommable
+    %th{:style => "text-align: center;"} Durée de vie consommable
+  %tbody
+    - @admin_valid_consommables.each do |i| 
+      / - puts i.incident_id
+      - @@consommable = Consommable.find(i.consommable_id)
+      %tr
+        %td
+          = i.date_valid
+          = i.hour_valid+":"+i.minute_valid
+          
+        
+        %td= link_to i.consommable_id , consommable_path(@@consommable)
+        %td= link_to @@consommable.code_consommables , consommable_path(@@consommable)
+        %td= link_to @@consommable.designation_consommables , consommable_path(@@consommable)
+        %td= link_to @@consommable.duree_vie_consommables + " jours" , consommable_path(@@consommable)
+        / %td= @@consommable.intitule_consommables

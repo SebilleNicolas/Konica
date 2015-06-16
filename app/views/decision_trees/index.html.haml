@@ -1,9 +1,9 @@
-%h1 DecisionTree#index
-%p Find me in app/views/decision_tree/index.html.haml
-- if current_user.is? :ADMIN
-  = link_to 'Ajouter un arbre de décision', new_decision_tree_path
 
-%table{:align => "center", :style => "width: 700px; border:none;"}
+- if current_user.is? :ADMIN
+  = link_to 'Ajouter un arbre de décision', new_decision_tree_path,style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
+%br
+%br
+%table{:align => "center", :style => "width: 100%; border:none;"}
   %thead
     %tr
       %td{:align => "center"}
@@ -31,4 +31,4 @@
         - if current_user.is? :ADMIN
 
           %td{:align => "center"}
-            = link_to 'Supprimer', decision_tree, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'arbre de décision ainsi que toutes ses questions ?" },:class => 'delete_decision_tree'
+            = link_to 'Supprimer', decision_tree, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'arbre de décision ainsi que toutes ses questions ?" },:class => 'delete_decision_tree',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'

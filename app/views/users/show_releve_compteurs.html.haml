@@ -1,0 +1,18 @@
+%H1 
+  Les relevé compteur modifiés par 
+  %b= @user.last_name 
+  %b= @user.first_name
+
+%table.table-bordered{:style => "width: 940px; text-align: center; "}
+  %thead
+    %th{:style => "text-align: center;"} Date
+    %th{:style => "text-align: center;"} ID relevé compteur
+  %tbody
+    - @user_update_releve_compteur.each do |i| 
+      / - puts i.incident_id
+      - @@releve_compteur = ReleveCompteur.find(i.releve_compteur_id)
+      %tr
+        %td
+          = i.date_update
+          = i.hour_update+":"+i.minute_update
+        %td= link_to i.releve_compteur_id , releve_compteur_path(@@releve_compteur)

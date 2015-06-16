@@ -74,3 +74,6 @@ gem "d3-rails"
 	# gem 'sunspot_solr'
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
+
+
+  gem 'spinjs-rails'
