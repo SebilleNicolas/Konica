@@ -3,7 +3,7 @@
   #{@incident.id}
   %span{style:"float: right;"}
     - if !@user.blank?
-      %b Ajouter par :
+      %b Ajouté par :
       = @user.last_name
       = @user.first_name
     - if !@date_inci.blank?
@@ -35,15 +35,22 @@
 /       - else
 /         %td= cktext_area_tag :description_incidents_disabled ,  @incident.description_incidents, disabled: true
 /         %td= cktext_area_tag :solution_incidents_disabled ,  @incident.solution_incidents, disabled: true
-            
-= simple_form_for @incident, data: { confirm: "Etes vous sur de vouloir modifier l'incident ?" }, method: :patch do |f|
-  = f.label "Description"
-  %td= f.cktext_area :description_incidents, label: false ,:input_html => { :size => 18, :maxlength => 20 , value: @incident.description_incidents}
-  = f.label "Solution"
-  %td
-    = f.cktext_area :solution_incidents, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @incident.solution_incidents}
-    / = f.hidden_field :printer_id, :value => @printer.id
-  %td= f.button :submit, class: "btn btn-block btn-primary btn-sm", value:'Modifier', id: 'edit-button'
+- if current_user.is? :ADMIN   
+  = simple_form_for @incident, data: { confirm: "Etes vous sur de vouloir modifier l'incident ?" }, method: :patch do |f|
+    = f.label "Description"
+    %td= f.cktext_area :description_incidents, label: false ,:input_html => { :size => 18, :maxlength => 20 , value: @incident.description_incidents}
+    = f.label "Solution"
+    %td
+      = f.cktext_area :solution_incidents, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @incident.solution_incidents}
+      / = f.hidden_field :printer_id, :value => @printer.id
+    %td= f.button :submit, class: "btn btn-block btn-primary btn-sm", value:'Modifier', id: 'edit-button'
+- else
+  = simple_form_for @incident, data: { confirm: "Etes vous sur de vouloir modifier l'incident ?" }, method: :patch do |f|
+    = f.label "Description"
+    %td= f.cktext_area :description_incidents, disabled: true, label: false ,:input_html => { :size => 18, :maxlength => 20 , value: @incident.description_incidents}
+    = f.label "Solution"
+    %td
+      = f.cktext_area :solution_incidents, label: false , disabled: true,:input_html => { :size => 35, :maxlength => 50 , value: @incident.solution_incidents}
 
 
 - if current_user.is? :ADMIN

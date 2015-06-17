@@ -269,6 +269,7 @@ class UsersController < ApplicationController
    def ajax_search_object
     @object_id = params[:object_id]
     @object_nature = params[:object_nature]
+    puts @object_id.inspect
     if @object_nature  == "incident"
       @object = Incident.find(@object_id)
     end

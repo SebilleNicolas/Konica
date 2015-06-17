@@ -7,7 +7,7 @@
     #{@consommable.valide_consommables}
   %span{style:"float: right;"}
     - if !@user.blank?
-      %b Ajouter par :
+      %b Ajouté par :
       = @user.last_name
       = @user.first_name
     - if !@date_conso.blank?

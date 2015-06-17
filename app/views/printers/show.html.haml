@@ -120,18 +120,18 @@
                       
                     - for i in 1..@attachments.count - 1
                       - if File.extname(@attachments[i].file.to_s) != ".pdf"
-                        - puts "8888888888888888888888888888888888888888888888888888888"
-                        - puts "*******************************************************"
-                        - puts "*******************************************************"
-                        - puts File.extname(@attachments[i].file.to_s) != ".pdf"
-                        - puts "*******************************************************"
-                        - puts "*******************************************************"
-                        - puts File.extname(@attachments[i].file.to_s)
-                        - puts "*******************************************************"
-                        - puts "*******************************************************"
-                        - puts @attachments.count 
-                        - puts "*******************************************************"
-                        - puts "*******************************************************"
+                        / - puts "8888888888888888888888888888888888888888888888888888888"
+                        / - puts "*******************************************************"
+                        / - puts "*******************************************************"
+                        / - puts File.extname(@attachments[i].file.to_s) != ".pdf"
+                        / - puts "*******************************************************"
+                        / - puts "*******************************************************"
+                        / - puts File.extname(@attachments[i].file.to_s)
+                        / - puts "*******************************************************"
+                        / - puts "*******************************************************"
+                        / - puts @attachments.count 
+                        / - puts "*******************************************************"
+                        / - puts "*******************************************************"
                         %li{"data-slide-to" => "i", "data-target" => "#carousel-example-generic"}
                       / %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
                       / %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
@@ -148,10 +148,10 @@
                       
                         / = image_tag(@attachments[1].file,:style => "margin-left:70px;")
                     - @attachments.each do |a|
-                      - puts File.extname(a.file.to_s)
-                      - puts "///////////////////////////////////" 
-                      - puts @attachments[0].file.to_s
-                      - puts "44444444444444444444444444444"
+                      / - puts File.extname(a.file.to_s)
+                      / - puts "///////////////////////////////////" 
+                      / - puts @attachments[0].file.to_s
+                      / - puts "44444444444444444444444444444"
                       - if a.file != @attachments[0].file && File.extname(a.file.to_s) != ".pdf"
                         .item
                           = image_tag(a.file_url(:thumb),:style => "margin-left:70px;")
@@ -297,7 +297,6 @@
             %tr
               %th ID
               %th CodeIncident
-              %th Statut
               - if current_user.is? :ADMIN
                 %th Supprimer 
           %tbody
@@ -305,7 +304,6 @@
               %tr
                 %td= link_to incident.id, incident
                 %td= link_to incident.code_incidents, incident
-                %td= link_to "VALIDER", incident
                 - if current_user.is? :ADMIN 
                   %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
      
@@ -320,7 +318,6 @@
             %tr
               %th ID
               %th CodeIncident
-              %th Statut
               - if current_user.is? :ADMIN
                 %th Supprimer 
           %tbody
@@ -328,7 +325,6 @@
               %tr
                 %td= link_to incident.id, incident
                 %td= link_to incident.code_incidents, incident
-                %td= link_to "non Valider", incident
                 - if current_user.is? :ADMIN 
                   %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
       - else        

@@ -16,5 +16,5 @@
         %td
           = i.date_update
           = i.hour_update+":"+i.minute_update
-        %td= link_to i.decision_tree_id , decision_tree_path(@@decision_tree)
-        %td= link_to @@decision_tree.title_decision_tree , decision_tree_path(@@decision_tree)
+        %td= link_to i.decision_tree_id , new_decision_tree_question_path(@@decision_tree)
+        %td= link_to @@decision_tree.title_decision_tree , new_decision_tree_question_path(@@decision_tree)

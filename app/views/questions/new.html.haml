@@ -156,10 +156,10 @@
     - @@question_next_no = @question_first
     - @margin = 10
     
-    = button_tag "YES", class: "btn btn-primary", value: @question_first.id_route_yes, id: @@question_next_yes.id, :onclick => "titi(#{@decision_tree.id},#{@@question_next_yes.id},'yes',0,10)"
+    = button_tag "YES", class: "btn btn-primary", value: @question_first.id_route_yes, id: @@question_next_yes.id, :onclick => "titi(#{@decision_tree.id},#{@@question_next_yes.id},'yes',0,10,0)"
     %div{id: "YESS0"}
     
-    = button_tag "NON", class: "btn btn-primary", value: @@question_next_no.id_route_yes, id: @@question_next_no.id_route_no, :onclick => "titi(#{@decision_tree.id},#{@@question_next_no.id},'no',0,10)"
+    = button_tag "NON", class: "btn btn-primary", value: @@question_next_no.id_route_yes, id: @@question_next_no.id_route_no, :onclick => "titi(#{@decision_tree.id},#{@@question_next_no.id},'no',0,10,0)"
 
     %div{id: "NO0"}
 
