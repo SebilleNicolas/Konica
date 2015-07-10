@@ -3,19 +3,14 @@ class Ability
 
   def initialize(user)
     # Define abilities for the passed in user here. For example:
-    #
       user ||= User.new # guest user (not logged in)
       if user.is? :ADMIN
         can :manage, :all
       elsif user.is? :HL2
         can :create, Incident
-        can :valide, Incident
-        
         can :crud, Consommable
         can :read, Printer
         can :update, Printer
-        # can :valide, Releve_compteur
-        # can :valide, Compteur
       else
         can :read, :all
       end

@@ -16,10 +16,8 @@
         %th Modifier
         - if @consommable.valide_consommables == false
           %th Valider
-  
   %tbody
     %tr
-      
       = simple_form_for @consommable,url: update_attributes_consommable_path(@consommable), data: { confirm: "Etes vous sur de vouloir modifier consommable ?" }, method: :patch do |f|
         - @disabled = true
         - @disabled = false if current_user.is? :ADMIN
@@ -31,9 +29,7 @@
           = f.collection_select :replacement_id, Replacement.all ,:id, :name, prompt: @r.name
         %td
           = f.input :duree_vie_consommables, label: false ,:input_html => { :min => "0" ,:type => "number", value: @consommable.duree_vie_consommables}, disabled: @disabled 
-          / = @disabled
         %td
-          / = f.collection_select :show, :consommables, @list_printers_consommable, :to_s
           %select
             - if @list_printers_consommable.count > 1 
               - @list_printers_consommable.each do |printer| 
@@ -49,103 +45,3 @@
           %td
             %button.btn.btn-primary#valid-consommable{data:{consommable: @consommable.id}}
               Valider
-          / %td= button_tag :submit, class: "btn btn-primary", value:'Valider'
-
-      / = simple_form_for @consommable,url: update_valide_consommable_path(@consommable), data: { confirm: "Etes vous sur de vouloir valider consommable ?" }, method: :patch do |f|
-   
-      /   %td= f.hidden_field :valide_consommables, :value => "true"
-      /   / # = button_to 'valider conso',  update_valide_consommable_path(@consommable) 
-      / %td= f.button :submit, class: "btn btn-primary btn-lg ", value:'Valider le consommable'
-      
-      
-
-
-/ - if current_user.is? :ADMIN
-/   - if "#{@consommable.valide_consommables}" == "false"
-
-/     = simple_form_for @consommable,url: update_valide_consommable_path(@consommable), data: { confirm: "Etes vous sur de vouloir valider consommable ?" }, method: :patch do |f|
-   
-/       = f.hidden_field :valide_consommables, :value => "true"
-/       / # = button_to 'valider conso',  update_valide_consommable_path(@consommable) 
-/       = f.button :submit, class: "btn btn-primary btn-lg btn-block", value:'Valider le consommable'
-/   = simple_form_for @consommable ,url: delete_consommable_path(@consommable),data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete do |f|
-/     = f.hidden_field :id, :value => @consommable.id
-/     = f.button :submit, class: "btn btn-primary btn-lg btn-block btn-danger", value:"Supprimer le consommable"
-
-/ = link_to " retour en arrière ", printer_path(@printer)+ "#consommableTrue" ,class:  "glyphicon glyphicon-arrow-left"
-
-
-
-
-
-
-/ ------------------------ Marche pas du premier coup ------------------
-
-
-
-/ %h1
-/   Consommables : #{@consommable.id}
-/
-  <table style="width: 900px; border: none; ">
-  <tr>
-  <td><b>Printer ID<b>  </td>
-  <td><b>Code Consommable<b></td>
-  <td><b>Designation<b></td>
-  <td><b>Modifier consommable<b></td>
-  <td><b>Supprimer consommable<b></td>
-  </tr>
-  
-  
-  <tr>
-  <td><haml_loud> @consommable.printer_id  </haml_loud> </td>
-  <haml_loud> simple_form_for @consommable ,
-  \:url => url_for(:action => 'update', :controller => 'consommables'),data: { confirm: "Etes vous sur de vouloir modifier le consommable ?" },   :method => 'put'  do |f| </haml_loud><haml_block>
-  <td><haml_loud> f.input :code_consommables, label: false ,:input_html => { :size => 15, :maxlength => 20 , value: @consommable.code_consommables} </haml_loud>  </td>
-  <td>
-  <haml_loud> f.input :designation_consommables, label: false ,:input_html => { :size => 15, :maxlength => 20 , value: @consommable.designation_consommables} </haml_loud>
-  </td>
-  <td>
-  <haml_loud> f.button :submit, class: "btn btn-primary", value:'Modifier' </haml_loud>
-  
-  </td>
-  </haml_block>
-  <td>
-  <haml_loud> simple_form_for @consommable,
-  \:url => url_for(:action => 'destroy', :controller => 'consommables'),data: { confirm: "Etes vous sur de vouloir supprimer ?" },   :method => 'delete' do |f| </haml_loud><haml_block>
-  
-  <haml_loud> f.button :submit, class: "btn btn-primary", value:'Supprimer' </haml_loud>
-  </haml_block>     </td>s
-  
-  </tr>
-  </tbody>
-  </table>
-  
-  
-  </br></br></br></br>
-
-
-
-
-/ %table{:style => "border: none;"}
-/   %tr
-/     %td 
-/       %b Code Conso
-/     %td 
-/       %b Designation Conso
-/     %td
-/       %b Modifier
-/     %td
-/       %b Supprimer
-/   %tr
-/     = simple_form_for @consommable , :url => url_for(:action => 'update', :controller => 'consommables'), data: { confirm: "Etes vous sur de vouloir modifier consommable ?" },   :method => 'put'  do |f| |
-/       %td= f.input :code_consommables, label: false ,:input_html => { :size => 15, :maxlength => 20 , value: @consommable.code_consommables}
-/       %td= f.input :designation_consommables, label: false ,:input_html => { :size => 15, :maxlength => 20 , value: @consommable.designation_consommables}
-/       %td
-/         = f.button :submit, class: "btn btn-primary", value: 'Modifier'
-
-/     = simple_form_for @consommable, :url => url_for(:action => 'destroy', :controller => 'consommables'),data: { confirm: "Etes vous sur de vouloir supprimer ?" },   :method => 'delete' do |f| |
-/       %td
-/         = f.button :submit, class: "btn btn-primary", value:'Supprimer'
-
-
-/ = link_to " retour en arrière", :back ,class:  "glyphicon glyphicon-arrow-left"

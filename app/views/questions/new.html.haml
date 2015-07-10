@@ -18,19 +18,31 @@
     %input#Compteur.modification{:name => "TempsAction",:onload => "load()", :style => "width:95px;", :type => "text", :value => "00 : 00 : 00",disabled: true}
 / = @decision_tree.id
 
+/ -------------------------------------------------------------------------------------------------------------------
+/ ---------------------------------------Explication algorythmique --------------------------------------------------
+/ -------------------------------------------------------------------------------------------------------------------
+/ Pour afficher toutes les questions dans la partie administrateur, on va commencer par parcourir toutes les questions YES Tant qu'elles possèdent un id_route_yes (soit tant qu'elles possèdent une réponse). A chaque affichage de question, on va enregistrer l'ID de la question dans un tableau @@arr. Ce qui nous permettra de savoir quelles questions ont déjà été affichée. On testera a chaque fois avant d'afficher une question si elle est déjà présente dans le tableau, dans le cas contraire on pourra afficher la question, sinon on remonte a la question précédente.
+/ Une fois la dernière question YES trouvée, on va remonté a la question précédente (rechercher dans toute les questions celle qui a l'id_route_yes de la derniere question) puis on va Fill sont id_route_no. 
+/ Après la question NO affichée, on va remonté 2 fois dans les questions mère, puis on va fill l'id route no. On va répéter cela jusqu'à arriver a la première question (question_first). ATTENTION : SI les questions NO possèdent une réponse on va les Fill et les afficher
+/ Puis on passe a la partie NO, en faisant un Fill du NO de la question first, et en répétant ainsi le même déroulement que précédemment.
+
+/La suppression d'une question entraine la suppression des réponse YES et NO qui lui sont associé (Si on supprime le YES; le NO va etre supprimer aussi)
+
 
 
 //-------------------------------------------------- PARTIE ADMIN --------------------------------------------------
 - if current_user.is? :ADMIN
-  / = puts @question.to_ya
   .container
     .row
       .col-md-8
+        / Création du tableau @@arr
         - @@arr = Array.new   
         - puts @question_first.to_yaml      
         - if !@question_first.nil?
+          / on affiche la 1ere question
           = label_tag "Titre Question :" 
           = @question_first.title_question
+          / on enregistre la question dans le tableau @@arr
           - @@arr << @question_first.id
           %br
           = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_first.id)
@@ -50,10 +62,14 @@
           = render "affiche_questions_yes_3"  
 
           - bool_yes = true
+          / tant que la question n'est pas la 1er question et que c'est une question YES
           - while @@question_next_yes.id != @question_first.id && bool_yes == true
+            / SI la question possède une réponse
             - if @@question_next_yes.id_route_no?
+              / Si la question n'est pas déjà dans le tableau
               - if !@@arr.include?(@@question_next_yes.id_route_no)
                 - @@question_next_yes = Question.find_by id: @@question_next_yes.id_route_no
+                / Si la question possède une réponse
                 - if @@question_next_yes.id_route_yes?
                   - while @@question_next_yes.id_route_yes?
                     - if @@question_next_yes.id_route_yes?
@@ -63,7 +79,6 @@
 
                 - @@margin = @@margin + 40
                 = render "affiche_questions_yes_3"  
-                / - puts  @@question_next_yes.to_yaml 
               - else
                 - if @@question_next_yes.question_yes == true
                   - @@question_next_yes = Question.find_by id_route_yes: @@question_next_yes.id
@@ -87,7 +102,6 @@
             - puts @@question_next_no.to_yaml
 
             - bool_no = true
-            / - if @@question_next_no.id_route_no?
             - while @@question_next_no.id != @question_first.id && bool_no == true
               - puts @@question_next_no.to_yaml
               - if @@question_next_no.id_route_no?
@@ -112,7 +126,7 @@
                 - bool_no = false
         
 
-
+      / Si l'arbre n'a pas encore de question on va créer la 1ere avec ses 2 réponses 
       - if @decision_tree.questions.count < 1
         .col-md-4
           %h4 Nom de la question Question
@@ -134,23 +148,14 @@
             = submit_tag "Valider" , class: "btn btn btn-primary" 
 - else
   //-------------------------------------------------- PARTIE HL1/2 --------------------------------------------------
+  / A chaque clic, on va éxécuté la fonction TITI , (cf assets/javascript/question.js)
+
   - if !@question_first.nil?
     = label_tag "Titre Question :" 
-    - puts @question_first.title_question
-    - puts '***************************************************'
     = @question_first.title_question
 
     %br
-    / = label_tag :Id_route_yes, "Yes", :value => "Yes" 
-    / = radio_button_tag 'Id_route_yes', 'true'
-    / #question_yes{style: "visibility:hidden;"}
-    /   ggggggggggggggg
 
-    / %br
-    / = label_tag :Id_route_no, "No", :value => "No" 
-    / = radio_button_tag 'Id_route_yes', 'false'
-    / #question_no{style: "visibility:hidden;"}
-    /   azdazda
     - cpt = 0 
     - @@question_next_yes = @question_first
     - @@question_next_no = @question_first
@@ -163,71 +168,4 @@
 
     %div{id: "NO0"}
 
-    / - while @@question_next_yes.id_route_yes?
-    /   - if @@question_next_yes.title_question != @question_first.title_question
-    /     %br
-    /     //%span{id: "toto" , data:{idyes: @@question_next_yes.id_route_yes, idno: @@question_next_yes.id_route_no}}  
-    /     %span{style: "margin-left: "+@margin.to_s+"px;"}
-    /       = button_tag "YES", class: "btn btn-primary", value: @question_first.id_route_yes, id: @@question_next_yes.id, :onclick => "titi(#{@decision_tree.id},#{@@question_next_yes.id})"
-    /       - if @question.id == @@question_next_yes.id
-    /         %b= @@question_next_yes.title_question
-    /       - else
-    /         = @@question_next_yes.title_question
-    /   - @@question_next_yes = Question.find_by decision_tree_id: @decision_tree.id ,id: @@question_next_yes.id_route_yes
-    /   - @margin = @margin + 40
-    /   - cpt = cpt + 1
-    / %br
-    / %span{style: "margin-left: "+@margin.to_s+"px;"}
-    /   = button_tag "YES", class: "btn btn-primary", value: @question_first.id_route_yes, id: @@question_next_yes.id_route_yes
-    /   - if @question.id == @@question_next_yes.id
-    /     %b= @@question_next_yes.title_question
-    /   - else
-    /     = @@question_next_yes.title_question
-    / - @@question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id_route_yes: @@question_next_yes.id
-    / - @@question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id: @@question_next_no.id_route_no
     
-    / %br
-    / %span{style: "margin-left: "+@margin.to_s+"px;"}
-    /   = button_tag "NON", class: "btn btn-primary", value: @question_first.id_route_yes, id: @@question_next_no.id_route_no
-
-    /   - if @question.id == @@question_next_no.id
-    /     %b= @@question_next_no.title_question
-    /   - else
-    /     = @@question_next_no.title_question
-    / - @margin = @margin - 40
-    / - cpt2 = 0
-    
-    / - while cpt > 1
-    /   - puts "Compteur : "+ cpt.to_s
-    /   - puts "Avant remonter "
-    /   - puts @@question_next_no.to_yaml
-    /   - puts "remonter 1"
-    /   - @@question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id_route_no: @@question_next_no.id
-    /   - puts @@question_next_no.to_yaml
-    /   - puts "remonter 2"
-    /   - @@question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id_route_yes: @@question_next_no.id
-    /   - puts @@question_next_no.to_yaml
-    /   - puts "fill question no"
-    /   - @@question_next_no = Question.find_by decision_tree_id: @decision_tree.id ,id: @@question_next_no.id_route_no
-    /   - puts @@question_next_no.to_yaml
-      
-    /   %br
-    /   %span{style: "margin-left: "+@margin.to_s+"px;"}
-    /     = button_tag "NON", class: "btn btn-primary", value: @@question_next_no.id_route_yes, id: @@question_next_no.id_route_no
-    /     - if @question.id == @@question_next_no.id
-    /       %b= @@question_next_no.title_question
-    /     - else
-    /       = @@question_next_no.title_question
-    /   - cpt = cpt - 1
-    /   - @margin = @margin - 40
-    
-    / %br
-
-    
-
-
-
-
-  
-
-

@@ -139,10 +139,6 @@ if($('#input_date_deb').val() != "" && $('#input_date_fin').val() != ""){
 	      },
 	      type: "GET",
 	      success: function(data) { 
-                // alert(data.toSource());
-                // alert(JSON.stringify(data, null, 4));
-                // alert(data["object_list"][1]["id"].toString());
-
 
                 var string =  "       <table class=\"table-bordered\" style=\"text-align:center; width:100%;\">";
                 string = string +   " <thead>";

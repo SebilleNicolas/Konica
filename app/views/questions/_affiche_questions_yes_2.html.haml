@@ -1,6 +1,7 @@
 - if @@question_next_yes.question_yes == true
   - if @@question_next_yes.id != @question_first.id
     //Affiche le YES
+    / SI la question n'est pas dans le tableau
     - if !@@arr.include?(@@question_next_yes.id)
       %br
       %span{style: "margin-left: "+@@margin.to_s+"px;"}
@@ -8,8 +9,6 @@
       - if @question.id == @@question_next_yes.id
         %b 
           %u= @@question_next_yes.title_question
-          / - @@bool_question_yes_double = true
-        / %b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       - else
         = @@question_next_yes.title_question
         
@@ -17,11 +16,14 @@
         - if !@@question_next_yes.id.nil?
           %br
           %span{style: "margin-left: "+@@margin.to_s+"px;"}
+            / Si la question n'a pas de réponse
             - if !@@question_next_yes.id_route_no?
               = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@@question_next_yes.id)
               |
+            / On donne la possibilité de modifier la question même si ce n'est pas la derniere
             = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@@question_next_yes.id)
-            - if !@@question_next_yes.id_route_no?
+            / Si la question n'a pas de réponse
+            - if !@@question_next_yes.id_route_no?  && @@question_next_yes.id != @question_first.id_route_yes && @@question_next_yes.id != @question_first.id_route_no
               |
               = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_yes.id), style: "color:red;"
               %span.label.label-info{style: "margin-left: 10px;"} FIN
@@ -49,7 +51,7 @@
               = link_to 'proposer reponse', decision_tree_question_path(@decision_tree,@@question_next_yes.id)
               |
             = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@@question_next_yes.id)
-            - if !@@question_next_yes.id_route_no?
+            - if !@@question_next_yes.id_route_no? && @@question_next_yes.id != @question_first.id_route_yes && @@question_next_yes.id != @question_first.id_route_no
               |
               = link_to 'supprimer', delete_decision_tree_question_path(@decision_tree,@@question_next_yes.id), style: "color:red;"
               %span.label.label-info{style: "margin-left: 10px;"} FIN

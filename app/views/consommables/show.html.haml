@@ -1,3 +1,4 @@
+/ Voir et modifier les informations d'un consommable
 
 %h1
   %b Consommables : 
@@ -64,35 +65,5 @@
       %button.btn.btn-success.btn-sm.btn-block#valid-consommable{style: "width: 1000px; margin-left: 63px;",data:{consommable: @consommable.id}}
         Valider le consommable
 %br
-
 = link_to " Retour en arriere ", :back ,class:  "glyphicon glyphicon-arrow-left"
 
-/ = simple_form_for @consommable,url: update_attributes_consommable_path(@consommable), data: { confirm: "Etes vous sur de vouloir modifier consommable ?" }, method: :patch do |f|
-/   - @disabled = true
-/   - @disabled = false if current_user.is? :ADMIN
-/   = f.input :code_consommables, label: false ,:input_html => { :size => 18, :maxlength => 20 , value: @consommable.code_consommables}, disabled: @disabled 
-  
-/   = f.text_area :designation_consommables, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @consommable.designation_consommables},:cols => 35, :rows => 6, disabled: @disabled , spellcheck: false
-/   = f.hidden_field :printer_id, :value => @printer.id
-
-/   = f.collection_select :replacement_id, Replacement.all ,:id, :name, prompt: @r.name
-
-/   = f.input :duree_vie_consommables, label: false ,:input_html => { :min => "0" ,:type => "number", value: @consommable.duree_vie_consommables}, disabled: @disabled 
-/     / = @disabled
- 
-/     / = f.collection_select :show, :consommables, @list_printers_consommable, :to_s
-/   / %select
-/   /   - if @list_printers_consommable.count > 1 
-/   /     - @list_printers_consommable.each do |printer| 
-/   /       %option
-/   /         = printer.code_printers
-/   /   - else
-/   /     %option Pas de système d'impression.
-
-/   - if current_user.is? :ADMIN 
-/     = f.button :submit, class: "btn btn-primary", value:'Modifier'
-/ - if current_user.is? :ADMIN 
-/   - if @consommable.valide_consommables == false
-/     %td
-/       %button.btn.btn-primary#valid-consommable{data:{consommable: @consommable.id}}
-/         Valider

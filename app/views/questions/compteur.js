@@ -1,3 +1,4 @@
+// Compteur à afficher dans la page question/new
 
 
 // window.reload();

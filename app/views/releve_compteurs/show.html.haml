@@ -1,3 +1,5 @@
+/ Voir et modifier les informations d'une méthode pour relevé un compteur
+
 %h3
   %b Releve Compteur : 
   #{@releve_compteur.id}
@@ -10,10 +12,8 @@
       %b Le : 
       = @date_rc.date_add
 %h3
-  / %span{style:"float: right;"}
   %b Système d'impression : 
   #{@printer.code_printers}
-
 
 = simple_form_for @releve_compteur, data: { confirm: "Etes vous sur de vouloir modifier la methode releve compteur ?" }, method: :patch do |f|
   %table.table.table-bordered
@@ -26,23 +26,17 @@
         
     %tbody
       %tr
-        
         %td
           - if current_user.is? :ADMIN
-            / = f.text_area :description_releve_compteurs, label: false,:cols => 40, :rows => 8 ,:input_html => { :size => 18, :maxlength => 20 , value: @releve_compteur.description_releve_compteurs}
             = f.cktext_area :description_releve_compteurs , :ckeditor => {:height => '250'},:spellcheck => false, :required => true , :value => @releve_compteur.description_releve_compteurs
           - else 
             = cktext_area_tag :description_printers ,  @releve_compteur.description_releve_compteurs, disabled: true
-       
-       
 
         - if current_user.is? :ADMIN 
           %td
             = @releve_compteur.valide_releve_compteurs
           %td
             = f.button :submit, class: "btn btn-primary", value:'Modifier'
-   
-      
             
      
 - if current_user.is? :ADMIN
@@ -57,4 +51,3 @@
 %br
 
 = link_to " Retour en arriere ", :back ,class:  "glyphicon glyphicon-arrow-left"
-/ = link_to "retour en arriere", :back ,class:  "glyphicon glyphicon-arrow-left"

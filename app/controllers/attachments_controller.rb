@@ -1,35 +1,20 @@
 class AttachmentsController < ApplicationController
 	def index
-	
-
 	end
 	def new	
 		@attachment = Attachment.new
 		@titre = "Ajouter une piece jointe"
 	end
 
-	# def update
-	# 	@attachment = Attachment.find(params[:id])
- #    if @incident.update(incident_update_params)
- #      flash[:notice] = "Incident modifié a une valeur 'VRAI'"
- #      redirect_to printers_path	      
- #    else
- #    	render 'edit'
- #    end
-	# end
-
+	#Ajouter une pièce jointe et inclure la dépendance dans le printer
 	def create
 		@printer = Printer.find(params[:attachment][:printer_id])
 		@attachment = Attachment.create(attachment_params)
-		puts params[:attachment][:file]
-		puts "****************************************"
-		puts @attachment.to_yaml
 		@attachment.save
 		if @attachment.save
 			flash[:notice] = "La piece jointe a bien été créé."
 			redirect_to @printer
 		else
-			# puts @attachment.errors.to_yaml
 			flash[:alert] = "La piece jointe n'a pas été créé"
 			redirect_to @printer
 		end
@@ -38,12 +23,8 @@ class AttachmentsController < ApplicationController
 	def edit
 		@attachment = Attachment.find(params[:id])
 	end
-
-
-	def show
-		
-	end		
 	
+	# Supprimer uhe pièce jointe (en ajax)
 	def destroy
  		@attachment = Attachment.find(params[:id])
  		@printer_id = @attachment.printer_id
@@ -56,16 +37,9 @@ class AttachmentsController < ApplicationController
     end
 	end
 
-
 private
+	def attachment_params
+		params.require(:attachment).permit(:file, :printer_id)
+	end
 	
-
-def attachment_params
-	params.require(:attachment).permit(:file, :printer_id)
 end
-	
-
-
-end
-
-

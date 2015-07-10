@@ -1,26 +1,23 @@
 class ReleveCompteursController < ApplicationController
-
-
 	def index
 		@releves_compteurs = ReleveCompteur.all
 		@releve_compteur = ReleveCompteur.new
-    # puts '***********************************************'
-    # @releves_compteurs =  @printer.releve_compteurs
     @releve_compteurs_true = @releves_compteurs.where("valide_releve_compteurs = ?", true).order(id: :asc)
     @releve_compteurs_false = @releves_compteurs.where("valide_releve_compteurs = ?", false).order(id: :asc)
 		@titre = "Liste des Releve Compteur"
-
-
 	end
 
   def new
   	@releve_compteur = ReleveCompteur.new
   end
+
+  #Création d'un relevé compteur
   def create
     @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")
+
   	@releve_compteur = ReleveCompteur.create(releve_compteur_params)
   	@printer = Printer.find(params[:releve_compteur][:printer_id])
 		if @releve_compteur.save
@@ -41,16 +38,19 @@ class ReleveCompteursController < ApplicationController
     @date = @time.strftime("%Y-%m-%d")
     @releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
+
+    # Tracabilité du relevé compteur
     @user_show =  UserShowReleveCompteur.create(releve_compteur_id: @releve_compteur.id, user_id: current_user.id,
       date_show: @date, hour_show: @hour, minute_show: @minute) 
     @titre = "Releve compteur"
+
      @date_rc = UserAddReleveCompteur.find_by releve_compteur_id: params[:id]
      if !@date_rc.blank?
       @user = User.find(@date_rc.user_id)
      end
   end
 
-
+  # Suppression d'un relevé compteur 
   def delete
 		@releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
@@ -61,6 +61,8 @@ class ReleveCompteursController < ApplicationController
   	end
     redirect_to @printer
   end
+
+  #Suppression d'un relevé compteur (en ajax)
   def destroy   
     @releve_compteur = ReleveCompteur.find(params[:id])
     @releve_compteur.destroy
@@ -71,14 +73,20 @@ class ReleveCompteursController < ApplicationController
       format.js   { render :layout => false }
     end
   end
+
+  # Modification d'un relevé compteur
 	def update
      @time = Time.now
     @hour = @time.strftime("%H")
     @minute = @time.strftime("%M:%S")
     @date = @time.strftime("%Y-%m-%d")
+
+
     @releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
     if @releve_compteur.update(releve_compteur_params)
+
+      # Tracabilité du relevé compteur 
       @user_update_releve_compteur = UserUpdateReleveCompteur.create(user_id: current_user.id ,
        releve_compteur_id: @releve_compteur.id,date_update: @date, hour_update: @hour, minute_update: @minute)
       @user_update_releve_compteur.save
@@ -88,6 +96,8 @@ class ReleveCompteursController < ApplicationController
     	render 'edit'
     end
 	end
+
+  # Validation du releve_compteur
 	def valide
     @time = Time.now
     @hour = @time.strftime("%H")
@@ -96,6 +106,8 @@ class ReleveCompteursController < ApplicationController
     @releve_compteur = ReleveCompteur.find(params[:id])
     @printer = Printer.find(@releve_compteur.printer_id)
     if @releve_compteur.update(valide_releve_compteur_params)
+
+      # Tracabilité du relevé compteur
       @admin_valid_releve_compteur = AdminValidReleveCompteur.create(user_id: current_user.id ,
        releve_compteur_id: @releve_compteur.id,date_valid: @date, hour_valid: @hour, minute_valid: @minute)
       @admin_valid_releve_compteur.save
@@ -105,6 +117,8 @@ class ReleveCompteursController < ApplicationController
     	render 'edit'
     end
 	end
+
+  # Validation du releve_compteur (en ajax)
   def update_valide
     @time = Time.now
     @hour = @time.strftime("%H")

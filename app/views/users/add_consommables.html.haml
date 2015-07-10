@@ -1,3 +1,5 @@
+/ Consommables ajoutés par un utilisateur
+
 %H1 
   Les Consommables ajouter par 
   %b= @user.last_name 
@@ -12,7 +14,6 @@
     %th{:style => "text-align: center;"} Durée de vie consommable
   %tbody
     - @user_add_consommables.each do |i| 
-      / - puts i.incident_id
       - @@consommable = Consommable.find(i.consommable_id)
       %tr
         %td
@@ -24,4 +25,3 @@
         %td= link_to @@consommable.code_consommables , consommable_path(@@consommable)
         %td= link_to @@consommable.designation_consommables , consommable_path(@@consommable)
         %td= link_to @@consommable.duree_vie_consommables + " jours" , consommable_path(@@consommable)
-        / %td= @@consommable.intitule_consommables

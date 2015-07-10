@@ -1,31 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
-  
-  
-
-  #  def update
-  #   @user = User.find(current_user.id)
-
-  #   successfully_updated = if needs_password?(@user, params)
-  #     @user.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
-  #   else
-  #     # remove the virtual current_password attribute
-  #     # update_without_password doesn't know how to ignore it
-  #     params[:user].delete(:current_password)
-  #     @user.update_without_password(devise_parameter_sanitizer.sanitize(:account_update))
-  #   end
-
-  #   if successfully_updated
-  #     set_flash_message :notice, :updated
-  #     # Sign in the user bypassing validation in case their password changed
-  #     sign_in @user, :bypass => true
-  #     redirect_to after_update_path_for(@user)
-  #   else
-  #     flash[:alert] = "L'utilisateur n'a pas été modifié"
-  #     render "edit"
-
-  #   end
-  #    @titre = "Modification"
-  # end
 
   def update
       @user = User.find(current_user.id)
@@ -75,7 +48,6 @@ class RegistrationsController < Devise::RegistrationsController
       end
     else
       set_flash_message(:notice, :saved) if is_flashing_format?
-       # javascript_tag "alert('All is good')", defer: 'defer'
       clean_up_passwords resource
       @validatable = devise_mapping.validatable?
       if @validatable

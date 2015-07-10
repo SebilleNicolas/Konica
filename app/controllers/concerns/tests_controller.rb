@@ -3,15 +3,10 @@ class TestsController < ActionController::Base
 		@test = test.new(user_params)
 		respond_to do |format|
 			@incident.save
-
-	end
-
+		end
 	end
 
 	def user_params
 		params.require(:@test).permit(:name, :age)
 	end
-
-
-
 end

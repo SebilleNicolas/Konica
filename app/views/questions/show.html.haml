@@ -1,156 +1,20 @@
-%h1 Question#NEW
+/ %h1 Question#NEW
+%h1 Question#Show
 .container
   .row
     .col-sm-10
       %h2= @decision_tree.title_decision_tree
-      / = @decision_tree.title_decision_trees
     .col-sm-1
       = button_to 'modifier le nom arbre décision',decision_tree_path(@decision_tree), class: "btn btn btn-primary", :method => :get
       %br
       = button_to 'retour vers l\'arbre de décision',new_decision_tree_question_path(@decision_tree), class: "btn btn btn-warning", :method => :get
-/ = @decision_tree.id
 
 
 
 - if current_user.is? :ADMIN
-  / = puts @question.to_ya
   .container
     .row
       .col-md-8
-        / - @@arr = Array.new   
-        / - puts @question_first.to_yaml      
-        / - if !@question_first.nil?
-        /   = label_tag "Titre Question :" 
-        /   / - puts @question_first.title_question
-        /   / - puts '***************************************************'
-        /   = @question_first.title_question
-        /   - @@arr << @question_first.id
-        /   %br
-        /   = link_to 'modifier question', edit_decision_tree_question_path(@decision_tree,@question_first.id)
-        /   - puts '*******************************************'
-        /   / - puts @question_first.to_yaml
-        /   - puts '*******************************************'
-        /   - @@question_next_yes = Question.find_by id: @question_first.id_route_yes
-        /   - @@question_next_no =  Question.find_by id: @question_first.id_route_no
-        /   - @@margin = 10
-        /   - puts '44444444444'
-        /   - puts @@question_next_yes.to_yaml
-        /   - puts @@question_next_no.to_yaml
-        /   />>>>>>>>>> Premier While Question_next_YES <<<<<<<<<<
-        /   - while @@question_next_yes.id_route_yes?
-        /     - if @@question_next_yes.id_route_yes?
-        /       - if @@question_next_yes.title_question != @question_first.title_question
-        /         - @@margin = @@margin + 40
-        /         = render "affiche_questions_yes" 
-        /         - @@question_next_yes = Question.find_by id: @@question_next_yes.id_route_yes
-        /         - puts '22222222222222222222222222222222222222222222'
-        /         - puts  @@question_next_yes .to_yaml
-
-        /   - @@margin = @@margin + 40 
-        /   / - @@bool_question_yes_double = false
-        /   = render "affiche_questions_yes_2"
-
-        /   = render "affiche_questions_yes_3"  
-
-        /   - bool_yes = true
-        /   - while @@question_next_yes.id != @question_first.id && bool_yes == true
-        /     - if @@question_next_yes.id_route_no?
-        /       / - puts '*************************************************'
-        /       / - puts @@question_next_yes.to_yaml
-        /       - puts '*************************************************'
-        /       - puts @@arr.to_yaml
-        /       - puts 'ARR INCLUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUDE'
-        /       - puts !@@arr.include?(@@question_next_yes.id_route_no)
-        /       - puts "QUESTION NEEEEXT YESSSSSs"
-        /       - puts @@question_next_yes.to_yaml
-        /       - if !@@arr.include?(@@question_next_yes.id_route_no)
-        /         - @@question_next_yes = Question.find_by id: @@question_next_yes.id_route_no
-        /         - if @@question_next_yes.id_route_yes?
-        /           - while @@question_next_yes.id_route_yes?
-        /             - if @@question_next_yes.id_route_yes?
-        /               - @@margin = @@margin + 40
-        /               = render "affiche_questions_yes"
-        /               - @@question_next_yes = Question.find_by id: @@question_next_yes.id_route_yes
-
-        /         - @@margin = @@margin + 40
-        /         = render "affiche_questions_yes_3"  
-        /         / - puts  @@question_next_yes.to_yaml 
-        /       - else
-        /         - puts '666666666666666666666666666666666666666666666666'
-        /         - puts '666666666666666666666666666666666666666666666666'
-        /         - puts  @@question_next_yes.to_yaml
-        /         - if @@question_next_yes.question_yes == true
-        /           - @@question_next_yes = Question.find_by id_route_yes: @@question_next_yes.id
-        /         - else
-        /           - @@question_next_yes = Question.find_by id_route_no: @@question_next_yes.id
-        /         - @@margin = @@margin - 40
-
-        /         - puts '666666666666666666666666666666666666666666666666'
-        /         - puts '666666666666666666666666666666666666666666666666'
-        /         - puts '666666666666666666666666666666666666666666666666'
-        /         - puts  @@question_next_yes.to_yaml 
-        /     - else
-        /       - bool_yes = false
-
-
-        /   - puts "////////////////////////////////////////////////////////////////////////////"
-        /   - puts "////////////////////////////////////////////////////////////////////////////"
-        /   - puts "////////////////////////////////////////////////////////////////////////////"
-        /   - puts "////////////////////////////////////////////////////////////////////////////"
-        /   - puts "////////////////////////////////////////////////////////////////////////////"
-        /   />>>>>>>>>> Deuxieme While Question_next_NO <<<<<<<<<<
-        /   - if !@@question_next_no.id.nil?
-        /     - while @@question_next_no.id_route_yes?
-        /       - if @@question_next_no.id_route_yes?
-        /         - if @@question_next_no.title_question != @question_first.title_question
-        /           - @@margin = @@margin + 40
-        /           = render "affiche_questions_no"
-        /           - @@question_next_no = Question.find_by id: @@question_next_no.id_route_yes
-        /     - @@margin = @@margin + 40
-        /     = render "affiche_questions_no_2"    
-        /     = render "affiche_questions_no_3"      
-        /     - puts @@question_next_no.to_yaml
-
-        /     - bool_no = true
-        /     / - if @@question_next_no.id_route_no?
-        /     - while @@question_next_no.id != @question_first.id && bool_no == true
-        /       - puts @@question_next_no.to_yaml
-        /       - if @@question_next_no.id_route_no?
-        /         - if !@@arr.include?(@@question_next_no.id_route_no)
-        /           - @@question_next_no = Question.find_by id: @@question_next_no.id_route_no
-        /           - if @@question_next_no.id_route_yes?
-        /             - while @@question_next_no.id_route_yes?
-        /               - if @@question_next_no.id_route_yes?
-        /                 - @@margin = @@margin + 40
-        /                 = render "affiche_questions_no"
-        /                 - @@question_next_no = Question.find_by id: @@question_next_no.id_route_yes
-
-        /           - @@margin = @@margin + 40
-        /           = render "affiche_questions_no_3"  
-        /         - else
-        /           - if @@question_next_no.question_yes == true
-        /             - @@question_next_no = Question.find_by id_route_yes: @@question_next_no.id
-        /           - else
-        /             - @@question_next_no = Question.find_by id_route_no: @@question_next_no.id 
-        /           - @@margin = @@margin - 40
-        /       - else
-        /         - bool_no = false
-
-        
-
-
-          
-        / = @y.title_question if !(@y.nil?)
-        / %br
-        / - if !(@y.nil? )
-        /   =  label_tag "YES :" , html: 
-        /   = q.title_question
-        / %br
-        / - if !(@n.nil? )
-        /   =  label_tag "NO :" 
-        /   = q.title_question
-        / - puts @y.to_yaml
-        / - puts @n.to_yaml
       .col-md-4
       %h4= @question.title_question
       = form_tag [@decision_tree, @question_new] do |f|

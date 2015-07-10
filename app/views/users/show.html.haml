@@ -1,3 +1,5 @@
+/ Page de consultation des actions effectué par un utilisateurs
+
 - if current_user.is? :ADMIN
   %H1
     Utilisateur : 
@@ -18,16 +20,12 @@
               .col-sm-3
                 %H3 Incidents
                 = link_to 'Incidents ajoutés', add_incidents_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_add_incidents
                 %br
                 = link_to 'Incidents validés', valid_incidents_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_valid_incidents
                 %br
-                / %span{style: "margin-left:50px;"}
                 = link_to 'Incidents modifiés', update_incidents_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_update_incidents_consommables
 
 
@@ -35,17 +33,12 @@
               .col-sm-3
                 %H3 Consommables
                 = link_to 'Consommables ajoutés', add_consommables_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_add_consommables
                 %br
-                / %span{style: "margin-left:50px;"}
                 = link_to 'Consommables validés', valid_consommables_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_valid_consommables
                 %br
-                / %span{style: "margin-left:50px;"}
                 = link_to 'Consommables modifiés', update_consommables_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_update_consommables
 
 
@@ -53,17 +46,12 @@
               .col-sm-3
                 %H3 Releve Compteurs
                 = link_to 'Compteurs ajoutés', add_releve_compteurs_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_add_releve_compteurs
                 %br
-                / %span{style: "margin-left:50px;"}
                 = link_to 'Compteurs validés', valid_releve_compteurs_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_valid_releve_compteurs
                 %br
-                / %span{style: "margin-left:50px;"}
                 = link_to 'Compteurs modifiés', update_releve_compteurs_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_update_releve_compteurs
                 %br
 
@@ -71,17 +59,12 @@
               .col-sm-3
                 %H3 Arbre de décisions
                 = link_to 'Arbre de décisions ajoutés', add_decision_trees_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_add_decision_trees
                 %br
-                / %span{style: "margin-left:50px;"}
                 = link_to 'Arbre de décisions validés', valid_decision_trees_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_valid_decision_trees
                 %br
-                / %span{style: "margin-left:50px;"}
                 = link_to 'Arbre de décisions modifiés', update_decision_trees_user_path
-                / %span{style: "margin-left:50px;"}Total : 
                 %span.badge= @count_update_decision_trees
                 %br
 
@@ -101,7 +84,6 @@
                   date deb
                   #datetimepicker_deb.input-group.date
                     %input#input_date_deb.form-control{style: "width:470px;"}
-                    / = f.input :date1, as: :string, input_html: { class: "form-control" }, label: false, required: true
                     %span.input-group-addon#calendar_group{style: "visibility:hidden;"}
                       %span.glyphicon.glyphicon-calendar#calendar_button{style: "visibility:hidden;"}
 
@@ -110,7 +92,6 @@
                   date fin
                   #datetimepicker_fin.input-group.date
                     %input#input_date_fin.form-control{style: "width:470px;"}
-                    / = f.input :date2, as: :string, input_html: { class: "form-control" }, label: false, required: false
                     %span.input-group-addon{style: "visibility:hidden;"}
                       %span.glyphicon.glyphicon-calendar{style: "visibility:hidden;"}
 
@@ -140,44 +121,6 @@
           %br
           %span#result_ajax_user
 
-
-
-
-
-
-
-  / %table.table-bordered{:style => "width: 940px; text-align: center; "}
-  /   %thead
-  /     %th{:style => "text-align: center;"} Date
-  /     %th{:style => "text-align: center;"} ID incident
-  /     %th{:style => "text-align: center;"} Nom incident
-  /   %tbody
-  /     %tr
-  /       %td qaz
-  / = link_to "Back", :back
-
-
-
   %br
   %br
   %br
-
-  / .container
-  /   .row
-  /     .col-sm-6
-  /       .form-group
-  /         #datetimepicker_deb.input-group.date
-  /           %input.form-control{:type => "text"}/
-  /           %span.input-group-addon
-  /             %span.glyphicon.glyphicon-calendar{style: "decoration: none; background: grey;"}
-  /     .col-sm-6
-  /       .form-group
-  /         #datetimepicker_fin.input-group.date
-  /           %input.form-control{:type => "text"}/
-  /           %span.input-group-addon
-  /             %span.glyphicon.glyphicon-calendar
-
-
-
-
-  / %input#dd{style: "visibility:hidden;"}

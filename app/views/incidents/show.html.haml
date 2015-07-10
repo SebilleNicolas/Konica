@@ -1,3 +1,5 @@
+/ Voir et modifier les informations d'un incident
+
 %h1
   %b Incident :
   #{@incident.id}
@@ -12,29 +14,6 @@
 %h1
   %b Système d'impression :
   #{@printer.code_printers}
-/ %table.table.table-bordered
-/   %thead
-/     %tr
-/       %th Description
-/       %th Solution
-/       - if current_user.is? :ADMIN 
-/         %th Modifier
-      
-/   %tbody
-/     %tr
-/       - if current_user.is? :ADMIN
-/         = simple_form_for @incident, data: { confirm: "Etes vous sur de vouloir modifier l'incident ?" }, method: :patch do |f|
-        
-/           %td= f.cktext_area :description_incidents, label: false ,:input_html => { :size => 18, :maxlength => 20 , value: @incident.description_incidents}
-/           %td
-/             = f.cktext_area :solution_incidents, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @incident.solution_incidents}
-/             / = f.hidden_field :printer_id, :value => @printer.id
-
-         
-/           %td= f.button :submit, class: "btn btn-primary", value:'Modifier', id: 'edit-button'
-/       - else
-/         %td= cktext_area_tag :description_incidents_disabled ,  @incident.description_incidents, disabled: true
-/         %td= cktext_area_tag :solution_incidents_disabled ,  @incident.solution_incidents, disabled: true
 - if current_user.is? :ADMIN   
   = simple_form_for @incident, data: { confirm: "Etes vous sur de vouloir modifier l'incident ?" }, method: :patch do |f|
     = f.label "Description"
@@ -42,7 +21,6 @@
     = f.label "Solution"
     %td
       = f.cktext_area :solution_incidents, label: false ,:input_html => { :size => 35, :maxlength => 50 , value: @incident.solution_incidents}
-      / = f.hidden_field :printer_id, :value => @printer.id
     %td= f.button :submit, class: "btn btn-block btn-primary btn-sm", value:'Modifier', id: 'edit-button'
 - else
   = simple_form_for @incident, data: { confirm: "Etes vous sur de vouloir modifier l'incident ?" }, method: :patch do |f|
@@ -57,19 +35,9 @@
   -if @incident.valide_incidents == false
     %br
     = button_to "Valider l'incident",update_valide_incident_path, data: { confirm: "Etes vous sur de vouloir valider l'incident ?" }, method: :patch, class: "btn btn-block btn-success btn-sm"
-  /     = simple_form_for @incident,data: { confirm: "Etes vous sur de vouloir valider l'incident ?" } do |f|
-  /       = f.hidden_field :valide_incidents, :value => true
-  /       = f.button :submit, class: "btn btn-success btn-lg btn-block", value:"Valider l'incident"
-  /     %br
-  /   = simple_form_for @incident ,url: delete_incident_path(@incident),data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete do |f|
-  /     = f.hidden_field :id, :value => @incident.id
-  /     = f.button :submit, class: "btn btn-danger btn-lg btn-block", value:"Supprimer l'incident"
   %br
-
   = button_to "Supprimer l'incident",delete_incident_path, data: { confirm: "Etes vous sur de vouloir supprimer l'incident ?" }, method: :delete, class: "btn btn-block btn-danger btn-sm"
-/ = link_to "retour en arriere", printer_path(@printer)+ "#incidentTrue" ,class:  "glyphicon glyphicon-arrow-left"
 %br
 %br
 %br
-
 = link_to " Retour en arriere ", :back ,class:  "glyphicon glyphicon-arrow-left"

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+  #tracabilité pour un utilisateur sur les incident, conso, releve compteur et arbre de décision
   def show
   	@user = User.find(params[:id])
   	@titre= "user"
@@ -53,12 +55,12 @@ class UsersController < ApplicationController
     @users = User.all
     @users_non_valide = @users.where("valide = ?", false)
     @users_valide = @users.where("valide = ?", true).order(last_name: :asc)
-   
     @titre = "Gérer Utilisateur"
   end
+
+  # Incident ajouté par un utilisateur
   def add_incidents
     @user = User.find(params[:id])
-    # @user_add_incidents = UserAddIncident.find_by_sql("select * from user_add_incidents where user_id = #{@user.id} order by datetime asc LIMIT 10")
     @all_user_add_incidents = UserAddIncident.all
     @user_add_incidents = @all_user_add_incidents.where("user_id = ?", @user.id).order(date_add: :asc)
     puts @user_add_incidents.to_yaml  
@@ -66,56 +68,58 @@ class UsersController < ApplicationController
     puts 'DATETIME'
     puts @dat.to_yaml
   end
+  # consommable ajouté par un utilisateur
   def add_consommables
     @user = User.find(params[:id])
-    # @user_add_incidents = UserAddIncident.find_by_sql("select * from user_add_incidents where user_id = #{@user.id} order by datetime asc LIMIT 10")
     @all_user_add_consommables = UserAddConsommable.all
     @user_add_consommables = @all_user_add_consommables.where("user_id = ?", @user.id).order(date_add: :asc)
     puts @user_add_consommables.to_yaml  
-    # @dat = UserAddConsommable.find_by_sql("select id,date_add from user_add_incidents")
-    # puts 'DATETIME'
-    # puts @dat.to_yaml
   end
+  # releve compteur ajouté par un utilisateur
   def add_releve_compteurs
     @user = User.find(params[:id])
-    # @user_add_incidents = UserAddIncident.find_by_sql("select * from user_add_incidents where user_id = #{@user.id} order by datetime asc LIMIT 10")
     @all_user_add_releve_compteurs = UserAddReleveCompteur.all
     @user_add_releve_compteur = @all_user_add_releve_compteurs.where("user_id = ?", @user.id).order(date_add: :asc)
     puts @user_add_releve_compteur.to_yaml  
-    # @dat = UserAddIncident.find_by_sql("select id,date_add from user_add_incidents")
-    # puts 'DATETIME'
-    # puts @dat.to_yaml
   end
+
+  # arbre de décision ajouté par un utilisateur
   def add_decision_trees
     @user = User.find(params[:id])
-    # @user_add_incidents = UserAddIncident.find_by_sql("select * from user_add_incidents where user_id = #{@user.id} order by datetime asc LIMIT 10")
     @all_user_add_decision_trees = UserAddDecisionTree.all
     @user_add_decision_tree = @all_user_add_decision_trees.where("user_id = ?", @user.id).order(date_add: :asc)
     puts @user_add_deicision_tree.to_yaml  
-    # @dat = UserAddIncident.find_by_sql("select id,date_add from user_add_incidents")
-    # puts 'DATETIME'
-    # puts @dat.to_yaml
   end
+
+
+  # Incident validé par un utilisateur
   def valid_incidents
     @user = User.find(params[:id])
     @all_admin_valid_incidents = AdminValidIncident.all
     @admin_valid_incidents = @all_admin_valid_incidents.where("user_id = ?", @user.id).order(date_valid: :asc)
   end
+  # Consommable validé par un utilisateur
   def valid_consommables
     @user = User.find(params[:id])
     @all_admin_valid_consommables = AdminValidConsommable.all
     @admin_valid_consommables = @all_admin_valid_consommables.where("user_id = ?", @user.id).order(date_valid: :asc)
   end
+  # Releve compteur validé par un utilisateur
   def valid_releve_compteurs
     @user = User.find(params[:id])
     @all_admin_valid_releve_compteurs = AdminValidReleveCompteur.all
     @admin_valid_releve_compteur = @all_admin_valid_releve_compteurs.where("user_id = ?", @user.id).order(date_valid: :asc)
   end
+  # arbre de décision validé par un utilisateur
   def valid_decision_trees
     @user = User.find(params[:id])
     @all_admin_valid_decision_trees = AdminValidDecisionTree.all
     @admin_valid_decision_tree = @all_admin_valid_decision_trees.where("user_id = ?", @user.id).order(date_valid: :asc)
   end
+
+
+
+  # Incident modifié par un utilisateur
   def update_incidents
     @user = User.find(params[:id])
     # @user_add_incidents = UserAddIncident.find_by_sql("select * from user_add_incidents where user_id = #{@user.id} order by datetime asc LIMIT 10")
@@ -124,24 +128,31 @@ class UsersController < ApplicationController
     # puts @user_valid_incidents.to_yaml  
     
   end
+  # Consommable modifié par un utilisateur
   def update_consommables
     @user = User.find(params[:id])
     @all_user_update_consommables = UserUpdateConsommable.all
     @user_update_consommables = @all_user_update_consommables.where("user_id = ?", @user.id).order(date_update: :asc)
   end
+  # Releve compteur modifié par un utilisateur
   def update_releve_compteurs
     @user = User.find(params[:id])
     @all_user_update_releve_compteurs = UserUpdateReleveCompteur.all
     @user_update_releve_compteur = @all_user_update_releve_compteurs.where("user_id = ?", @user.id).order(date_update: :asc)
   end
+  # Arbre de décision modifié par un utilisateur
   def update_decision_trees
     @user = User.find(params[:id])
     @all_user_update_decision_trees = UserUpdateDecisionTree.all
     @user_update_decision_tree = @all_user_update_decision_trees.where("user_id = ?", @user.id).order(date_update: :asc)
   end
+
+  # Validation d'un utilisateur
   def update_valide
     @user = User.find(params[:id])
     @user.update_attributes(valide_user_params)
+
+    #Si l'user a été validé, on lui envoi un mail
     if @user.valide?
       UserMailer.welcome_email(@user).deliver
     end
@@ -151,6 +162,8 @@ class UsersController < ApplicationController
       format.js   { render :layout => false }
     end
   end
+
+  # Changer le role d'un utilisateur
   def update_role
     @user = User.find(params[:id])
     @user.update_attributes(role_user_params)
@@ -161,6 +174,8 @@ class UsersController < ApplicationController
       format.js   { render :layout => false }
     end
   end
+
+  # Supprimé un utilisateur
   def destroy
     @user = User.find(params[:id])
       if @user.destroy
@@ -170,6 +185,8 @@ class UsersController < ApplicationController
       end
       redirect_to manage_users_path
   end
+
+  # Modifier les informations d'un utilisateur avec/sans mot de passe
   def update
     @user = User.find(params[:id])
 		@titre = "Modification"
@@ -200,11 +217,7 @@ class UsersController < ApplicationController
     @titre = "Modification"
   end
 
-# if date1.to_time.to_i < Date.today.to_time.to_i && Date.today.to_time.to_i > date2.to_time.to_i
-#   puts Date.today
-# end
-
-
+  # fonction qui retourne le numéro du mois par rapport à l'intitulé du mois
   def return_date_string(string)
     if string == 'Janvier'
       string = '01'
@@ -253,20 +266,22 @@ class UsersController < ApplicationController
     if string == 'Décembre'
       string = '12'
     end
-
      return string
   end
-   def ajax_search_user
+
+  # CF assets/javascripts/user.js
+  def ajax_search_user
     @user_id = params[:user_id]
     @user = User.find(@user_id)
-
-     respond_to do |format|
+    respond_to do |format|
       format.json { render :json => {:user => @user }}
       format.html { redirect_to printers_path}
-      # format.json { render :json =>  @question_avant.to_json }
     end
-   end
-   def ajax_search_object
+  end
+
+  # CF assets/javascripts/user.js
+  # Récupération des informations en fonction des objets
+  def ajax_search_object
     @object_id = params[:object_id]
     @object_nature = params[:object_nature]
     puts @object_id.inspect
@@ -282,15 +297,15 @@ class UsersController < ApplicationController
     if @object_nature  == "releve_compteur"
       @object = ReleveCompteur.find(@object_id)
     end
-    puts @object.inspect
     
     respond_to do |format|
       format.json { render :json => {:object => @object }}
       format.html { redirect_to printers_path}
-      # format.json { render :json =>  @question_avant.to_json }
     end
-   end
-   def ajax_search_date
+  end
+
+  # CF assets/javascripts/user.js
+  def ajax_search_date
     @date_deb = params[:date_deb]
     @date_fin = params[:date_fin]
 
@@ -298,7 +313,6 @@ class UsersController < ApplicationController
     @object = params[:object_obj]
     @table = @action.to_s + @object.to_s
     @my_obj = @object
-    # puts @action.to_yaml
 
     if @action == 'user_add_'
       @date_db = 'date_add' 
@@ -322,15 +336,12 @@ class UsersController < ApplicationController
     @date_fin_tab[1] = return_date_string(@date_fin_tab[1])
     @date_de_fin = Date.new(@date_fin_tab[2].to_i,@date_fin_tab[1].to_i,@date_fin_tab[0].to_i)
 
+
+
+    #On obtient le nom de la table en fonction de l'objet et de l'action associé
     if @my_obj.to_s == 'incidents'
       if @action == 'user_add_'
         @object = UserAddIncident.find_by_sql('Select * from '+@table+' where date_add BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
-        # @object = @object + User.find(@object.user_id)
-        puts '*************************************'
-        puts '*************************************'
-        puts @object.inspect
-        puts '*************************************'
-        puts '*************************************'
       end
       if @action == 'user_update_'
         @object = UserUpdateIncident.find_by_sql('Select * from '+@table+' where date_update BETWEEN \''+@date_debut.to_s+'\' and \''+@date_de_fin.to_s+'\'')
@@ -389,16 +400,9 @@ class UsersController < ApplicationController
       end
     end
 
-    puts "*************************************************************"
-      puts @object.inspect
-    puts "*************************************************************"
-    
-
-    
     respond_to do |format|
       format.json { render :json => {:object_list => @object }}
       format.html { redirect_to printers_path}
-      # format.json { render :json =>  @question_avant.to_json }
     end
 
   end

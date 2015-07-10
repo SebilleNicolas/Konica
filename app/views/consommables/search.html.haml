@@ -1,8 +1,4 @@
-/ %h2= "Recherche pour : '#{@param}'"
-
-/ -if @search.count < 1
-/   %p= "il n'y a pas de résultat a votre recherche '#{@param}'."
-/ -else
+/ Rechercher un consommables pour ajouté la dépendance dans un printer
 
 - if @return_value == false
   - @search_url = params[:consommable][:code_consommables]
@@ -11,7 +7,6 @@
   n'est pas complet ou n'existe pas. Pour l'ajouter, cliquez 
   = link_to 'ici.', printer_path(params[:consommable][:printer_id])+"#ajouterConsommable"
 - if @search.blank? && @return_value == true
-  / - puts @search.to_yaml
   %p Le consommable est déjà ajouté dans le système d'impression.
 -  if !@search.blank?
   %table{:align => "center", :style => "width: 100%; border:none;"}
@@ -27,7 +22,6 @@
             = params[:consommable][:printer_id]
              
     %tbody
-      / - @search.each do |conso|
       %tr
         %td{:align => "center"}
           =  @search.id

@@ -18,6 +18,7 @@
     %th{:style => "text-align:center;"}
       Supprimer
   %tbody  
+    / Affiche les consommables non validés
     - @consommables_false.each do |conso|
       - @date = UserAddConsommable.find_by consommable_id: conso.id
       - if !@date.blank?
@@ -42,9 +43,6 @@
         %td{:align => "center"}
           = link_to conso.designation_consommables, conso
         %td{:align => "center"}
-          / = simple_form_for conso , url: update_valide_consommables_path(conso),data: { confirm: "Etes vous sur de vouloir valider ce consommable ?" },:method => 'patch'  do |f| |
-          /   = f.hidden_field :valide_consommables, :value => true
-          /   = f.button :submit, class: "btn btn-primary", :value => 'valider'
           = link_to 'Valider', conso, :remote => true, method: :patch, data: { confirm: "Etes vous sur de vouloir valider le consommable?" },:class => 'update_consommables',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
         %td{:align => "center"}
           = link_to 'Supprimer', conso, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le conso?" },:class => 'delete_consommable',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'

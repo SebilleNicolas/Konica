@@ -46,33 +46,3 @@ class SessionsController < Devise::SessionsController
 
 end
 
-
-# def create
-# 		self.resource = warden.authenticate!(auth_options)
-# 		set_flash_message(:notice, :signed_in) if is_flashing_format?
-# 		sign_in(resource_name, resource)
-# 		yield resource if block_given?
-# 		respond_with resource, location: after_sign_in_path_for(resource)
-# 	end
-
-
-# class SessionsController < Devise::SessionsController
-#   def create
-#     logger.info "Attempt to sign in by #{ params[:user][:email] }"
-#     @user = User.find_by_email(params[:user][:email])
-#     if @user != nil
-#     	puts "#{{@user.first_name}}"
-#       if !@user.valide != true
-#         flash[:alert] = "#{ @user.email } do not have portal access."
-#         redirect_to '/'
-#       else
-#         super
-#       end
-#     end
-#   end
-
-#   def destroy
-#     logger.info "#{ current_user.email } signed out"
-#     super
-#   end    
-# end

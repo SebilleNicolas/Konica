@@ -1,11 +1,7 @@
 class Printer < ActiveRecord::Base
-	# attr_accessible :id, :code_printers, :description_printers, :created_at, :updated_at
 	has_many :attachments, :dependent => :destroy
 	accepts_nested_attributes_for :attachments
-
-
 	has_many :releve_compteurs
-	
 	has_many :printers_incidents
 	has_many :incidents ,:through => :printers_incidents
 	has_many :printers_consommables

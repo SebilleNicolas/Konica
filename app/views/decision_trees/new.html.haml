@@ -1,27 +1,3 @@
-/ %h1 AJAX
-/ %H3 Rentrez le titre de l'arbre de décision : 
-/ %input#title_decision_tree
-/ %button.btn.btn-primary#button_add_title_decision_tree Valider
-/ %button.btn.btn-primary#button_update_title_decision_tree{style: "visibility:hidden;"} Modifier
-/ %H3 Rentrez la 1ère question : 
-/ %input.question_decision_tree
-/ %button.btn.btn-primary#button_add_question Valider
-
-/ %br
-/ %br
-/ %br
-
-/ #titi
-
-
-/ %br
-/ %br
-/ %br
-/ %H1 Normal
-
-
-
-
 = simple_form_for @decision_trees do |f|
 	
 	= f.input :title_decision_tree
