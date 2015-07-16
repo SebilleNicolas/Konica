@@ -1,16 +1,17 @@
-%header{:style => " display: inline-flex ;"}
+%header{:style => ""}
+  / insertion d'une librairie pour ajouter des icons
   %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", :rel => "stylesheet"}/
   / image_tag("logo.png", :alt => "Application exemple", :class => "round")
   - logo =  image_tag("KM.png", :alt => "Konica Minolta", :class => "round" , :style => "margin-right: 60px;")
   
   -if user_signed_in?
     %a#imageLogo{:href => root_path}
-      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
+      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => ""}
   - else
     %a#imageLogo{:href => new_user_session_path}
-      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
+      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => ""}
   - if user_signed_in?
-    - @size = "715px", @margin = "-22px"  if current_user.is? :ADMIN
+    - @size = "700px", @margin = "-22px"  if current_user.is? :ADMIN
     - @size = "550px", @margin = "0px" if current_user.is? :HL2 
     - @size = "550px", @margin = "0px" if current_user.is? :HL1
     - @user_false = User.all.where("valide = ?", false).count
@@ -20,14 +21,14 @@
     - @total = @user_false + @incident_false + @consommables_false + @releve_compteur_false
 
     %nav#test{:style => "width: #{@size}; margin-left:  #{@margin};"}
-      %ul#menu{style: "margin-top:10px;"}
+      %ul#menu{style: "margin-top:10px; text-align:center;"}
         - if current_user.is? :ADMIN
           %li
-            %span.glyphicon.glyphicon-plus
+            %span.glyphicon.glyphicon-print
             = link_to "Ajouter système d'impression", new_printer_path
           |
         %li
-          %span.glyphicon.glyphicon-th-list
+          %span.glyphicon.glyphicon-list-alt
           = link_to "Liste système d'impression", search_printers_path
           |
         %li
@@ -50,43 +51,39 @@
         %li
           %span.glyphicon.glyphicon-log-out
           = link_to "Déconnexion", destroy_user_session_path, method: :delete, :class => 'navbar-link'
-        %br
     
 
         #collapse_info.collapse
-          %br
           - if current_user.is? :ADMIN
-            %table.navBar{:align => "left", :style => "border:none;height: 50px; width: 250px;"}
+            %table.navBar{:align => "left", :style => "border:none;height: 50px; width: 50%;text-align:left;margin-top:2%;border-collapse:inherit; border-spacing: 8px;"}
               %tr
                 %td
-                  %p{:align => "left"}
-                    %a{:href => manage_users_path}
-                      Nombre Utilisateurs non validé 
-                      %span.badge= @user_false.to_s
+                  %a{:href => manage_users_path}
+                    Nombre Utilisateurs non validé 
+                    %span.badge= @user_false.to_s
 
               %tr
                 %td
-                  %p{:align => "left"}
                   %a{:href => incidents_path}
                     Nombre Incidents non validé 
                     %span.badge= @incident_false.to_s
               %tr
                 %td
-                  %p{:align => "left"}
                   %a{:href => consommables_path}
                     Nombre Consommables non validé 
                     %span.badge=@consommables_false.to_s
               %tr
                 %td
-                  %p{:align => "left"}
                   %a{:href => releve_compteurs_path}
                     Nombre Relevé Compteur non validé 
                     %span.badge=@releve_compteur_false.to_s
           %br/
-          %table.navBar{:align => "right", :style => "border:none; height: 50px;"}
+          %table.navBar{:align => "right", :style => "border:none; height: 50px;width: 50%;"}
             %tr
               %td
-                %p{:align => "right"} Vous êtes connecté en tant que :
+                %p{:align => "right"} 
+                  Vous êtes connecté en tant que :
+                  %span.glyphicon.glyphicon-user{style: "color: black;"}
               %td
                 %p{:align => "center"}
                   \&nbsp;
@@ -95,19 +92,26 @@
                     , #{current_user.first_name}
             %tr
               %td
-                %p{:align => "right"} Votre statut est :
+
+                %p{:align => "right"}
+                  Votre statut est :
+                  %span.glyphicon.glyphicon-tag{style: "color: black;"}
               %td
                 %p{:align => "center"}
                   %strong= current_user.role
             %tr
               %td
-                %p{:align => "right"} Email :
+                %p{:align => "right"} 
+                  Email :
+                  %span.glyphicon.glyphicon-envelope{style: "color: black;"}
               %td
                 %p{:align => "center"}
                   %strong= current_user.email
             %tr
               %td
-                %p{:align => "right"} Derniere Connexion :
+                %p{:align => "right"} 
+                  Derniere Connexion :
+                  %span.glyphicon.glyphicon-time{style: "color: black;"}
               %td
                 %p{:align => "center"}
 
@@ -116,7 +120,4 @@
                     - @tt =  DateTime.strptime(@rr, '%Y-%m-%dT%H:%M:%S')
                     - @ss = @tt.strftime("%Y-%m-%d | %H:%M:%S")
                     = @ss
-%br/
-%br/
-%br/
 %br/

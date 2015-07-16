@@ -92,12 +92,13 @@ mettre des width et jouer avec sa*/
   background-color: #cff;
 }
 
+ul#menu li { margin-bottom: 15px;}
 /*ul#menu{ 
   height:20px;
   overflow:hidden;
  transition:height 1s ease 0.10s;
- /*transform:rotate(-90deg);*/
-/*}*/
+ transform:rotate(-90deg);
+/*}
 /*ul#menu:hover{ height:260px; }*/
 
 .carousel
@@ -143,20 +144,21 @@ mettre des width et jouer avec sa*/
     background-repeat: repeat-x;
     left: auto;
     right: 0;
-    height: 250px;
+    height: 364px;
 }
 .carousel-control.left {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
     background-repeat: repeat-x;
-    height: 250px;
+    height: 364px;
 }
 #form_home {
 opacity: 0.7;
 }
 #imageLogo {
-  width: 255px;
-  height: 50px;
-  margin-right: 50px;
+  /*width: 280px;
+  height: 70px;*/
+  width: 20%;
+  /*margin-right: 50px;*/
 }
 #home {
   background-image:url(../images/gsti.png);
@@ -183,8 +185,7 @@ body {
   width: 100%;
   background-position:center top;
   /*margin-top: 150px;*/
-  font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
+  font-family: "Lato";
 
 }
 
@@ -285,8 +286,6 @@ a.signup_button {
   -o-box-shadow: 2px 2px 4px 0px #656565;
   box-shadow: 2px 2px 4px 0px #656565;
   filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
-
-
 }
 /*.table.table-bordered tbody{
     overflow-y: auto;
@@ -297,16 +296,18 @@ a.signup_button {
 /*Mettre le background du datetimepicker en white*/
 table.table-condensed tr:nth-child(2n+1) {background-color: #ffffff;}
 
+table#toto tr:nth-child(2n+1)
+{
+  background-color: #ffffff ;
+}
 
 table tr:nth-child(2n+1)
 {
-    background-color: #cff;
+  background-color: rgba(135, 206, 235, 0.4);
 }
 textarea {
-  
   resize: none;
-  
-  overflow: auto;
+  overflow: auto;l
 }
 .ui-autocomplete
  {
@@ -314,44 +315,42 @@ textarea {
   list-style-type:none;
   background: -moz-linear-gradient(center top , #51c3fa, rgba(81, 195, 250, 0)) repeat scroll 0 0 rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 5px 0px #68cbd0;
--webkit-box-shadow: 5px 5px 5px 0px #68cbd0;
--o-box-shadow: 5px 5px 5px 0px #68cbd0;
-box-shadow: 5px 5px 5px 0px #68cbd0;
-filter:progid:DXImageTransform.Microsoft.Shadow(color=#68cbd0, Direction=134, Strength=5);
--moz-border-radius: 12px;
--webkit-border-radius: 12px;
-border-radius: 12px;
-width: 400px;
+  -webkit-box-shadow: 5px 5px 5px 0px #68cbd0;
+  -o-box-shadow: 5px 5px 5px 0px #68cbd0;
+  box-shadow: 5px 5px 5px 0px #68cbd0;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#68cbd0, Direction=134, Strength=5);
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  width: 400px;
  }
  .ui-menu-item:hover
  {
   text-decoration: underline;
-
  }
 
 /* Coins arrondis */
-
 .round {
   -moz-border-radius:    10px;
   -webkit-border-radius: 10px;
   border-radius:         10px;
   -moz-box-shadow: 2px 2px 4px 0px #656565;
--webkit-box-shadow: 2px 2px 4px 0px #656565;
--o-box-shadow: 2px 2px 4px 0px #656565;
-box-shadow: 2px 2px 4px 0px #656565;
-filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
-/*background-color: #380000 ;*/
+  -webkit-box-shadow: 2px 2px 4px 0px #656565;
+  -o-box-shadow: 2px 2px 4px 0px #656565;
+  box-shadow: 2px 2px 4px 0px #656565;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
 }
 #test{
   /*background-color: #380000 ;*/
--moz-border-radius:    10px;
+  -moz-border-radius:    10px;
   -webkit-border-radius: 10px;
   border-radius:         10px;
   -moz-box-shadow: 2px 2px 4px 0px #656565;
--webkit-box-shadow: 2px 2px 4px 0px #656565;
--o-box-shadow: 2px 2px 4px 0px #656565;
-box-shadow: 2px 2px 4px 0px #656565;
-filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
+  -webkit-box-shadow: 2px 2px 4px 0px #656565;
+  -o-box-shadow: 2px 2px 4px 0px #656565;
+  box-shadow: 2px 2px 4px 0px #656565;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=4);
+  width:  75%;
 }
 
 footer {
@@ -368,16 +367,16 @@ footer nav {
 
 
 .form-control{
-border: 1px solid grey;
-margin-top: 10px;
-margin-left: 10px;
+  border: 1px solid grey;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 
 .aaa{
   border: 1px solid black;
-   border-collapse: separate;
-    padding: 7px ;
+  border-collapse: separate;
+  padding: 7px ;
 }
   
 
@@ -408,11 +407,15 @@ height: 39px;
 
 }
 
+.info{
+  background-color: #FFFFFF;
+}
 
 
 
 
-.CSSTableGenerator {
+
+/*.CSSTableGenerator {
   margin:0px;padding:0px;
   width:100%;
   box-shadow: 5px 5px 5px #888888;
@@ -500,6 +503,143 @@ height: 39px;
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#aaffff", endColorstr="#6ff2f2");  background: -o-linear-gradient(top,#aaffff,6ff2f2);
 
   background-color:#aaffff;
+}
+.CSSTableGenerator tr:first-child td:first-child{
+  border-width:0px 0px 1px 0px;
+}
+.CSSTableGenerator tr:first-child td:last-child{
+  border-width:0px 0px 1px 1px;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.CSSTableGenerator {
+  margin:0px;padding:0px;
+  width:100%;
+  box-shadow: 10px 10px 5px #888888;
+  border:1px solid #000000;
+  
+  -moz-border-radius-bottomleft:0px;
+  -webkit-border-bottom-left-radius:0px;
+  border-bottom-left-radius:0px;
+  
+  -moz-border-radius-bottomright:0px;
+  -webkit-border-bottom-right-radius:0px;
+  border-bottom-right-radius:0px;
+  
+  -moz-border-radius-topright:0px;
+  -webkit-border-top-right-radius:0px;
+  border-top-right-radius:0px;
+  
+  -moz-border-radius-topleft:0px;
+  -webkit-border-top-left-radius:0px;
+  border-top-left-radius:0px;
+}.CSSTableGenerator table{
+    border-collapse: collapse;
+        border-spacing: 0;
+  width:100%;
+  height:100%;
+  margin:0px;padding:0px;
+}.CSSTableGenerator tr:last-child td:last-child {
+  -moz-border-radius-bottomright:0px;
+  -webkit-border-bottom-right-radius:0px;
+  border-bottom-right-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:first-child {
+  -moz-border-radius-topleft:0px;
+  -webkit-border-top-left-radius:0px;
+  border-top-left-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:last-child {
+  -moz-border-radius-topright:0px;
+  -webkit-border-top-right-radius:0px;
+  border-top-right-radius:0px;
+}.CSSTableGenerator tr:last-child td:first-child{
+  -moz-border-radius-bottomleft:0px;
+  -webkit-border-bottom-left-radius:0px;
+  border-bottom-left-radius:0px;
+}.CSSTableGenerator tr:hover td{
+  background-color:#ffffff;
+    
+
+}
+.CSSTableGenerator td{
+  vertical-align:middle;
+  
+  background-color:#ffffff;
+
+  border:1px solid #000000;
+  border-width:0px 1px 1px 0px;
+  text-align:center;
+  padding:7px;
+  font-size:10px;
+  font-family: "Lato";
+  font-weight:normal;
+  color:#000000;
+}.CSSTableGenerator tr:last-child td{
+  border-width:0px 1px 0px 0px;
+}.CSSTableGenerator tr td:last-child{
+  border-width:0px 0px 1px 0px;
+}.CSSTableGenerator tr:last-child td:last-child{
+  border-width:0px 0px 0px 0px;
+}
+.CSSTableGenerator tr:first-child td{
+    background:-o-linear-gradient(bottom, #7abaf9 5%, #7abaf9 100%);  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7abaf9), color-stop(1, #7abaf9) );
+  background:-moz-linear-gradient( center top, #7abaf9 5%, #7abaf9 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#7abaf9", endColorstr="#7abaf9");  background: -o-linear-gradient(top,#7abaf9,7abaf9);
+
+  background-color:#7abaf9;
+  border:0px solid #000000;
+  text-align:center;
+  border-width:0px 0px 1px 1px;
+  font-size:14px;
+  font-family:"Lato";
+  font-weight:bold;
+  color:#000000;
+}
+.CSSTableGenerator tr:first-child:hover td{
+  background:-o-linear-gradient(bottom, #7abaf9 5%, #7abaf9 100%);  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7abaf9), color-stop(1, #7abaf9) );
+  background:-moz-linear-gradient( center top, #7abaf9 5%, #7abaf9 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#7abaf9", endColorstr="#7abaf9");  background: -o-linear-gradient(top,#7abaf9,7abaf9);
+
+  background-color:#7abaf9;
 }
 .CSSTableGenerator tr:first-child td:first-child{
   border-width:0px 0px 1px 0px;

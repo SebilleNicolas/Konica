@@ -15,15 +15,19 @@
     %h3
       Système d'impression :
   .col-xs-3
+    / Donner l'autorisation de mofidier le code printer si l'user est ADMIN
     - if current_user.is? :ADMIN
+      / Modifier le code_printer de l'imprimante
       = simple_form_for(@printer, url: update_code_printers_printer_path(params[:id]),data: { confirm: "Etes vous sur de vouloir modifier le code du système d'impression ?" }, method: :patch) do |f|
         %b
           = f.input :code_printers , :input_html => { :style => "width:100%;" }, label: false, value: @printer.code_printers
-        = f.button :submit, class: "btn btn-block btn-primary", value:'Modifier'
+        = f.button :submit, class: "btn btn-block btn-sm btn-primary", value:'Modifier'
+      / Sinon afficher le code_printer en dur
     - else
       %br
       %b= @printer.code_printers 
   .col-xs-1{style: "margin-top: 15px;"} 
+    / Si l'utilisateur est AMDIN, permettre de supprimer l'imprimante et ses composants
     - if current_user.is? :ADMIN
       = button_to "Supprimer", @printer, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le système d'impression et tous ces composants ?" }, class: "btn btn btn-danger"
   .col-xs-2
@@ -50,9 +54,9 @@
           %span.caret
         %ul.dropdown-menu{"aria-labelledby" => "myTabDrop1", :role => "menu"}
           %li
-            %a{"data-toggle" => "tab", :href => "#incidentTrue", :role => "tab"} Incident Validé
+            %a{"data-toggle" => "tab", :href => "#incidentTrue", :role => "tab"} Incidents Validés
           %li
-            %a{"data-toggle" => "tab", :href => "#incidentFalse", :role => "tab"} Incident Non Validé
+            %a{"data-toggle" => "tab", :href => "#incidentFalse", :role => "tab"} Incidents Non Validés
     - else
       %li
         %a{"data-toggle" => "tab", :href => "#incidentTrue", :role => "tab"} Incidents
@@ -65,24 +69,24 @@
           %span.caret
         %ul.dropdown-menu{"aria-labelledby" => "myTabDrop1", :role => "menu"}
           %li
-            %a{"data-toggle" => "tab", :href => "#consommableTrue", :role => "tab"} Consommable Validé
+            %a{"data-toggle" => "tab", :href => "#consommableTrue", :role => "tab"} Consommables Validés
           %li
-            %a{"data-toggle" => "tab", :href => "#consommableFalse", :role => "tab"} Consommable Non Validé
+            %a{"data-toggle" => "tab", :href => "#consommableFalse", :role => "tab"} Consommables Non Validés
     - else
       %li
         %a{"data-toggle" => "tab", :href => "#consommableTrue", :role => "tab"} Consommables
 
 
-    - if can? :valide, Printer
+    - if can? :valide, ReleveCompteur
       %li.dropdown
         %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
           Compteur
           %span.caret
         %ul.dropdown-menu{"aria-labelledby" => "myTabDrop1", :role => "menu"}
           %li
-            %a{"data-toggle" => "tab", :href => "#compteurTrue", :role => "tab"} Compteur Validé
+            %a{"data-toggle" => "tab", :href => "#compteurTrue", :role => "tab"} Compteurs Validés
           %li
-            %a{"data-toggle" => "tab", :href => "#compteurFalse", :role => "tab"} Compteur Non Validé
+            %a{"data-toggle" => "tab", :href => "#compteurFalse", :role => "tab"} Compteurs Non Validés
     - else
       %li
         %a{"data-toggle" => "tab", :href => "#compteurTrue", :role => "tab"} Compteurs
@@ -116,14 +120,15 @@
               %b Caractéristique et image du système d'impression
         #collapseOne.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
           .panel-body
+            /Si il y a au moin 1 pièce jointe
             - if @printer.attachments.count > 0
               / ****************** Slide des images : ******************
               #carousel-example-generic.carousel.slide{:style => "width:300px; float:left;","data-ride" => "carousel", "data-spy" => "scroll"}
                 / Indicators
                 %ol.carousel-indicators
                   %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
+                  / Afficher que les images dans le carousel (pas les pdf)
                   - if File.extname(@attachments[0].file.to_s) != ".pdf"
-                      
                     - for i in 1..@attachments.count - 1
                       - if File.extname(@attachments[i].file.to_s) != ".pdf"
                         %li{"data-slide-to" => "i", "data-target" => "#carousel-example-generic"}
@@ -132,15 +137,16 @@
                 .carousel-inner{:role => "listbox"}
                   - if @attachments.count > 0
                     .item.active
-                      = image_tag(@attachments[0].file_url(:thumb),:style => "margin-left:70px;")
+                      / On affiche la 1ere image
+                      = image_tag(@attachments[0].file_url(:thumb),:style => "margin-left:70px;margin-top:25%;")
                       %p
                         = File.basename(@attachments[0].file.to_s)
                       .carousel-caption
-                      
+                    / Puis on boucle pour afficher les autres
                     - @attachments.each do |a|
                       - if a.file != @attachments[0].file && File.extname(a.file.to_s) != ".pdf"
                         .item
-                          = image_tag(a.file_url(:thumb),:style => "margin-left:70px;")
+                          = image_tag(a.file_url(:thumb),:style => "margin-left:70px;margin-top:25%;")
                           %p
                             = File.basename(a.file.to_s)
                 / Controls
@@ -160,7 +166,7 @@
                   %tr
                     %td
                       = f.hidden_field :nature, :value => "description"
-                      = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary btn-block"
+                      = f.button :submit, "Modifier" , class: "btn btn-sm btn-primary btn-block"
             - else
               %p
                 = cktext_area_tag :description_printers ,  @printer.description_printers, disabled: true, :ckeditor => {:height => '250', :width => '1050'}
@@ -194,19 +200,15 @@
                               %td
                                 = p.input :file, as: :file, label: false, class: "uploadBox"
                               %td 
-                                = link_to 'Supprimer', @printer.attachments[p.index], :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer la piece jointe ?" },:class => 'delete_attachment'
+                                = link_to 'Supprimer', @printer.attachments[p.index], :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer la pièce jointe ?" },:class => 'delete_attachment' , style: "color:red;"
          
                   %tr
                     %td
                       = f.hidden_field :nature, :value => "pj"
-                      = f.button :submit, "Modifier les pieces jointes" , class: "btn btn-lg btn-primary btn-block", id: "update_attachments_printer",data:{delete: false}, :disabled => true
-              %br/
-              %br/
+                      = f.button :submit, "Modifier les pieces jointes" , class: "btn btn-sm btn-primary btn-block", id: "update_attachments_printer",data:{delete: false}, :disabled => true
               %br/
               %span.glyphicon.glyphicon-paperclip
-              %button.btn.btn-lg.btn-primary{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}
-                
-                Ajouter Nouvelle Piece Jointe
+              %button.btn.btn-sm.btn-primary{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}                Ajouter Nouvelle Piece Jointe
               / Modal
               #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1" }
                 .modal-dialog
@@ -223,11 +225,13 @@
                               = f.input :file, as: :file
                               = f.hidden_field :printer_id, :value => @printer.id
                             %td
-                              = f.button :submit, "Valider" , class: "btn btn-primary "
+                              %span.input-group-btn{style: "margin-left: 100px;"}
+                                %button.btn.btn-primary{"data-dismiss" => "modal", :type => "button", :style => "margin-right:9px; margin-left: 15px; border-radius: 4px;"} Fermer
                             %br
                             %td
-                              %span.input-group-btn{style: "margin-left: 100px;"}
-                                %button.btn.btn-primary{"data-dismiss" => "modal", :type => "button", :style => "margin-left:30px;"} Close
+                              = f.button :submit, "Valider" , class: "btn btn-primary "
+                            %br
+                            
                               
                                 
             - else 
@@ -430,7 +434,7 @@
                 %td Code Incident :
                 %td Intitulé Incident :
               %tr
-                %td.info
+                %td.info{style:"background-color: #ffffff;"}
                   .col-md-9{:style => "width: 100%"}
                     .form-group
                       = f.input :code_incidents ,label: false, :required => true ,:input_html => { :size => 40, :maxlength => 20}
@@ -452,7 +456,7 @@
               %tr
                 %td{:colspan => "2"}
                   .modal-footer{:align => "center"}
-                    = f.button :submit, class: "btn btn-primary", :value => 'Valider'
+                    = f.button :submit, class: "btn btn-primary btn-block", :value => 'Valider'
       / ------------------------- Fin div css GENERATOR -------------------------
     / Fin de l'onglet AJOUTERINCIDENT
     / ---------------------- PAGE CONSOMMABLE     ----------------------
@@ -507,7 +511,7 @@
                 %tr
                   %td
                     .modal-footer{:align => "center"}
-                      = f.button :submit, class: "btn btn-primary", :value => 'Valider'
+                      = f.button :submit, class: "btn btn-primary btn-block", :value => 'Valider'
         #searchConso.tab-pane.fade
         
 
@@ -541,7 +545,7 @@
             %tr
               %td
                 .modal-footer{:align => "center"}
-                  = f.button :submit, class: "btn btn-primary ", :value => 'Valider'
+                  = f.button :submit, class: "btn btn-primary btn-block", :value => 'Valider'
 %br/
 %br/
 %br/
@@ -552,4 +556,3 @@
 %br/
 %br/
 %br/
-k

@@ -13,7 +13,6 @@ SampleApp::Application.routes.draw do
   
   resources :decision_trees do
     member do
-    
     end
     collection do
       get :add_title_first_question_decision_tree
@@ -27,17 +26,9 @@ SampleApp::Application.routes.draw do
 
         end
       end
-
-    # resources :questions do
-    #   member do
-    #   end
-    #   collection do
-    #   end
-    # end
   end
   
   resources :printers do
-
     member do
       patch :update_description
       patch :update_code_printers  
@@ -60,7 +51,6 @@ SampleApp::Application.routes.draw do
 
 
   resources :pages do
-    # get :search , :on => :collection 
     get :autocomplete_incident_code_incidents, :on => :collection 
   end
 
@@ -112,6 +102,8 @@ SampleApp::Application.routes.draw do
     member do
       patch :update_valide
       patch :update_role
+
+      
       get :add_incidents
       get :add_consommables
       get :add_releve_compteurs
@@ -145,42 +137,8 @@ SampleApp::Application.routes.draw do
 
   end
 end
-  # devise_for :users, :controllers => { :registrations => "registrations" }, :skip => [:registrations, :sessions] do 
-
-  #   get 'signup' => 'devise/registrations#new', :as => :new_user_registration 
-  #   post 'signup' => 'devise/registrations#create', :as => :custom_user_registration 
-  #   get 'users/cancel' => 'devise/registrations#cancel', :as => :cancel_user_registration 
-  #   get 'account/edit' => 'devise/registrations#edit', :as => :custom_edit_user_registration 
-  #   put 'account' => 'devise/registrations#update', :as => :custom_update_user_registration
-  #   delete 'users/cancel' => 'devise/registrations#destroy'   
-  #   # devise/sessions 
-  #   get 'signin' => 'devise/sessions#new', :as => :new_user_session 
-  #   post 'signin' => 'devise/sessions#create', :as => :user_session 
-  #   delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
-
-  # end
 
 
-
-
-
-
-
-  # match '/new', :to => 'users#new' , :via => [:get]
-  # match '/edit',    :to => 'users#edit', :via => [:get]
-  # match '/show',    :to => 'users#show', :via => [:get]
-  # match '/manage',    :to => 'users/devise#manage', :via => [:get]
-
-
-  # match '/show',    :to => 'printers#show', :via => [:get], :controllers => { :printers => "printers" }
-  # match '/test',    :to => 'printers#test', :via => [:get], :controllers => { :printers => "printers" }
-
-  # match '/show',    :to => 'consommables#show', :via => [:get], :controllers => { :consommables => "consommables" }
-  # match '/show',    :to => 'consommables#update', :via => [:put], :controllers => { :consommables => "consommables" }
-  # match '/show',    :to => 'consommables#show', :via => [:delete], :controllers => { :consommables => "consommables" }
-
-  # match '/show',    :to => 'incidents#show', :via => [:get], :controllers => { :incidents => "incidents" }
-  # match '/show',    :to => 'incidents#show', :via => [:delete], :controllers => { :incidents => "incidents" }
 
   match '/contact', :to => 'pages#contact' , :via => [:get]
   match '/about',   :to => 'pages#about', :via => [:get]
@@ -196,7 +154,7 @@ end
 
   root :to => 'printers#index'
   # root :to => 'printers#index'
-  # if user_signed_in?
+  # if current_user.sign_in?
   #   root :to => 'pages#inscription'
   # else
   #   root :to => 'users#sign_in'

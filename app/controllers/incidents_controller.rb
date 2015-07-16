@@ -1,4 +1,5 @@
 class IncidentsController < ApplicationController
+	# autocomplete :incident, :code_incidents, :full => true
 	def index
 		@incidents = Incident.all
 		@incidents_false = @incidents.where("valide_incidents = ?", false).order(code_incidents: :asc)
@@ -109,7 +110,7 @@ class IncidentsController < ApplicationController
   end
 
 
-  # Voir les détails pour 1 incident
+  # Voir les détails pour 1'incident
   def show
 		@time = Time.now
 		@hour = @time.strftime("%H")

@@ -71,8 +71,8 @@ $("#printer_code_printers").keyup(function() {
 
           var resultat = data[cpt].id;
           var nom = data[cpt].code_printers;
-          s = s + '<a href="http://150.17.156.38:3000/printers/'+resultat+'">'+nom+' </a> </br>';
-          // $('#resultat').html('<a href="http://150.17.156.38:3000/printers/'+resultat+'">'+nom+' </a>');
+          s = s + '<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a> </br>';
+          // $('#resultat').html('<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a>');
           // alert(data[0].code_printers);
           cpt++;
       }
@@ -100,7 +100,7 @@ $("#consommable_code_consommables").keyup(function() {
       },
       type: "GET",
       success: function(data) {
-        alert(data.status);
+        // alert(data.status);
 
         //Si il ne trouve pas de data
         if (data.status == true)
@@ -134,9 +134,9 @@ $("#consommable_code_consommables").keyup(function() {
             {
               nom = data[cpt].designation_consommables;
             }
-          s = s + '<a href="http://150.17.156.38:3000/consommables/'+resultat+'">'+nom+' </a> </br>';
+          s = s + '<a href="http://localhost:3000/consommables/'+resultat+'">'+nom+' </a> </br>';
           // s = s + nom+' </br>';
-          // $('#resultat').html('<a href="http://150.17.156.38:3000/printers/'+resultat+'">'+nom+' </a>');
+          // $('#resultat').html('<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a>');
           // alert(data[0].code_printers);
           cpt++;
       }

@@ -20,13 +20,6 @@
         %br
         %br
         %br
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
   .panel.panel-default
     / RECHERCHE INCIDENT
     #headingTwo.panel-heading{:role => "tab"}
@@ -61,24 +54,31 @@
           Rechercher Consommable
     #collapseThree.panel-collapse.collapse{"aria-labelledby" => "headingThree", :role => "tabpanel"}
       .panel-body
-        = simple_form_for @consommable, :html => {:autocomplete => "off"}, url: ajax_consommable_consommables_path(@consommable) do |f|
+        .container
+          .row
+            .col-sm-5
+              %p Entrez le code consommable a rechercher :
+              = simple_form_for @consommable, :html => {:autocomplete => "off"}, url: ajax_consommable_consommables_path(@consommable) do |f|
 
-          = f.input :code_consommables, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "Entrez le code consommable",  autosave: false
-        %h3 Rechercher par :  
-        %select#column_search
-          %option{value: "code_consommables"} Code
-          %option{value: "designation_consommables"} Designation
-        #resultat_consommables{:style => "margin-left: 10px;"}
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
+                = f.input :code_consommables, as: :string, :input_html => { :style => "width:500px",:autocomplete => "off" }, style: "display:none;", label: false, placeholder: "Entrez le code consommable",  autosave: false
+                #resultat_consommables{:style => "margin-left: 10px;"}
+            .col-sm-5
+              %span{align: "right"}
+                %h4{style: "margin-top:5px; margin-bottom: 7px;"} Rechercher par :  
+                %select#column_search{style: "margin-left: 75%;"}
+                  %option{value: "code_consommables"} Code
+                  %option{value: "designation_consommables"} Designation
+                
+                %br
+                %br
+                %br
+                %br
+                %br
+                %br
+                %br
+                / %br
+                / %br
+                / %br
 
 
 
@@ -90,20 +90,16 @@
           Arbres de décisions
     #collapseFour.panel-collapse.collapse{"aria-labelledby" => "headingFour", :role => "tabpanel"}
       .panel-body
-
-        = link_to "Consulter arbres de décisions",decision_trees_path,style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
-        %br
-        %br
-        %br
+        %span{align: "left", style: "margin-left: 75px;"}
+          = link_to "Consulter arbres de décisions",decision_trees_path,style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
+        %span{ style: "margin-left:50%;"}
         - if current_user.is? :ADMIN
-          = link_to 'Ajouter un arbre de décision', new_decision_tree_path,style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
+          %span{align: "right"}
+            = link_to 'Ajouter un arbre de décision', new_decision_tree_path,style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #337ab7; border-color: #2e6da4;  color: white;'
         %br
         %br
         %br
-        %br
-        %br
-        %br
-        %br
+    
 
 
 %br/

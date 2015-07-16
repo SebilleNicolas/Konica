@@ -8,6 +8,7 @@
   = link_to 'ici.', printer_path(params[:consommable][:printer_id])+"#ajouterConsommable"
 - if @search.blank? && @return_value == true
   %p Le consommable est déjà ajouté dans le système d'impression.
+  = link_to " Retour en arriere ", :back ,class:  "glyphicon glyphicon-arrow-left"
 -  if !@search.blank?
   %table{:align => "center", :style => "width: 100%; border:none;"}
     %thead
@@ -18,9 +19,9 @@
           %b Code Consommable
         %td{:align => "center"}
           %b 
-            Ajouter dans le système d'impression
-            = params[:consommable][:printer_id]
-             
+            Ajouter dans '
+            = "#{@printer.code_printers}"
+            '
     %tbody
       %tr
         %td{:align => "center"}

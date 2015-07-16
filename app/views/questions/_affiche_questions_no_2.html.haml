@@ -10,7 +10,6 @@
           %u= @@question_next_no.title_question
       - else
         = @@question_next_no.title_question
-       
         - @@arr << @@question_next_no.id
         - if !@@question_next_no.id.nil?
           %br
