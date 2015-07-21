@@ -1,0 +1,122 @@
+%header{:style => " display: inline-flex ;"}
+  %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+  / image_tag("logo.png", :alt => "Application exemple", :class => "round")
+  - logo =  image_tag("KM.png", :alt => "Konica Minolta", :class => "round" , :style => "margin-right: 60px;")
+  
+  -if user_signed_in?
+    %a#imageLogo{:href => root_path}
+      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
+  - else
+    %a#imageLogo{:href => new_user_session_path}
+      %img.round{:alt => "Konica Minolta", :src => "/images/KM.png", :style => "margin-right: 60px;"}
+  - if user_signed_in?
+    - @size = "715px", @margin = "-22px"  if current_user.is? :ADMIN
+    - @size = "550px", @margin = "0px" if current_user.is? :HL2 
+    - @size = "550px", @margin = "0px" if current_user.is? :HL1
+    - @user_false = User.all.where("valide = ?", false).count
+    - @incident_false = Incident.all.where("valide_incidents = ?", false).count
+    - @consommables_false = Consommable.all.where("valide_consommables = ?", false).count
+    - @releve_compteur_false = ReleveCompteur.all.where("valide_releve_compteurs = ?", false).count
+    - @total = @user_false + @incident_false + @consommables_false + @releve_compteur_false
+
+    %nav#test{:style => "width: #{@size}; margin-left:  #{@margin};"}
+      %ul#menu{style: "margin-top:10px;"}
+        - if current_user.is? :ADMIN
+          %li
+            %span.glyphicon.glyphicon-plus
+            = link_to "Ajouter système d'impression", new_printer_path
+          |
+        %li
+          %span.glyphicon.glyphicon-th-list
+          = link_to "Liste système d'impression", search_printers_path
+          |
+        %li
+          %span.glyphicon.glyphicon-user
+          = link_to "Profil", edit_user_registration_path
+          |
+        - if current_user.is? :ADMIN
+          %li
+            / %span.glyphicon.glyphicon-lock
+            %i.fa.fa-users{style: "color:#09c;"}
+            = link_to "Gérer U", manage_users_path, data: { no_turbolink: true }
+            |
+        %li
+          %span.glyphicon.glyphicon-info-sign
+
+            = link_to "Info", '#collapse_info',"aria-controls" => "collapse_info", "aria-expanded" => "false", "data-toggle" => "collapse"
+            -if current_user.is? :ADMIN
+              %span.badge=@total
+            |
+        %li
+          %span.glyphicon.glyphicon-log-out
+          = link_to "Déconnexion", destroy_user_session_path, method: :delete, :class => 'navbar-link'
+        %br
+    
+
+        #collapse_info.collapse
+          %br
+          - if current_user.is? :ADMIN
+            %table.navBar{:align => "left", :style => "border:none;height: 50px; width: 250px;"}
+              %tr
+                %td
+                  %p{:align => "left"}
+                    %a{:href => manage_users_path}
+                      Nombre Utilisateurs non validé 
+                      %span.badge= @user_false.to_s
+
+              %tr
+                %td
+                  %p{:align => "left"}
+                  %a{:href => incidents_path}
+                    Nombre Incidents non validé 
+                    %span.badge= @incident_false.to_s
+              %tr
+                %td
+                  %p{:align => "left"}
+                  %a{:href => consommables_path}
+                    Nombre Consommables non validé 
+                    %span.badge=@consommables_false.to_s
+              %tr
+                %td
+                  %p{:align => "left"}
+                  %a{:href => releve_compteurs_path}
+                    Nombre Relevé Compteur non validé 
+                    %span.badge=@releve_compteur_false.to_s
+          %br/
+          %table.navBar{:align => "right", :style => "border:none; height: 50px;"}
+            %tr
+              %td
+                %p{:align => "right"} Vous êtes connecté en tant que :
+              %td
+                %p{:align => "center"}
+                  \&nbsp;
+                  %strong
+                    = current_user.last_name
+                    , #{current_user.first_name}
+            %tr
+              %td
+                %p{:align => "right"} Votre statut est :
+              %td
+                %p{:align => "center"}
+                  %strong= current_user.role
+            %tr
+              %td
+                %p{:align => "right"} Email :
+              %td
+                %p{:align => "center"}
+                  %strong= current_user.email
+            %tr
+              %td
+                %p{:align => "right"} Derniere Connexion :
+              %td
+                %p{:align => "center"}
+
+                  %strong
+                    - @rr = current_user.last_sign_in_at.to_time.iso8601
+                    - @tt =  DateTime.strptime(@rr, '%Y-%m-%dT%H:%M:%S')
+                    - @ss = @tt.strftime("%Y-%m-%d | %H:%M:%S")
+                    = @ss
+%br/
+%br/
+%br/
+%br/

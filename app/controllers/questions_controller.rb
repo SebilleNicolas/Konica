@@ -47,6 +47,7 @@ class QuestionsController < ApplicationController
 
 
   def new
+    @titre= "Arbre de Décision"
     @decision_tree = DecisionTree.find(params[:decision_tree_id])
     @question = @decision_tree.questions.build
     @question_first = Question.find_by decision_tree_id: @decision_tree.id ,number_question: "1" 

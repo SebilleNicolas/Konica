@@ -1,11 +1,14 @@
 class DecisionTreesController < ApplicationController
   def index
+    @titre = "Liste des Arbres Décisions"
     @decision_trees = DecisionTree.all
   end
   def new
+    @titre = "Ajouter Arbre Décision"
     @decision_trees = DecisionTree.new
   end
   def edit
+    @titre = "Modifier nom Arbre Décision"
     @decision_tree = DecisionTree.find(params[:id])
   end
 

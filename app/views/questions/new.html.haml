@@ -8,14 +8,20 @@
       %h2= @decision_tree.title_decision_tree
 
       / = @decision_tree.title_decision_trees
+    
     - if current_user.is? :ADMIN
       .col-sm-1
-        = button_to 'modifier le nom arbre décision',edit_decision_tree_path(@decision_tree), class: "btn btn btn-primary", :method => :get
+        = button_to 'Modifier le nom arbre décision',edit_decision_tree_path(@decision_tree), class: "btn btn btn-primary", :method => :get
 
     %br
+      .col-sm-10
+      .col-sm-1
+        = button_to 'Consulter les arbres de décisions',decision_trees_path, class: "btn btn btn-primary", :method => :get
     %br
-    Temps écoulé : 
-    %input#Compteur.modification{:name => "TempsAction",:onload => "load()", :style => "width:95px;", :type => "text", :value => "00 : 00 : 00",disabled: true}
+    .col-sm-10
+    .col-sm-2
+      Temps écoulé : 
+      %input#Compteur.modification{:name => "TempsAction",:onload => "load()", :style => "width:95px;", :type => "text", :value => "00 : 00 : 00",disabled: true}
 / = @decision_tree.id
 
 / -------------------------------------------------------------------------------------------------------------------

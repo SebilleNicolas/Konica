@@ -162,14 +162,14 @@
                 %table.table-bordered{:style => "margin-left: inherit;"}
                   %tr
                     %td
-                      = f.cktext_area :description_printers , :ckeditor => {:height => '250', :width => '780'},:spellcheck => false, :required => true , :value => @printer.description_printers
+                      = f.cktext_area :description_printers , :ckeditor => {:height => '260', :width => '780'},:spellcheck => false, :required => true , :value => @printer.description_printers
                   %tr
                     %td
                       = f.hidden_field :nature, :value => "description"
                       = f.button :submit, "Modifier" , class: "btn btn-sm btn-primary btn-block"
             - else
               %p
-                = cktext_area_tag :description_printers ,  @printer.description_printers, disabled: true, :ckeditor => {:height => '250', :width => '1050'}
+                = cktext_area_tag :description_printers ,  @printer.description_printers, disabled: true, :ckeditor => {:height => '320', :width => '1050'}
       / ************************** Colapse Pieces Jointes  du Printer : **************************
       / - if current_user.is? :ADMIN
       .panel.panel-default
