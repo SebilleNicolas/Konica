@@ -86,11 +86,6 @@ mettre des width et jouer avec sa*/
         stroke-width: 1.5px;
     }
 
-.ui-menu-item
-{
-  width: 100%;
-  background-color: #cff;
-}
 
 ul#menu li { margin-bottom: 15px;}
 /*ul#menu{ 
@@ -313,11 +308,11 @@ textarea {
  {
   padding:1;
   list-style-type:none;
-  background: -moz-linear-gradient(center top , #51c3fa, rgba(81, 195, 250, 0)) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  /*background: -moz-linear-gradient(center top , #51c3fa, rgba(81, 195, 250, 0)) repeat scroll 0 0 rgba(0, 0, 0, 0);
   -moz-box-shadow: 5px 5px 5px 0px #68cbd0;
   -webkit-box-shadow: 5px 5px 5px 0px #68cbd0;
   -o-box-shadow: 5px 5px 5px 0px #68cbd0;
-  box-shadow: 5px 5px 5px 0px #68cbd0;
+  box-shadow: 5px 5px 5px 0px #68cbd0;*/
   filter:progid:DXImageTransform.Microsoft.Shadow(color=#68cbd0, Direction=134, Strength=5);
   -moz-border-radius: 12px;
   -webkit-border-radius: 12px;
@@ -328,6 +323,15 @@ textarea {
  {
   text-decoration: underline;
  }
+.ui-menu-item
+{
+  width: 100%;
+  /*background-color: rgba(221, 221, 221, 0.5);*/
+}
+
+
+
+
 
 /* Coins arrondis */
 .round {

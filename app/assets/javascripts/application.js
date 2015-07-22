@@ -34,14 +34,14 @@ $('.collapse').collapse();
 
 $(document).ready(function() {
   $("input[type='file']").change(function(e) {
-    // alert(document.getElementById("update_attachments_printer").dataset.delete);
-
-   if (document.getElementById("update_attachments_printer").dataset.delete == "false"){
-    // alert('ii');
+  //Bloquer la modification des pièces jointes si aucune PJ n'est selectionnée
+  if (document.getElementById("update_attachments_printer").dataset.delete == "false"){
     document.getElementById("update_attachments_printer").disabled = false;
    }
   });
 
+
+//Recherche automatique en autocompletion du code_printers
 $("#printer_code_printers").keyup(function() {
     $.ajax({
       url: 'printers/ajax_printer',
@@ -72,14 +72,10 @@ $("#printer_code_printers").keyup(function() {
           var resultat = data[cpt].id;
           var nom = data[cpt].code_printers;
           s = s + '<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a> </br>';
-          // $('#resultat').html('<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a>');
-          // alert(data[0].code_printers);
           cpt++;
       }
          $('#resultat_printers').html(s);
         }
-        
-        
       }
     });
   });
@@ -90,7 +86,7 @@ $("#printer_code_printers").keyup(function() {
 
 
  
-
+//Recherche automatique en autocompletion du code_consommables
 $("#consommable_code_consommables").keyup(function() {
     $.ajax({
       url: 'consommables/ajax_consommable',
@@ -117,14 +113,11 @@ $("#consommable_code_consommables").keyup(function() {
         }
         else
         {
-          
           var cpt = 0;
           var s = "";
-          // alert(data.length);
           while (cpt < data.length) {
 
            var resultat = data[cpt].id;
-           // alert(data[cpt]);
           var nom = '';
           if ($('#column_search').val()== "code_consommables")
             {
@@ -135,16 +128,10 @@ $("#consommable_code_consommables").keyup(function() {
               nom = data[cpt].designation_consommables;
             }
           s = s + '<a href="http://localhost:3000/consommables/'+resultat+'">'+nom+' </a> </br>';
-          // s = s + nom+' </br>';
-          // $('#resultat').html('<a href="http://localhost:3000/printers/'+resultat+'">'+nom+' </a>');
-          // alert(data[0].code_printers);
-          cpt++;
+            cpt++;
       }
          $('#resultat_consommables').html(s);
-         // alert($('#resultat_consommables').val());
         }
-        
-        
       }
     });
   });
@@ -152,10 +139,6 @@ $("#consommable_code_consommables").keyup(function() {
   $('#consommable_code_consommables').keypress(function(e){
     if ( e.which == 13 ) return false;
   });
-
-
-
-
 //FIN du document.ready
 });
 
@@ -203,8 +186,6 @@ $(document).ready(function() {
 $(document).ready(function() {
   // SI #consommableFalse est présent dans l'URL
   if(document.location.href.indexOf("#cc") > -1){
-    // $('#myTabDrop1 .active').dropdown('hide');
-    // $('#pro').tab('show') ;
     alert("fff");
     alert(document.location.href.indexOf("#cc"));
     $('#myTab a[href="#incidentFalse"]').tab('show');
@@ -232,12 +213,4 @@ $(function() {
 $('.carousel').carousel({
   interval: 5000
 })
-
-
-//$('#myTab a[href="#profile"]').tab('show') // Select tab by name
-//$('#myTab a:first').tab('show') // Select first tab
-//$('#myTab a:last').tab('show') // Select last tab
-//$('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
-
-
 

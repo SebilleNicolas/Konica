@@ -55,7 +55,6 @@
 
 
 
-// BENOIT JS
 $(document).on('ready page:change', function() {
   // $.fn.datetimepicker.dates
   $('#datetimepicker_deb').datetimepicker({
@@ -89,15 +88,12 @@ function alo()
 	 $.ajax({
 	      url: 'users/ajax_search_date',
 	      data: {
-	          date_deb: $(this).val()
+        date_deb: $(this).val()
 	      },
 	      type: "GET",
 	      success: function(data) { 
-
 	      }
 	    });
-
-
 	}
  
 }
