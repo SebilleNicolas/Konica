@@ -4,4 +4,4 @@ development:
   database: KMbdd
   pool: 5
   username: hotline
-  password: 12345678 
+  password:  
