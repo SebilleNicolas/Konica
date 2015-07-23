@@ -3,5 +3,5 @@ development:
   encoding: unicode
   database: KMbdd
   pool: 5
-  username: nicolas
-  password: km312267187
+  username: hotline
+  password: 12345678 
