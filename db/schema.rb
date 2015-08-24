@@ -91,14 +91,6 @@ ActiveRecord::Schema.define(version: 20150601122012) do
     t.datetime "updated_at"
   end
 
-  create_table "posts", force: true do |t|
-    t.string   "name"
-    t.string   "title"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "printers", force: true do |t|
     t.string   "code_printers"
     t.string   "primary_key"

@@ -13,7 +13,7 @@ $ ->
           s = t[4].substring(0).split('#')
           #alert s[0]
           #window.location.reload()
-          document.location.href="http://localhost:3000/printers/ "+s[0]+" #consommableFalse"
+          document.location.href="http://150.17.157.160/printers/ "+s[0]+" #consommableFalse"
           #document.location.href=t[0]+"#consommableFalse" 
           #$(this).closest('tr').fadeOut(2000)
           #alert this

@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
   #Envoi d'un mail a l'utilisateur qui a eu son compte validé
   def welcome_email(user)
     @user = user
-    @url  = 'http://localhost:3000/users/sign_in'
+    @url  = 'http://150.17.157.160/users/sign_in'
     mail(to: @user.email, subject: 'Votre compte a été validé')
   end
 end

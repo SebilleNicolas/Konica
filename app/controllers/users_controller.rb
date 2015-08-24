@@ -60,6 +60,7 @@ class UsersController < ApplicationController
 
   # Incident ajouté par un utilisateur
   def add_incidents
+	@titre="Incidents ajoutés"
     @user = User.find(params[:id])
     @all_user_add_incidents = UserAddIncident.all
     @user_add_incidents = @all_user_add_incidents.where("user_id = ?", @user.id).order(date_add: :asc)
@@ -70,6 +71,7 @@ class UsersController < ApplicationController
   end
   # consommable ajouté par un utilisateur
   def add_consommables
+	@titre="Consommables ajoutés"
     @user = User.find(params[:id])
     @all_user_add_consommables = UserAddConsommable.all
     @user_add_consommables = @all_user_add_consommables.where("user_id = ?", @user.id).order(date_add: :asc)
@@ -77,6 +79,7 @@ class UsersController < ApplicationController
   end
   # releve compteur ajouté par un utilisateur
   def add_releve_compteurs
+	@titre = "Relevés compteurs ajoutés"
     @user = User.find(params[:id])
     @all_user_add_releve_compteurs = UserAddReleveCompteur.all
     @user_add_releve_compteur = @all_user_add_releve_compteurs.where("user_id = ?", @user.id).order(date_add: :asc)
@@ -85,6 +88,7 @@ class UsersController < ApplicationController
 
   # arbre de décision ajouté par un utilisateur
   def add_decision_trees
+	@titre= "Arbres de décisions ajoutés"
     @user = User.find(params[:id])
     @all_user_add_decision_trees = UserAddDecisionTree.all
     @user_add_decision_tree = @all_user_add_decision_trees.where("user_id = ?", @user.id).order(date_add: :asc)
@@ -94,24 +98,28 @@ class UsersController < ApplicationController
 
   # Incident validé par un utilisateur
   def valid_incidents
+	@titre="Incidents validés"
     @user = User.find(params[:id])
     @all_admin_valid_incidents = AdminValidIncident.all
     @admin_valid_incidents = @all_admin_valid_incidents.where("user_id = ?", @user.id).order(date_valid: :asc)
   end
   # Consommable validé par un utilisateur
   def valid_consommables
+	@titre="Consommables validés"
     @user = User.find(params[:id])
     @all_admin_valid_consommables = AdminValidConsommable.all
     @admin_valid_consommables = @all_admin_valid_consommables.where("user_id = ?", @user.id).order(date_valid: :asc)
   end
   # Releve compteur validé par un utilisateur
   def valid_releve_compteurs
+	@titre="Relevés compteurs validés"
     @user = User.find(params[:id])
     @all_admin_valid_releve_compteurs = AdminValidReleveCompteur.all
     @admin_valid_releve_compteur = @all_admin_valid_releve_compteurs.where("user_id = ?", @user.id).order(date_valid: :asc)
   end
   # arbre de décision validé par un utilisateur
   def valid_decision_trees
+	@titre="Arbres de décisions validés"
     @user = User.find(params[:id])
     @all_admin_valid_decision_trees = AdminValidDecisionTree.all
     @admin_valid_decision_tree = @all_admin_valid_decision_trees.where("user_id = ?", @user.id).order(date_valid: :asc)
@@ -121,6 +129,7 @@ class UsersController < ApplicationController
 
   # Incident modifié par un utilisateur
   def update_incidents
+	@titre="Incidents modifiés"
     @user = User.find(params[:id])
     # @user_add_incidents = UserAddIncident.find_by_sql("select * from user_add_incidents where user_id = #{@user.id} order by datetime asc LIMIT 10")
     @all_user_update_incidents = UserUpdateIncident.all
@@ -130,18 +139,21 @@ class UsersController < ApplicationController
   end
   # Consommable modifié par un utilisateur
   def update_consommables
+	@titre="Consommables modifiés"
     @user = User.find(params[:id])
     @all_user_update_consommables = UserUpdateConsommable.all
     @user_update_consommables = @all_user_update_consommables.where("user_id = ?", @user.id).order(date_update: :asc)
   end
   # Releve compteur modifié par un utilisateur
   def update_releve_compteurs
+	@titre="Relevés compteurs modifiés"
     @user = User.find(params[:id])
     @all_user_update_releve_compteurs = UserUpdateReleveCompteur.all
     @user_update_releve_compteur = @all_user_update_releve_compteurs.where("user_id = ?", @user.id).order(date_update: :asc)
   end
   # Arbre de décision modifié par un utilisateur
   def update_decision_trees
+	@titre="Arbres de décisions modifiés"
     @user = User.find(params[:id])
     @all_user_update_decision_trees = UserUpdateDecisionTree.all
     @user_update_decision_tree = @all_user_update_decision_trees.where("user_id = ?", @user.id).order(date_update: :asc)

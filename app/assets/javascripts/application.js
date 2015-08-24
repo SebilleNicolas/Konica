@@ -71,7 +71,7 @@ $("#printer_code_printers").keyup(function() {
 
           var resultat = data[cpt].id;
           var nom = data[cpt].code_printers;
-          s = s + '<a href="http://150.17.157.160:3000/printers/'+resultat+'">'+nom+' </a> </br>';
+          s = s + '<a href="http://150.17.157.160/printers/'+resultat+'">'+nom+' </a> </br>';
           cpt++;
       }
          $('#resultat_printers').html(s);
@@ -127,7 +127,7 @@ $("#consommable_code_consommables").keyup(function() {
             {
               nom = data[cpt].designation_consommables;
             }
-          s = s + '<a href="http://150.17.157.160:3000/consommables/'+resultat+'">'+nom+' </a> </br>';
+          s = s + '<a href="http://150.17.157.160/consommables/'+resultat+'">'+nom+' </a> </br>';
             cpt++;
       }
          $('#resultat_consommables').html(s);

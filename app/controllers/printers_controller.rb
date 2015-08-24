@@ -17,6 +17,7 @@ class PrintersController < ApplicationController
 
 	def search
 		@printers=Printer.all
+		@titre = "Recherche Imprimante"
 	end
 
 
