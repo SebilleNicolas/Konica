@@ -57,12 +57,12 @@
         %br  
         %br 
         - if current_user.is? :ADMIN
-          = f.button :submit, class: "btn btn-block btn-primary btn-sm", value:'Modifier le consommable'
+          = f.button :submit,align: "center", class: "btn btn-block btn-primary btn-sm", value:'Modifier le consommable'
 
 - if current_user.is? :ADMIN 
   - if @consommable.valide_consommables == false
     %span{style: "margin-left:50%;"}
-      %button.btn.btn-success.btn-sm.btn-block#valid-consommable{style: "width: 1000px; margin-left: 63px;",data:{consommable: @consommable.id}}
+      %button.btn.btn-success.btn-sm.btn-block#valid-consommable{style: "width: 1000px; margin-left:auto; margin-right: auto;",data:{consommable: @consommable.id}}
         Valider le consommable
 %br
 = link_to " Retour en arriere ", :back ,class:  "glyphicon glyphicon-arrow-left",  data: { no_turbolink: true }
