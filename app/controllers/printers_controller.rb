@@ -160,9 +160,19 @@ class PrintersController < ApplicationController
   # Supprimer la dépendance d'une imprimante
 	def delete_printers_consommables
 		@consommable = Consommable.find(params[:id])
-		@printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
+		@printer = Printer.find(params[:printer])
+		puts '-------------------------------------------'
+		puts @printer.to_yaml
+		puts '-------------------------------------------'
+		@printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id, printer_id: @printer.id
+		puts @printer_conso.to_yaml
 		@printer_conso.destroy
-	    render nothing: true
+		respond_to do |format|
+      format.html { redirect_to printers_url }
+      format.json { head :no_content }
+      format.js   { render :layout => false }
+    end
+	    # render nothing: true
 	end
 
   

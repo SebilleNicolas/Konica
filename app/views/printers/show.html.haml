@@ -354,7 +354,7 @@
                 %td= link_to  @r.name,consommable
                 - if current_user.is? :ADMIN 
                   %td
-                    %button.btn.btn-warning.delete-printers-consommable{data:{consommable: consommable.id}}
+                    %button.btn.btn-warning.delete-printers-consommable{data:{consommable: consommable.id, printer: params[:id]}}
                       Supprimer
                   %td
                     = link_to 'Supprimer définitivement', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable définitivement de tous les système d'impression ?" },:class => 'delete_printer_consommable',style: ' -moz-user-select: none;background-image: none; border: 1px solid transparent; border-radius: 4px;   cursor: pointer; display: inline-block;  font-size: 14px; font-weight: normal;  line-height: 1.42857;  margin-bottom: 0;  padding: 6px 12px;   text-align: center;  vertical-align: middle;  white-space: nowrap; background-color: #d9534f; border-color: #d43f3a;  color: white;'
