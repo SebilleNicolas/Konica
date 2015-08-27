@@ -147,7 +147,7 @@ class ConsommablesController < ApplicationController
     @printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
     @printer = Printer.find(@printer_conso.printer_id)
     @r = Replacement.find(@consommable.replacement_id)
-    @titre = "CONSO"
+    @titre = "Consommable"
     @list_printers_consommable = Printer.find_by_sql("select * from printers where id 
  		in ( select  printer_id from printers_consommables where consommable_id = #{@consommable.id})")
 

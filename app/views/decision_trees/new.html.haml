@@ -1,5 +1,6 @@
 = simple_form_for @decision_trees do |f|
-	
-	= f.input :title_decision_tree
+	= f.label "Titre Arbre de décision"		
+	= f.input :title_decision_tree, label: false, :input_html => { :size => 100}
 
 	= f.button :submit, class: "btn btn-primary", value:"valider"
+

@@ -139,17 +139,17 @@
           = form_tag [@decision_tree, @question] do |f|
             = label_tag "Question :"
             %br
-            = text_field_tag  :title_question
+            = text_field_tag  :title_question, nil, :size => 55
             %br
             = label_tag "YES :"
             %br
             = hidden_field_tag :question_yes, :value => true
-            = text_field_tag  :title_questions_yes
+            = text_field_tag  :title_questions_yes, nil, :size => 55
             %br
             = label_tag "NO :"
             %br
             = hidden_field_tag :question_no, :value => false
-            = text_field_tag  :title_questions_no
+            = text_field_tag  :title_questions_no, nil, :size => 55
             %br
             = submit_tag "Valider" , class: "btn btn btn-primary" 
 - else
